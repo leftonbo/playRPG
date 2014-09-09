@@ -1,3 +1,4 @@
+# Ignore Play! working directory #
 logs
 project/project
 project/target
