@@ -1,0 +1,15 @@
+.app_title {
+	font-size: 60px;
+	text-align: center;
+}
+.app_version {
+	font-size: 14px;
+	text-align: center;
+}
+
+.main_new{
+	margin-top: 4em;
+}
+.main_continue{
+	margin-top: 6em;
+}

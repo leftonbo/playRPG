@@ -1,7 +1,44 @@
 @(message: String)
 
-@main("Welcome to Play") {
+@main(Application.appTitle) {
 
-    @play20.welcome(message, style = "Java")
+    <h1 class="app_title">
+        @Application.appTitle
+    </h1>
+    <h2 class="app_version">
+        ver: @Application.appVersion
+    </h2>
 
+<div class="row main_new">
+<div class="col-xs-8 col-lg-offset-2">
+<form class="form-horizontal" name="logform" action="" method="POST">
+  <fieldset>
+    <div class="form-group">
+      <label for="name" class="col-lg-4 control-label">なまえ</label>
+      <div class="col-lg-6">
+        <input type="text" class="form-control" id="name" placeholder="Name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password" class="col-lg-4 control-label">ひみつのことば</label>
+      <div class="col-lg-6">
+        <input type="password" class="form-control" id="password" placeholder="Password">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-2 col-lg-offset-4">
+        <button type="BUTTON" class="btn btn-danger" 
+            onClick="document.logform.action='@routes.Application.newGame()';
+            document.logform.submit();">はじめから</button>
+      </div>
+      <div class="col-lg-2">
+        <button type="BUTTON" class="btn btn-primary" 
+            onClick="document.logform.action='@routes.AuthHero.loginProcess()';
+            document.logform.submit();">つづきから</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+</div>
+</div>
 }

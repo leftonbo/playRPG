@@ -6,8 +6,8 @@
 GET     /                           controllers.Application.index()
 
 # New Charactor
-GET     /new                        controllers.Application.newGame()
-POST    /new                        controllers.Application.newGameApply()
+POST    /new                        controllers.Application.newGame()
+POST    /                           controllers.Application.newGameApply()
 
 # Log in
 GET     /login                      controllers.AuthHero.index()
