@@ -1,0 +1,26 @@
+@(bol: List[BattleOccur])
+
+@main(Application.appTitle) {
+	<ul>
+	@for(bo <- bol) {
+		@if(bo.occur == BattleOccur.Occur.START) {
+			<li>があらわれた！</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.ATTACK) {
+			<li>@bo.target の攻撃！</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.DAMAGE) {
+			<li>@bo.target に  @bo.amount のダメージ！</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.MISS) {
+			<li>@bo.target は攻撃をかわした！</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.WIN) {
+			<li>まもののむれをやっつけた！</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.LOSE) {
+			<li>あなたはしにました。</li>
+		}
+	}
+	</ul>
+}

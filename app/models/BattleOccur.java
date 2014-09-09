@@ -7,6 +7,9 @@ public class BattleOccur {
 		CAST,
 		DAMAGE,
 		HEAL,
+		MISS,
+		RUN,
+		DIE,
 		WIN,
 		LOSE,
 	}
