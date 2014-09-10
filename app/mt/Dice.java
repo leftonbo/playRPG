@@ -35,6 +35,5 @@ public class Dice {
 				critical = 1;
 			}
 		}
-		play.Logger.debug(results.toString());
 	}
 }

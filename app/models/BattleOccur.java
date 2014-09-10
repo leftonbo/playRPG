@@ -3,6 +3,8 @@ package models;
 public class BattleOccur {
 	public enum Occur {
 		START,
+		APPEAR,
+		TURN,
 		ATTACK,
 		CAST,
 		DAMAGE,

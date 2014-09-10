@@ -3,8 +3,11 @@
 @main(Application.appTitle) {
 	<ul>
 	@for(bo <- bol) {
-		@if(bo.occur == BattleOccur.Occur.START) {
-			<li>があらわれた！</li>
+		@if(bo.occur == BattleOccur.Occur.APPEAR) {
+			<li>@bo.target があらわれた！</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.TURN) {
+			<li>(@{bo.amount}ターン目)</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.ATTACK) {
 			<li>@bo.target の攻撃！</li>

@@ -32,13 +32,16 @@ public class Battle {
 		
 		// 開始処理
 		result.add( new BattleOccur(-1, BattleOccur.Occur.START) );
+		for (Charactor cc : enemies) {
+			result.add( new BattleOccur(0, BattleOccur.Occur.APPEAR, cc) );
+		}
 		
 		// どっちか全滅するまでループ
 		int chk = 0;
 		boolean endflag = false;
 		turn = 1;
 		while (true) {
-			play.Logger.debug("!");
+			result.add( new BattleOccur(0, BattleOccur.Occur.TURN, null, turn) );
 			// inisia
 			List<Charactor> cturn = getInitiativeList();
 			for (Charactor cc : cturn) {
