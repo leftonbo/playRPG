@@ -14,34 +14,26 @@ public class Application extends Controller {
 	
 	public static final String appTitle = "playRPG";
 	public static final String appVersion = "0.01";
+	
+    public static Result GO_HOME = redirect(
+        routes.Application.index()
+    );
 
     public static Result index() {
     	Form<FormNewGame> fm = form(FormNewGame.class);
         return ok(index.render(fm));
     }
     
-    public static Result newGame() {
-    	Form<FormNewGame> fm = form(FormNewGame.class).bindFromRequest();
-    	if (fm.hasErrors()) {
-    		return badRequest(newGameForm.render(fm));
-    	}
-        return TODO;
-    }
-    
-    public static Result newGameApply() {
-        return TODO;
-    }
-    
     public static Result testBattle() {
     	Sfmt mt = new Sfmt();
     	
-    	List<Charactor> a = new ArrayList();
+    	List<Charactor> a = new ArrayList<Charactor>();
     	a.add(new Charactor().DebugRandomCreate(mt, 1, 40));
     	a.add(new Charactor().DebugRandomCreate(mt, 1, 35));
     	a.add(new Charactor().DebugRandomCreate(mt, 1, 35));
     	a.add(new Charactor().DebugRandomCreate(mt, 1, 30));
 
-    	List<Charactor> b = new ArrayList();
+    	List<Charactor> b = new ArrayList<Charactor>();
     	switch (mt.NextInt(4)) {
     	case 0:
 	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 10));

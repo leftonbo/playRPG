@@ -7,13 +7,19 @@ GET     /                           controllers.Application.index()
 
 # New Charactor
 GET     /new                        controllers.Application.index()
-POST    /new                        controllers.Application.newGame()
-POST    /                           controllers.Application.newGameApply()
+POST    /new                        controllers.AuthHero.newGame()
 
 # Log in
 GET     /login                      controllers.AuthHero.index()
 POST    /login                      controllers.AuthHero.loginProcess()
 
+# Log out
+GET     /logout                     controllers.AuthHero.logoutProcess()
+
+# Game Main
+GET     /game                       controllers.GameMain.index()
+
+# Test
 GET     /test                       controllers.Application.testBattle()
 
 # Map static resources from the /public folder to the /assets URL path

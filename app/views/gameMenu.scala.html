@@ -1,0 +1,13 @@
+@(name:String)
+
+@implicitFieldConstructor = @{ helper.FieldConstructor(loginInput.render) }
+
+@main(Application.appTitle) {
+
+    <p class="app_title">
+        @name
+    </p>
+    <p class="app_title">
+        <a href="@routes.AuthHero.logoutProcess()" class="btn btn-warning">bye</a>
+    </p>
+}

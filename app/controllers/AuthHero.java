@@ -1,8 +1,12 @@
 package controllers;
 
 import static play.data.Form.form;
+
+import java.util.UUID;
+
+import models.Charactor;
 import models.FormContGame;
-import play.*;
+import models.FormNewGame;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
@@ -18,8 +22,35 @@ public class AuthHero extends Controller {
     	if (fm.hasErrors()) {
     		return badRequest(continueGameForm.render(fm));
     	}
-        return TODO;
+    	// ログイン処理
+    	FormContGame fn = fm.get();
+    	// トークン作成
+    	final String userToken = UUID.randomUUID().toString(); // ランダムトークン作成
+    	MyAuthenticator.registerLoginSession(ctx(), userToken, fn.name);
+    	return GameMain.GO_HOME;
     }
+
     
-    
+    public static Result newGame() {
+    	Form<FormNewGame> fm = form(FormNewGame.class).bindFromRequest();
+    	if (fm.hasErrors()) {
+    		return badRequest(newGameForm.render(fm));
+    	}
+    	// 登録処理
+    	FormNewGame fn = fm.get();
+    	Charactor newchar = new Charactor();
+    	newchar.name = fn.name;
+    	newchar.password = fn.password;
+    	newchar.scene = 1000;	// 初期メッセージ画面？
+    	newchar.save();
+    	// トークン作成
+    	final String userToken = UUID.randomUUID().toString(); // ランダムトークン作成
+    	MyAuthenticator.registerLoginSession(ctx(), userToken, fn.name);
+    	return GameMain.GO_HOME;
+    }
+
+    public static Result logoutProcess() {
+    	MyAuthenticator.unregisterLoginSession(ctx());
+    	return Application.GO_HOME;
+    }
 }
