@@ -25,10 +25,16 @@ public class Charactor extends Model {
 	@Id
 	public Long id;
 	
+	/** 味方かな */
+	public int side = 1;
+	
 	/** 勇者の名前　*/
     @Constraints.Required
     @MaxLength(16)
     public String name;
+    
+    /** 復活の呪文 */
+    public String password;
 
     /** レベル　*/
     @Min(1)
@@ -55,6 +61,11 @@ public class Charactor extends Model {
     /** こころ　*/
     public int wil;
 
+    /** 現在地点 */
+    public int place = 0;
+    /** シーン */
+    public int scene = 0;
+
     /**
      * デフォルトパラメータ
      */
@@ -70,8 +81,9 @@ public class Charactor extends Model {
      * デバッグ用ランダムクリエイト
      * @return
      */
-    public Charactor DebugRandomCreate(Sfmt mt, int side, int Lv) {
+    public Charactor DebugRandomCreate(Sfmt mt, int s, int Lv) {
     	level = Lv;
+    	side = s;
     	if (side == 1) {
     		int rnd = mt.NextInt(8);
     		switch (rnd) {
