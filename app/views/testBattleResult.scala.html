@@ -4,58 +4,70 @@
 	<ul>
 	@for(bo <- bol) {
 		@if(bo.occur == BattleOccur.Occur.APPEAR) {
-			<li>@bo.target.name があらわれた！</li>
+			<li>
+			<span class="battle-log-name">@bo.target.name</span> があらわれた！
+			(Lv@{bo.target.level}: H@{bo.target.mhp} M@{bo.target.mmp} @{bo.target.str}/@{bo.target.agi}/@{bo.target.sen}/@{bo.target.wil})
+			</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.TURN) {
-			<li>(@{bo.amount}ターン目)</li>
+	</ul>
+	<ul>
+			<li class="text-primary">(@{bo.amount}ターン目)</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.ATTACK) {
-			<li>@bo.target.name の攻撃！</li>
+			@if(bo.side == 0) {
+				<li class="text-warning"><span class="battle-log-name">@bo.target.name</span> の攻撃！</li>
+			}
+			@if(bo.side == 1) {
+				<li class="text-info"><span class="battle-log-name">@bo.target.name</span> の攻撃！</li>
+			}
 		}
 		@if(bo.occur == BattleOccur.Occur.DAMAGE) {
-			<li>@bo.target.name に  @bo.amount のダメージ！</li>
+			<li><span class="battle-log-name">@bo.target.name</span> に <span class="battle-log-damage"> @bo.amount</span> のダメージ！</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.MISS) {
-			<li>@bo.target.name は攻撃をかわした！</li>
+			<li><span class="battle-log-name">@bo.target.name</span> は攻撃をかわした！</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.DIE) {
 			@if(bo.side == 0) {
-				<li>@bo.target.name は力尽き倒れた！</li>
+				<li class="text-danger"><span class="battle-log-name">@bo.target.name</span> は力尽き倒れた！</li>
 			}
 			@if(bo.side == 1) {
-				<li>@bo.target.name を倒した！</li>
+				<li class="text-success"><span class="battle-log-name">@bo.target.name</span> を倒した！</li>
 			}
 		}
 		@if(bo.occur == BattleOccur.Occur.CRITICALHIT) {
 			@if(bo.side == 0) {
-				<li>かいしんの一撃！</li>
+				<li class="text-danger"><span class="battle-log-critical">かいしんの一撃！</span></li>
 			}
 			@if(bo.side == 1) {
-				<li>つうこんの一撃！</li>
+				<li class="text-danger"><span class="battle-log-critical">つうこんの一撃！</span></li>
 			}
 		}
 		@if(bo.occur == BattleOccur.Occur.FUNBLEHIT) {
 			@if(bo.side == 0) {
-				<li>しかし攻撃がうまく当たらない！</li>
+				<li>ミス！攻撃が当たらない！</li>
 			}
 			@if(bo.side == 1) {
-				<li>しかし攻撃がうまく当たらない！</li>
+				<li>ミス！攻撃が当たらない！</li>
 			}
 		}
 		@if(bo.occur == BattleOccur.Occur.CRITICALBLOCK) {
 			@if(bo.side == 0) {
-				<li>@bo.target.name は攻撃をはじいた！</li>
+				<li><span class="battle-log-name">@bo.target.name</span> は攻撃をはじいた！</li>
 			}
 			@if(bo.side == 1) {
-				<li>@bo.target.name は攻撃をはじいた！</li>
+				<li><span class="battle-log-name">@bo.target.name</span> は攻撃をはじいた！</li>
 			}
 		}
 		@if(bo.occur == BattleOccur.Occur.END) {
+	</ul>
+	<ul>
 			@if(bo.side == 0) {
-				<li>あなたたちはしにました。</li>
+				<li class="text-danger battle-log-result">あなたたちはしにました。</li>
 			}
 			@if(bo.side == 1) {
-				<li>まもののむれをやっつけた！</li>
+				<li class="text-success battle-log-result">まもののむれをやっつけた！</li>
 			}
 		}
 	}

@@ -189,10 +189,16 @@ public class Battle {
 		// +2補正はそのうち外すかも
 		if (type == 0) {
 			atkp = atk.str + 2;
-			defp = atk.str;
+			defp = def.str;
 		} else if (type == 1) {
 			atkp = atk.agi + 2;
-			defp = atk.agi;
+			defp = def.agi;
+		} else if (type == 2) {
+			atkp = atk.sen + 2;
+			defp = def.sen;
+		} else if (type == 3) {
+			atkp = atk.wil + 2;
+			defp = def.wil;
 		}
 		
 		lastcrit = 0;
@@ -203,7 +209,7 @@ public class Battle {
 		} else if (atkDice.critical == -1) {
 			// ふぁんぶる
 			judge = -6;
-			lastcrit = -1;
+			lastcrit = -2;
 		} else if (defDice.critical == 1) {
 			// 防御クリッツ
 			judge = -6;
@@ -215,7 +221,7 @@ public class Battle {
 		
 		if (judge >= 0) {
 			// 0以上なら命中
-			res = Math.max( judge , 0) + xDy(1+atk.level/5,6);
+			res = Math.max( judge , 0) + xDy(1+atk.level/10,6);
 		}
 		// ダメージ値を返す
 		return res;

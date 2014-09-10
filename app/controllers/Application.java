@@ -28,13 +28,15 @@ public class Application extends Controller {
     	Sfmt mt = new Sfmt();
     	
     	List<Charactor> a = new ArrayList();
-    	a.add(new Charactor().DebugRandomCreate(mt, 1, 15));
-    	a.add(new Charactor().DebugRandomCreate(mt, 1, 15));
+    	a.add(new Charactor().DebugRandomCreate(mt, 1,  40));
+    	a.add(new Charactor().DebugRandomCreate(mt, 1,  35));
+    	a.add(new Charactor().DebugRandomCreate(mt, 1,  35));
+    	a.add(new Charactor().DebugRandomCreate(mt, 1,  30));
     	
     	List<Charactor> b = new ArrayList();
-    	b.add(new Charactor().DebugRandomCreate(mt, 0, 4));
-    	b.add(new Charactor().DebugRandomCreate(mt, 0, 4));
-    	b.add(new Charactor().DebugRandomCreate(mt, 0, 4));
+    	b.add(new Charactor().DebugRandomCreate(mt, 0, 100));
+    	b.add(new Charactor().DebugRandomCreate(mt, 0,  25));
+    	b.add(new Charactor().DebugRandomCreate(mt, 0,  25));
     	
     	Battle btl = new Battle(a,b);
     	List<BattleOccur> bo = btl.processBattle();

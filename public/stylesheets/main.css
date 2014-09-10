@@ -13,3 +13,20 @@
 .main_continue{
 	margin-top: 6em;
 }
+
+.battle-log-name{
+	font-size: 18px;
+    font-weight: bold;
+}
+.battle-log-critical{
+	font-size: 22px;
+    font-weight: bold;
+}
+.battle-log-damage{
+	font-size: 30px;
+    font-weight: bold;
+}
+.battle-log-result{
+	font-size: 30px;
+    font-weight: bold;
+}
