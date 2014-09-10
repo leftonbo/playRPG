@@ -6,6 +6,7 @@
 GET     /                           controllers.Application.index()
 
 # New Charactor
+GET     /new                        controllers.Application.index()
 POST    /new                        controllers.Application.newGame()
 POST    /                           controllers.Application.newGameApply()
 

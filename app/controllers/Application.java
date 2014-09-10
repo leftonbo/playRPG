@@ -1,9 +1,12 @@
 package controllers;
 
+import static play.data.Form.form;
+
 import java.util.*;
 
 import models.*;
 import mt.Sfmt;
+import play.data.*;
 import play.mvc.*;
 import views.html.*;
 
@@ -13,10 +16,15 @@ public class Application extends Controller {
 	public static final String appVersion = "0.01";
 
     public static Result index() {
-        return ok(index.render(""));
+    	Form<FormNewGame> fm = form(FormNewGame.class);
+        return ok(index.render(fm));
     }
     
     public static Result newGame() {
+    	Form<FormNewGame> fm = form(FormNewGame.class).bindFromRequest();
+    	if (fm.hasErrors()) {
+    		return badRequest(newGameForm.render(fm));
+    	}
         return TODO;
     }
     

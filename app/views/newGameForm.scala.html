@@ -8,12 +8,22 @@
         @Application.appTitle
     </h1>
     <h2 class="app_version">
-        ver: @Application.appVersion
+        あたらしい ぼうげんのしょ
     </h2>
 
 <div class="row main_new">
 <div class="col-xs-8 col-lg-offset-2">
 <form class="form-horizontal" name="logform" action="" method="POST">
+            @if(lForm.hasErrors()) {
+                <p class="text-danger" align=center>
+                    なまえと呪文を入力してください
+                </p>
+            }
+            @if(lForm.hasGlobalErrors()) {
+                <p class="text-danger" align=center>
+                    @lForm.globalError().message()
+                </p>
+            }
   <fieldset>
     @helper.inputText(lForm("name"), '_label->"なまえ", '_help -> "", 'class->"form-control", 'placeholder->"Name")
     @helper.inputPassword(lForm("password"), '_label->"復活の呪文", '_help -> "", 'class->"form-control", 'placeholder->"Password")
