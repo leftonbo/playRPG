@@ -22,7 +22,7 @@ public class Dice {
 		int fnvchk = 0, critchk = 0;
 		results = new ArrayList<Integer>();
 		for (int i = 0; i < num; i++) {
-			int r = mt.NextIntEx(dice) + 1;
+			int r = mt.NextInt(dice) + 1;
 			sum += r;
 			results.add(r);
 			if (r == 1) fnvchk ++;
@@ -35,5 +35,6 @@ public class Dice {
 				critical = 1;
 			}
 		}
+		//play.Logger.debug(results.toString());
 	}
 }

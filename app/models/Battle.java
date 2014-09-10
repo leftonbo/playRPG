@@ -165,11 +165,17 @@ public class Battle {
 	 * @return
 	 */
 	private Charactor randomTarget(boolean ally) {
+		List<Charactor> targets = new ArrayList();
 		if (ally) {
-			return allies.get(mt.NextIntEx(allies.size()));
+			for (Charactor c : allies) {
+				if (c.hp > 0) targets.add(c);
+			}
 		} else {
-			return enemies.get(mt.NextIntEx(enemies.size()));
+			for (Charactor c : enemies) {
+				if (c.hp > 0) targets.add(c);
+			}
 		}
+		return targets.get(mt.NextIntEx(targets.size()));
 	}
 	
 	public int meleeAttack(Charactor atk, Charactor def, int type) {
@@ -219,7 +225,7 @@ public class Battle {
 	
 	private int xDy (int x, int y) {
 		int res = 0;
-		for (int i = 0; i < x; i++) res += mt.NextIntEx(y);
+		for (int i = 0; i < x; i++) res += mt.NextInt(y) + 1;
 		return res;
 	}
 }

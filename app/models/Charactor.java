@@ -73,7 +73,7 @@ public class Charactor extends Model {
     public Charactor DebugRandomCreate(Sfmt mt, int side, int Lv) {
     	level = Lv;
     	if (side == 1) {
-    		int rnd = mt.NextIntEx(4);
+    		int rnd = mt.NextInt(8);
     		switch (rnd) {
     		case 0:	name="トロ";	break;
     		case 1:	name="ミン";	break;
@@ -85,7 +85,19 @@ public class Charactor extends Model {
     		case 7:	name="よう";	break;
     		}
     	} else {
-    		name="スライム"+(mt.NextIntEx(100)+1);
+    		int rnd = mt.NextInt(10);
+    		switch (rnd) {
+    		case 0:	name="スライム";	break;
+    		case 1:	name="スライムB";	break;
+    		case 2:	name="スライムC";	break;
+    		case 3:	name="スライムD";	break;
+    		case 4:	name="スライムE";	break;
+    		case 5:	name="スライムF";	break;
+    		case 6:	name="スライムG";	break;
+    		case 7:	name="スライムH";	break;
+    		case 8:	name="スライムI";	break;
+    		case 9:	name="スライムJ";	break;
+    		}
     	}
     	mhp = hp = 20 + Lv * 2;
     	mmp = mp = 20 + Lv * 2;
