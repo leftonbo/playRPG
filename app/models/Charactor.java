@@ -6,6 +6,7 @@ import play.db.ebean.*;
 
 import javax.persistence.*;
 
+import mt.Sfmt;
 import play.db.ebean.Model.Finder;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.*;
@@ -63,6 +64,43 @@ public class Charactor extends Model {
     	mmp = mp = 20;
     	str = 3;	agi = 2;
     	sen = 2;	wil = 3;
+    }
+    
+    /**
+     * デバッグ用ランダムクリエイト
+     * @return
+     */
+    public Charactor DebugRandomCreate(Sfmt mt, int side, int Lv) {
+    	level = Lv;
+    	if (side == 1) {
+    		int rnd = mt.NextIntEx(4);
+    		switch (rnd) {
+    		case 0:	name="トロ";	break;
+    		case 1:	name="ミン";	break;
+    		case 2:	name="レア";	break;
+    		case 3:	name="シグ";	break;
+    		case 4:	name="HAS";	break;
+    		case 5:	name="ああああ";	break;
+    		case 6:	name="トロイヌ";	break;
+    		case 7:	name="よう";	break;
+    		}
+    	} else {
+    		name="スライム"+(mt.NextIntEx(100)+1);
+    	}
+    	mhp = hp = 20 + Lv * 2;
+    	mmp = mp = 20 + Lv * 2;
+    	str = 1;	agi = 1;
+    	sen = 1;	wil = 1;
+    	for (int i = 0; i < 6+Lv/5; i++) {
+    		int rnd = mt.NextIntEx(4);
+    		switch (rnd) {
+    		case 0:	str ++;	break;
+    		case 1:	agi ++;	break;
+    		case 2:	sen ++;	break;
+    		case 3:	wil ++;	break;
+    		}
+    	}
+    	return this;
     }
     
     /* ************************************************************ */

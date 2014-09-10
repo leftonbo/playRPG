@@ -4,26 +4,26 @@
 	<ul>
 	@for(bo <- bol) {
 		@if(bo.occur == BattleOccur.Occur.APPEAR) {
-			<li>@bo.target があらわれた！</li>
+			<li>@bo.target.name があらわれた！</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.TURN) {
 			<li>(@{bo.amount}ターン目)</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.ATTACK) {
-			<li>@bo.target の攻撃！</li>
+			<li>@bo.target.name の攻撃！</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.DAMAGE) {
-			<li>@bo.target に  @bo.amount のダメージ！</li>
+			<li>@bo.target.name に  @bo.amount のダメージ！</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.MISS) {
-			<li>@bo.target は攻撃をかわした！</li>
+			<li>@bo.target.name は攻撃をかわした！</li>
 		}
 		@if(bo.occur == BattleOccur.Occur.DIE) {
 			@if(bo.side == 0) {
-				<li>@bo.target は力尽き倒れた！</li>
+				<li>@bo.target.name は力尽き倒れた！</li>
 			}
 			@if(bo.side == 1) {
-				<li>@bo.target を倒した！</li>
+				<li>@bo.target.name を倒した！</li>
 			}
 		}
 		@if(bo.occur == BattleOccur.Occur.CRITICALHIT) {
@@ -44,10 +44,10 @@
 		}
 		@if(bo.occur == BattleOccur.Occur.CRITICALBLOCK) {
 			@if(bo.side == 0) {
-				<li>@bo.target は攻撃をはじいた！</li>
+				<li>@bo.target.name は攻撃をはじいた！</li>
 			}
 			@if(bo.side == 1) {
-				<li>@bo.target は攻撃をはじいた！</li>
+				<li>@bo.target.name は攻撃をはじいた！</li>
 			}
 		}
 		@if(bo.occur == BattleOccur.Occur.END) {

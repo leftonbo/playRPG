@@ -32,6 +32,9 @@ public class Battle {
 		
 		// 開始処理
 		result.add( new BattleOccur(-1, BattleOccur.Occur.START) );
+		for (Charactor cc : allies) {
+			result.add( new BattleOccur(1, BattleOccur.Occur.APPEAR, cc) );
+		}
 		for (Charactor cc : enemies) {
 			result.add( new BattleOccur(0, BattleOccur.Occur.APPEAR, cc) );
 		}
@@ -56,7 +59,7 @@ public class Battle {
 				Charactor target = randomTarget(!ally);
 				int damage = meleeAttack( cc, target, 0);
 				if (lastcrit ==  1) 
-					result.add( new BattleOccur(allyInt, BattleOccur.Occur.CRITICALHIT, target) );
+					result.add( new BattleOccur(ally ? 0 : 1, BattleOccur.Occur.CRITICALHIT, target) );
 				if (damage >= 0) {
 					result.add( new BattleOccur(allyInt, BattleOccur.Occur.DAMAGE, target, damage) );
 					target.hp -= damage;
@@ -65,7 +68,7 @@ public class Battle {
 					}
 				} else {
 					if (lastcrit == -2) 
-						result.add( new BattleOccur(allyInt, BattleOccur.Occur.FUNBLEHIT, target) );
+						result.add( new BattleOccur(ally ? 0 : 1, BattleOccur.Occur.FUNBLEHIT, target) );
 					else if (lastcrit == -1) 
 						result.add( new BattleOccur(allyInt, BattleOccur.Occur.CRITICALBLOCK, target) );
 					else 
@@ -206,7 +209,7 @@ public class Battle {
 		
 		if (judge >= 0) {
 			// 0以上なら命中
-			res = Math.max( judge , 0) + xDy(1,6);
+			res = Math.max( judge , 0) + xDy(1+atk.level/5,6);
 		}
 		// ダメージ値を返す
 		return res;
