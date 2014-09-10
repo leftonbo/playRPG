@@ -2,15 +2,18 @@ package models;
 
 import java.util.*;
 
-import mt.Sfmt;
+import mt.*;
 
 public class Battle {
 	public List<Charactor> allies;
 	public List<Charactor> enemies;
 	
+	public List<BattleOccur> result;
+	
 	private boolean processed = false;
 	private Sfmt mt;
 	private int turn = 0;
+	private int lastcrit = 0;
 	
 	public Battle(List<Charactor> a, List<Charactor> e) {
 		allies = a;		enemies = e;
@@ -25,40 +28,63 @@ public class Battle {
 	public List<BattleOccur> processBattle() {
 		if (processed) return new ArrayList<BattleOccur>();
 		
-		List<BattleOccur> result = new ArrayList<BattleOccur>();
+		result = new ArrayList<BattleOccur>();
 		
 		// 開始処理
-		result.add( new BattleOccur(BattleOccur.Occur.START) );
+		result.add( new BattleOccur(-1, BattleOccur.Occur.START) );
 		
 		// どっちか全滅するまでループ
-		int chk;
+		int chk = 0;
+		boolean endflag = false;
 		turn = 1;
-		while ((chk = checkTeamDefeated()) == 0) {
+		while (true) {
 			play.Logger.debug("!");
 			// inisia
 			List<Charactor> cturn = getInitiativeList();
 			for (Charactor cc : cturn) {
+				// HP0なら行動しない
+				if (cc.hp <= 0) continue;
+				/** 敵か味方か **/
 				boolean ally = isAlly(cc);
+				int allyInt = ally ? 1 : 0;
 				// とりあえず攻撃
-				result.add( new BattleOccur(BattleOccur.Occur.ATTACK, cc) );
+				result.add( new BattleOccur(allyInt, BattleOccur.Occur.ATTACK, cc) );
 				// テキトーに攻撃
 				Charactor target = randomTarget(!ally);
 				int damage = meleeAttack( cc, target, 0);
+				if (lastcrit ==  1) 
+					result.add( new BattleOccur(allyInt, BattleOccur.Occur.CRITICALHIT, target) );
 				if (damage >= 0) {
-					result.add( new BattleOccur(BattleOccur.Occur.DAMAGE, target, damage) );
+					result.add( new BattleOccur(allyInt, BattleOccur.Occur.DAMAGE, target, damage) );
 					target.hp -= damage;
+					if (target.hp <= 0) {
+						result.add( new BattleOccur(allyInt, BattleOccur.Occur.DIE, target) );
+					}
 				} else {
-					result.add( new BattleOccur(BattleOccur.Occur.MISS, target) );
+					if (lastcrit == -2) 
+						result.add( new BattleOccur(allyInt, BattleOccur.Occur.FUNBLEHIT, target) );
+					else if (lastcrit == -1) 
+						result.add( new BattleOccur(allyInt, BattleOccur.Occur.CRITICALBLOCK, target) );
+					else 
+						result.add( new BattleOccur(allyInt, BattleOccur.Occur.MISS, target) );
+				}
+				// 戦闘終了チェック
+				if ((chk = checkTeamDefeated()) != 0) {
+					endflag = true;	break;
 				}
 			}
+			// 戦闘ループ終了
+			if (endflag) break;
 			// ターンカウント
 			turn ++;
 		}
 		
 		if (chk == -1) {
-			result.add( new BattleOccur(BattleOccur.Occur.LOSE) );
+			// 負け
+			result.add( new BattleOccur(0, BattleOccur.Occur.END) );
 		} else {
-			result.add( new BattleOccur(BattleOccur.Occur.WIN) );
+			// 勝ち
+			result.add( new BattleOccur(1, BattleOccur.Occur.END) );
 		}
 		
 		processed = true;
@@ -143,24 +169,43 @@ public class Battle {
 	public int meleeAttack(Charactor atk, Charactor def, int type) {
 		int res = -1;
 		int judge;
-		int atkDice = xDy(2,6);
-		int defDice = xDy(2,6);
-		if (turn >= 10) {
-			atkDice = xDy(1+turn/5,6);
-		}
-		if (atkDice >= 12) {
-			// 攻撃クリッツ
-			defDice = 0;
-		} else if (atkDice <= 2 || defDice >= 12) {
-			// ふぁんぶる
-			return -2;
-		}
+		Dice atkDice = new Dice(mt, 2, 6);
+		Dice defDice = new Dice(mt, 2, 6);
+		int atkp = 0, defp = 0;
+		
+		// 攻撃タイプ
 		// +2補正はそのうち外すかも
-		judge = (atk.str + atkDice + 2) - (def.str - defDice);
+		if (type == 0) {
+			atkp = atk.str + 2;
+			defp = atk.str;
+		} else if (type == 1) {
+			atkp = atk.agi + 2;
+			defp = atk.agi;
+		}
+		
+		lastcrit = 0;
+		if (atkDice.critical == 1) {
+			// 攻撃クリッツ
+			judge = (atkp + atkDice.sum) - (defp);
+			lastcrit = 1;
+		} else if (atkDice.critical == -1) {
+			// ふぁんぶる
+			judge = -6;
+			lastcrit = -1;
+		} else if (defDice.critical == 1) {
+			// 防御クリッツ
+			judge = -6;
+			lastcrit = -1;
+		} else {
+			// 通常
+			judge = (atkp + atkDice.sum) - (defp + defDice.sum);
+		}
+		
 		if (judge >= 0) {
 			// 0以上なら命中
-			res = Math.max( judge + xDy(1,6)-3, 0);
+			res = Math.max( judge , 0) + xDy(1,6);
 		}
+		// ダメージ値を返す
 		return res;
 	}
 	

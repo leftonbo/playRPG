@@ -15,11 +15,45 @@
 		@if(bo.occur == BattleOccur.Occur.MISS) {
 			<li>@bo.target は攻撃をかわした！</li>
 		}
-		@if(bo.occur == BattleOccur.Occur.WIN) {
-			<li>まもののむれをやっつけた！</li>
+		@if(bo.occur == BattleOccur.Occur.DIE) {
+			@if(bo.side == 0) {
+				<li>@bo.target は力尽き倒れた！</li>
+			}
+			@if(bo.side == 1) {
+				<li>@bo.target を倒した！</li>
+			}
 		}
-		@if(bo.occur == BattleOccur.Occur.LOSE) {
-			<li>あなたはしにました。</li>
+		@if(bo.occur == BattleOccur.Occur.CRITICALHIT) {
+			@if(bo.side == 0) {
+				<li>かいしんの一撃！</li>
+			}
+			@if(bo.side == 1) {
+				<li>つうこんの一撃！</li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.FUNBLEHIT) {
+			@if(bo.side == 0) {
+				<li>しかし攻撃がうまく当たらない！</li>
+			}
+			@if(bo.side == 1) {
+				<li>しかし攻撃がうまく当たらない！</li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.CRITICALBLOCK) {
+			@if(bo.side == 0) {
+				<li>@bo.target は攻撃をはじいた！</li>
+			}
+			@if(bo.side == 1) {
+				<li>@bo.target は攻撃をはじいた！</li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.END) {
+			@if(bo.side == 0) {
+				<li>あなたたちはしにました。</li>
+			}
+			@if(bo.side == 1) {
+				<li>まもののむれをやっつけた！</li>
+			}
 		}
 	}
 	</ul>

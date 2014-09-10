@@ -10,24 +10,30 @@ public class BattleOccur {
 		MISS,
 		RUN,
 		DIE,
-		WIN,
-		LOSE,
+		CRITICALHIT,
+		FUNBLEHIT,
+		CRITICALBLOCK,
+		END,
 	}
 
+	public int side;
 	public Occur occur;
 	public int amount;
 	public Charactor target;
 
-	public BattleOccur(Occur o) {
+	public BattleOccur(int s, Occur o) {
+		side = s;
 		occur = o;
 		amount = 0;
 	}
-	public BattleOccur(Occur o, Charactor t) {
+	public BattleOccur(int s, Occur o, Charactor t) {
+		side = s;
 		occur = o;
 		target = t;
 		amount = 0;
 	}
-	public BattleOccur(Occur o, Charactor t, int a) {
+	public BattleOccur(int s, Occur o, Charactor t, int a) {
+		side = s;
 		occur = o;
 		target = t;
 		amount = a;
