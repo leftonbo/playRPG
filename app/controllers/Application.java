@@ -28,15 +28,32 @@ public class Application extends Controller {
     	Sfmt mt = new Sfmt();
     	
     	List<Charactor> a = new ArrayList();
-    	a.add(new Charactor().DebugRandomCreate(mt, 1,  40));
-    	a.add(new Charactor().DebugRandomCreate(mt, 1,  35));
-    	a.add(new Charactor().DebugRandomCreate(mt, 1,  35));
-    	a.add(new Charactor().DebugRandomCreate(mt, 1,  30));
-    	
+    	a.add(new Charactor().DebugRandomCreate(mt, 1, 40));
+    	a.add(new Charactor().DebugRandomCreate(mt, 1, 35));
+    	a.add(new Charactor().DebugRandomCreate(mt, 1, 35));
+    	a.add(new Charactor().DebugRandomCreate(mt, 1, 30));
+
     	List<Charactor> b = new ArrayList();
-    	b.add(new Charactor().DebugRandomCreate(mt, 0, 100));
-    	b.add(new Charactor().DebugRandomCreate(mt, 0,  25));
-    	b.add(new Charactor().DebugRandomCreate(mt, 0,  25));
+    	switch (mt.NextInt(4)) {
+    	case 0:
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 10));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 10));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 10));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 10));
+	    	break;
+    	case 1:
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 60));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 15));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 15));
+	    	break;
+    	case 2:
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 25));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 25));
+	    	break;
+    	case 3:
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 100));
+	    	break;
+    	}
     	
     	Battle btl = new Battle(a,b);
     	List<BattleOccur> bo = btl.processBattle();
