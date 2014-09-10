@@ -217,6 +217,11 @@ public class Battle {
 		} else {
 			// 通常
 			judge = (atkp + atkDice.sum) - (defp + defDice.sum);
+			if (judge >= 10) {
+				// 10以上クリッツ
+				judge = (atkp + atkDice.sum) - (defp);
+				lastcrit = 1;
+			}
 		}
 		
 		if (judge >= 0) {
