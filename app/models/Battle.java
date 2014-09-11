@@ -129,15 +129,18 @@ public class Battle {
 	private List<Charactor> getInitiativeList() {
 		Map<Integer,Charactor> sort = new TreeMap<Integer,Charactor>();
 
+		int zurasi = 15;	// イニシア同値回避用
 		// 味方
 		for (Charactor c : allies) {
-			int ini = (Math.max(c.agi, c.sen) + xDy(1,6)) << 1 + 1;
+			int ini = ((Math.max(c.agi, c.sen) + xDy(1,6)) << 4) + zurasi;
 			sort.put(-ini,c);
+			zurasi --;
 		}
 		// 敵
 		for (Charactor c : enemies) {
-			int ini = (Math.max(c.agi, c.sen) + xDy(1,6)) << 1;
+			int ini = ((Math.max(c.agi, c.sen) + xDy(1,6)) << 4) + zurasi;
 			sort.put(-ini,c);
+			zurasi --;
 		}
 
 		List<Charactor> result = new ArrayList<Charactor>();
