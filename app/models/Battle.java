@@ -230,6 +230,7 @@ public class Battle {
 		if (judge >= 0) {
 			// 0以上なら命中
 			res = Math.max( judge , 0) + xDy(1+atk.level/10,6);
+			if (lastcrit == 1) res += xDy(1+atk.level/15,6);	// クリッツ振り足し
 		}
 		// ダメージ値を返す
 		return res;
