@@ -137,4 +137,8 @@ public class Charactor extends Model {
 	public static final List<Charactor> all() {
 		return find.all();
 	}
+	
+	public static final Charactor getByName(String name) {
+		return find.where().eq("name", name).findUnique();
+	}
 }
