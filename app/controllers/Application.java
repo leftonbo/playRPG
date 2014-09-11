@@ -49,13 +49,13 @@ public class Application extends Controller {
 	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 10));
 	    	break;
     	case 1:
-	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 60));
-	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 15));
-	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 15));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 70));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 25));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 25));
 	    	break;
     	case 2:
-	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 25));
-	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 25));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 30));
+	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 30));
 	    	break;
     	case 3:
 	    	b.add(new Charactor().DebugRandomCreate(mt, 0, 100));
