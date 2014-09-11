@@ -19,6 +19,9 @@ GET     /logout                     controllers.AuthHero.logoutProcess()
 # Game Main
 GET     /game                       controllers.GameMain.index()
 
+# Game Event Choose
+POST    /game/event                 controllers.GameMain.eventProcess()
+
 # Test
 GET     /test                       controllers.Application.testBattle()
 
