@@ -10,6 +10,13 @@
     <h2 class="app_version">
         ver: @Application.appVersion
     </h2>
+    
+    @if(flash.contains("danger")) {
+    <div class="alert alert-dismissable alert-danger">
+    	<button type="button" class="close" data-dismiss="alert">×</button>
+        @flash.get("danger")
+    </div>
+	}
 
 <div class="row main_new">
 <div class="col-xs-8 col-lg-offset-2">

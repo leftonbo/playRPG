@@ -15,11 +15,18 @@ public class Application extends Controller {
 	public static final String appTitle = "playRPG";
 	public static final String appVersion = "0.01";
 	
+	private static final String appKeyString = "playRPG-d2r";
+	
     public static Result GO_HOME = redirect(
         routes.Application.index()
     );
 
     public static Result index() {
+	    final Http.Cookie userCookie = ctx().request().cookie(appKeyString);
+	    if (userCookie != null) {
+	    	// クッキーあるっぽいなら即げ～む画面へ移動してみる
+	    	return GameMain.GO_HOME;
+	    }
     	Form<FormNewGame> fm = form(FormNewGame.class);
         return ok(index.render(fm));
     }

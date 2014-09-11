@@ -13,6 +13,7 @@ public class MyAuthenticator extends Security.Authenticator {
 	public Result onUnauthorized(Http.Context arg0)
 	{
 	    // ログインページへジャンプします
+		Application.flash("danger", "おきのどくですが、あなたはログアウトされました。");
 	    return redirect(controllers.routes.Application.index());
 	}
 	
