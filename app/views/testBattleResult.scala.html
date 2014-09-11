@@ -16,10 +16,10 @@
 		}
 		@if(bo.occur == BattleOccur.Occur.ATTACK) {
 			@if(bo.side == 0) {
-				<li class="text-warning"><span class="battle-log-name">@bo.target.name</span> の攻撃！</li>
+				<li><span class="battle-log-name">@bo.target.name</span> の攻撃！</li>
 			}
 			@if(bo.side == 1) {
-				<li class="text-info"><span class="battle-log-name">@bo.target.name</span> の攻撃！</li>
+				<li><span class="battle-log-name">@bo.target.name</span> の攻撃！</li>
 			}
 		}
 		@if(bo.occur == BattleOccur.Occur.DAMAGE) {

@@ -7,7 +7,6 @@ import play.db.ebean.*;
 import javax.persistence.*;
 
 import mt.Sfmt;
-import play.db.ebean.Model.Finder;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.*;
 

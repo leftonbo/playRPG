@@ -15,7 +15,7 @@ public class GameMain extends Controller {
     public static Result index() {
     	// TODO:ここにシーン遷移
     	loginName = request().username();
-        return ok(loginName);
+        return ok(gameMenu.render(loginName));
     }
 }
 

@@ -168,7 +168,7 @@ public class Battle {
 	 * @return
 	 */
 	private Charactor randomTarget(boolean ally) {
-		List<Charactor> targets = new ArrayList();
+		List<Charactor> targets = new ArrayList<Charactor>();
 		if (ally) {
 			for (Charactor c : allies) {
 				if (c.hp > 0) targets.add(c);
