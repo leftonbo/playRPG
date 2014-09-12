@@ -66,6 +66,10 @@ public class Charactor extends Model {
     public int place = 0;
     /** シーン */
     public int scene = 0;
+    /** 行こうとしてる地点 */
+    public int nextplace = 0;
+    /** リスポン地点 */
+    public int respawn = 0;
 
     /**
      * デフォルトパラメータ

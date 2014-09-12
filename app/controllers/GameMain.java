@@ -35,6 +35,12 @@ public class GameMain extends Controller {
     	loginName = request().username();
     	login = Charactor.getByName(loginName);
     	int scene = login.scene;
+
+    	if (scene == 0 && login.nextplace != 0) {
+    		// シーンなし＋次場所予約済みなら移動する
+    		return moveProcessTo(login.nextplace);
+    	}
+    	
     	GamePlace place = GamePlace.createByPlace(login.place);
     	
     	Html render = null;
@@ -94,6 +100,7 @@ public class GameMain extends Controller {
     	nse = bef.onLeavePlace(aft);
     	if (nse != 0) {
     		// シーン割り込みで移動失敗
+        	login.nextplace = f.next;
         	login.scene = nse;
         	login.update();
         	return GO_HOME;
@@ -101,6 +108,33 @@ public class GameMain extends Controller {
     	
     	// 場所を更新
     	login.place = f.next;
+    	login.nextplace = 0;
+    	nse = aft.onEnterPlace(bef);
+    	login.scene = nse;
+    	login.update();
+    	
+    	return GO_HOME;
+    }
+    
+    
+    /**
+     * 場所移動の処理 その2
+     * @return
+     */
+    @Security.Authenticated(MyAuthenticator.class)
+    public static Result moveProcessTo(int np) {
+    	loginName = request().username();
+    	login = Charactor.getByName(loginName);
+    	int nse = 0;
+    	
+    	GamePlace bef = GamePlace.createByPlace(login.place);
+    	GamePlace aft = GamePlace.createByPlace(np);
+    	
+	    // 場所離れる処理は終わっているとする
+    	
+    	// 場所を更新
+    	login.place = np;
+    	login.nextplace = 0;
     	nse = aft.onEnterPlace(bef);
     	login.scene = nse;
     	login.update();

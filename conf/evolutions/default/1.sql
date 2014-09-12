@@ -21,6 +21,8 @@ create table charactor (
   wil                       integer,
   place                     integer,
   scene                     integer,
+  nextplace                 integer,
+  respawn                   integer,
   constraint pk_charactor primary key (id))
 ;
 
