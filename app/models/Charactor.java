@@ -39,7 +39,9 @@ public class Charactor extends Model {
     @Min(1)
     public int level;
     /** けいけんち　*/
-    public int exp;
+    public long exp;
+    /** おかね　*/
+    public long money;
     
     /** せいめいりょく　*/
     public int mhp;
@@ -74,6 +76,33 @@ public class Charactor extends Model {
     	mmp = mp = 20;
     	str = 3;	agi = 2;
     	sen = 2;	wil = 3;
+    }
+    
+    /**
+     * 次のレベルへの経験値
+     * @return
+     */
+    public long getNextExp() {
+    	if (level <= 1) return 2*2*2;
+    	return (level+1) * (level+1) * (level+1);
+    }
+    
+    /**
+     * 現在のレベルの経験値(表示用)
+     * @return
+     */
+    public long getNowExp() {
+    	if (level <= 1) return exp;
+    	return exp - level * level * level;
+    }
+    
+    /**
+     * 現在のレベルから見た次の経験値(表示用)
+     * @return
+     */
+    public long getNowNextExp() {
+    	if (level <= 1) return (level+1) * (level+1) * (level+1);
+    	return (level+1) * (level+1) * (level+1) - level * level * level;
     }
     
     /**

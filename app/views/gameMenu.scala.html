@@ -2,6 +2,10 @@
 
 @implicitFieldConstructor = @{ helper.FieldConstructor(loginInput.render) }
 
+@percent(a:Double,b:Double) = @{
+	100.0 * a / b
+}
+
 @main(Application.appTitle) {
 
     <div class="jumbotron">
@@ -23,17 +27,17 @@
   </div>
   <div class="tab-pane fade" id="stats">
     <h2>@pl.name</h2>
-    <p>レベル: @pl.level</p>
+    <p>レベル: @pl.level <small>(Exp: @{pl.exp}/@{pl.getNextExp()})</small></p>
     <div class="progress">
-      <div class="progress-bar progress-bar-warning" style="width: 0%"></div>
+      <div class="progress-bar progress-bar-warning" style="width: @{percent(pl.getNowExp(),pl.getNowNextExp())}%"></div>
     </div>
     <p>HP: @pl.hp / @pl.mhp</p>
     <div class="progress">
-      <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+      <div class="progress-bar progress-bar-success" style="width: @{percent(pl.hp,pl.mhp)}%"></div>
     </div>
     <p>MP: @pl.mp / @pl.mmp</p>
     <div class="progress">
-      <div class="progress-bar progress-bar-info" style="width: 100%"></div>
+      <div class="progress-bar progress-bar-info" style="width: @{percent(pl.mp,pl.mmp)}%"></div>
     </div>
     <p>ちから:　@pl.str</p>
     <p>きようさ:　@pl.agi</p>
