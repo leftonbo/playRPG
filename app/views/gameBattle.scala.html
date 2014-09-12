@@ -1,0 +1,98 @@
+@(pname:String, bol: List[BattleOccur])
+
+@main(Application.appTitle) {
+
+<div class="page-header">
+  <div class="row">
+  <div class="col-lg-12">
+    <h1>@pname</h1>
+  </div>
+  </div>
+</div>
+
+	<ul>
+	@for(bo <- bol) {
+		@if(bo.occur == BattleOccur.Occur.APPEAR) {
+			@if(bo.side == 0) {
+			<li>
+			<span class="battle-log-name">@bo.target.name</span> があらわれた！
+			(Lv@{bo.target.level}: H@{bo.target.mhp} M@{bo.target.mmp} @{bo.target.str}/@{bo.target.agi}/@{bo.target.sen}/@{bo.target.wil})
+			</li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.TURN) {
+	</ul>
+	<ul>
+			<li class="text-primary">(@{bo.amount}ターン目)</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.ATTACK) {
+			@if(bo.side == 0) {
+				<li><span class="battle-log-name">@bo.target.name</span> の攻撃！</li>
+			}
+			@if(bo.side == 1) {
+				<li><span class="battle-log-name">@bo.target.name</span> の攻撃！</li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.DAMAGE) {
+			<li><span class="battle-log-name">@bo.target.name</span> に <span class="battle-log-damage"> @bo.amount</span> のダメージ！</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.MISS) {
+			<li><span class="battle-log-name">@bo.target.name</span> は攻撃をかわした！</li>
+		}
+		@if(bo.occur == BattleOccur.Occur.DIE) {
+			@if(bo.side == 0) {
+				<li class="text-danger"><span class="battle-log-name">@bo.target.name</span> はしんでしまった！</li>
+			}
+			@if(bo.side == 1) {
+				<li class="text-success"><span class="battle-log-name">@bo.target.name</span> を倒した！</li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.CRITICALHIT) {
+			@if(bo.side == 0) {
+				<li class="text-danger"><span class="battle-log-critical">かいしんの一撃！</span></li>
+			}
+			@if(bo.side == 1) {
+				<li class="text-danger"><span class="battle-log-critical">つうこんの一撃！</span></li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.FUNBLEHIT) {
+			@if(bo.side == 0) {
+				<li>ミス！攻撃が当たらない！</li>
+			}
+			@if(bo.side == 1) {
+				<li>ミス！攻撃が当たらない！</li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.CRITICALBLOCK) {
+			@if(bo.side == 0) {
+				<li><span class="battle-log-name">@bo.target.name</span> は攻撃をはじいた！</li>
+			}
+			@if(bo.side == 1) {
+				<li><span class="battle-log-name">@bo.target.name</span> は攻撃をはじいた！</li>
+			}
+		}
+		@if(bo.occur == BattleOccur.Occur.END) {
+	</ul>
+	<ul>
+			@if(bo.side == 0) {
+				<li class="text-danger battle-log-result">あなたはしにました。</li>
+			}
+			@if(bo.side == 1) {
+				<li class="text-success battle-log-result">まもののむれをやっつけた！</li>
+			}
+		}
+	}
+	</ul>
+	
+    <p>
+    <a href="@routes.GameMain.index()" class="btn btn-primary">つづける</a>
+    </p>
+	
+<div class="page-header">
+  <div class="row">
+  <div class="col-lg-12">
+    <h1>　</h1>
+  </div>
+  </div>
+</div>
+}

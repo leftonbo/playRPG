@@ -39,7 +39,9 @@ public class Charactor extends Model {
     @Min(1)
     public int level;
     /** けいけんち　*/
-    public int exp;
+    public long exp;
+    /** おかね　*/
+    public long money;
     
     /** せいめいりょく　*/
     public int mhp;
@@ -64,6 +66,10 @@ public class Charactor extends Model {
     public int place = 0;
     /** シーン */
     public int scene = 0;
+    /** 行こうとしてる地点 */
+    public int nextplace = 0;
+    /** リスポン地点 */
+    public int respawn = 0;
 
     /**
      * デフォルトパラメータ
@@ -74,6 +80,42 @@ public class Charactor extends Model {
     	mmp = mp = 20;
     	str = 3;	agi = 2;
     	sen = 2;	wil = 3;
+    }
+    
+    /**
+     * やられたかな？
+     * @return
+     */
+    public boolean isDefeated() {
+    	if (hp <= 0) return true;
+    	return false;
+    }
+    
+    /**
+     * 次のレベルへの経験値
+     * @return
+     */
+    public long getNextExp() {
+    	if (level <= 1) return 2*2*2;
+    	return (level+1) * (level+1) * (level+1);
+    }
+    
+    /**
+     * 現在のレベルの経験値(表示用)
+     * @return
+     */
+    public long getNowExp() {
+    	if (level <= 1) return exp;
+    	return exp - level * level * level;
+    }
+    
+    /**
+     * 現在のレベルから見た次の経験値(表示用)
+     * @return
+     */
+    public long getNowNextExp() {
+    	if (level <= 1) return (level+1) * (level+1) * (level+1);
+    	return (level+1) * (level+1) * (level+1) - level * level * level;
     }
     
     /**
@@ -123,6 +165,44 @@ public class Charactor extends Model {
     		case 3:	wil ++;	break;
     		}
     	}
+    	return this;
+    }
+    
+    public Charactor setName(String s) {
+    	name = s;
+    	return this;
+    }
+    public Charactor setLevel(int v) {
+    	level = v;
+    	return this;
+    }
+    public Charactor setHP(int v) {
+    	mhp = hp = v;
+    	return this;
+    }
+    public Charactor setMP(int v) {
+    	mmp = mp = v;
+    	return this;
+    }
+    public Charactor setparams(int s, int a, int e, int w) {
+    	str = s; agi = a; sen = e; wil = w;
+    	return this;
+    }
+    public Charactor setparams(int h, int m, int s, int a, int e, int w) {
+    	mhp = hp = h;
+    	mmp = mp = m;
+    	str = s; agi = a; sen = e; wil = w;
+    	return this;
+    }
+    public Charactor setparams(int l, int h, int m, int s, int a, int e, int w) {
+    	level = l;
+    	mhp = hp = h;
+    	mmp = mp = m;
+    	str = s; agi = a; sen = e; wil = w;
+    	return this;
+    }
+    public Charactor setRewards(int e, int m) {
+    	exp = e;	money = m;
     	return this;
     }
     

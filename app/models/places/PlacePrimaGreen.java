@@ -1,46 +1,35 @@
-package models;
+package models.places;
 
 import java.util.*;
 
-import models.places.*;
+import models.Charactor;
+import models.GamePlace;
+import mt.Sfmt;
 
-public class GamePlace {	
-	public int place;
-	public String name;
-	
-	// 場所移動用
-	public Map<String,GamePlace> nexts;
-	
-	// イベント用変数
-	public String eventName;
-	public String eventText;
-	public Map<Integer,String> choose;
-	
-	// 戦闘用
-	public List<Charactor> enemies;
-	
+public class PlacePrimaGreen extends GamePlace {
+
 	/**
 	 * 場所の設定
 	 */
-	public GamePlace() {
-		place = 0;
-		name = "未定義の場所";
+	public PlacePrimaGreen() {
+		place = 3;
+		name = "プライマ平原";
 	}
-	
+
 	/**
 	 * 場所の説明
 	 * @return
 	 */
 	public String getDespriction() {
-		return "";
+		return "西にファズマリの街が見える。";
 	}
-	
+
 	/**
 	 * 移動可能エリアの設定
 	 */
 	public void makeNextList() {
 		nexts = new LinkedHashMap<String,GamePlace>();
-		nexts.put("初期地点", new PlaceFazmari());
+		nexts.put("西", new PlaceFazmari());
 	}
 	
 	/**
@@ -48,7 +37,7 @@ public class GamePlace {
 	 * @return　次のシーン
 	 */
 	public int onEnterPlace(GamePlace from) {
-		return 0;
+		return enemyEncounter();
 	}
 	
 	/**
@@ -56,6 +45,14 @@ public class GamePlace {
 	 * @return　次のシーン、0なら次のMAPへ
 	 */
 	public int onLeavePlace(GamePlace to) {
+		return enemyEncounter();
+	}
+	
+	public int enemyEncounter() {
+		Sfmt mt = new Sfmt();
+		if (mt.NextUnif() < 0.3) {
+			return 100;
+		}
 		return 0;
 	}
 
@@ -65,26 +62,26 @@ public class GamePlace {
 	 * @return 勝った時のシーン移動
 	 */
 	public int setEnemies(int scene) {
+		enemies = new ArrayList<Charactor>();
+		switch (scene) {
+		default:
+			enemies.add(new Charactor()
+				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300));
+		}
 		return 0;
 	}
-	
+
 	/**
 	 * イベントテキストの定義
 	 * @param scene シーン(1000~1999)
 	 */
 	public void makeEventText(int scene) {
-	}
-	
-	
-	/// ====
-	
-	static public GamePlace createByPlace(int p) {
-		switch(p) {
-		case 2:
-			return new PlaceFazmari();
-		case 3:
-			return new PlacePrimaGreen();
+		choose = new LinkedHashMap<Integer,String>();
+		switch (scene) {
+		default:
+			eventText = "謎の空間";
+			choose.put(0,"次へ");
 		}
-		return new GamePlace();
 	}
+	
 }

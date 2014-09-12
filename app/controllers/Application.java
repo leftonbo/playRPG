@@ -5,6 +5,7 @@ import static play.data.Form.form;
 import java.util.*;
 
 import models.*;
+import models.forms.FormNewGame;
 import mt.Sfmt;
 import play.data.*;
 import play.mvc.*;
@@ -13,7 +14,7 @@ import views.html.*;
 public class Application extends Controller {
 	
 	public static final String appTitle = "playRPG";
-	public static final String appVersion = "0.01";
+	public static final String appVersion = "0.10";
 	
 	private static final String appKeyString = "playRPG-d2r";
 	
@@ -68,4 +69,6 @@ public class Application extends Controller {
     	return ok(testBattleResult.render(bo));
     }
 
+    
+    // =======
 }

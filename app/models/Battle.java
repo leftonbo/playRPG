@@ -9,6 +9,7 @@ public class Battle {
 	public List<Charactor> enemies;
 	
 	public List<BattleOccur> result;
+	public int win;
 	
 	private boolean processed = false;
 	private Sfmt mt;
@@ -49,7 +50,7 @@ public class Battle {
 			List<Charactor> cturn = getInitiativeList();
 			for (Charactor cc : cturn) {
 				// HP0なら行動しない
-				if (cc.hp <= 0) continue;
+				if (cc.isDefeated()) continue;
 				/** 敵か味方か **/
 				boolean ally = isAlly(cc);
 				int allyInt = ally ? 1 : 0;
@@ -85,6 +86,7 @@ public class Battle {
 			turn ++;
 		}
 		
+		win = chk;
 		if (chk == -1) {
 			// 負け
 			result.add( new BattleOccur(0, BattleOccur.Occur.END) );
@@ -108,14 +110,14 @@ public class Battle {
 		// 味方
 		flag = false;
 		for (Charactor c : allies) {
-			if (c.hp > 0) { flag = true; break; }
+			if (!c.isDefeated()) { flag = true; break; }
 		}
 		if (!flag) return -1;
 		
 		// 敵
 		flag = false;
 		for (Charactor c : enemies) {
-			if (c.hp > 0) { flag = true; break; }
+			if (!c.isDefeated()) { flag = true; break; }
 		}
 		if (!flag) return  1;
 		
@@ -171,11 +173,11 @@ public class Battle {
 		List<Charactor> targets = new ArrayList<Charactor>();
 		if (ally) {
 			for (Charactor c : allies) {
-				if (c.hp > 0) targets.add(c);
+				if (!c.isDefeated()) targets.add(c);
 			}
 		} else {
 			for (Charactor c : enemies) {
-				if (c.hp > 0) targets.add(c);
+				if (!c.isDefeated()) targets.add(c);
 			}
 		}
 		return targets.get(mt.NextIntEx(targets.size()));
@@ -229,7 +231,7 @@ public class Battle {
 		
 		if (judge >= 0) {
 			// 0以上なら命中
-			res = Math.max( judge , 0) + xDy(1+atk.level/10,6);
+			res = Math.max( judge , 0) + xDy(1+atk.level/10,6) - 3;
 			if (lastcrit == 1) res += xDy(1+atk.level/15,6);	// クリッツ振り足し
 		}
 		// ダメージ値を返す

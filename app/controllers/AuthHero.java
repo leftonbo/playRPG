@@ -5,8 +5,8 @@ import static play.data.Form.form;
 import java.util.UUID;
 
 import models.Charactor;
-import models.FormContGame;
-import models.FormNewGame;
+import models.forms.FormContGame;
+import models.forms.FormNewGame;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
@@ -42,6 +42,7 @@ public class AuthHero extends Controller {
     	newchar.name = fn.name;
     	newchar.password = fn.password;
     	newchar.place = 2;		// 初期地点(ファズマリ)
+    	newchar.respawn = 2;
     	newchar.scene = 1000;	// 初期メッセージ画面？
     	newchar.save();
     	// トークン作成

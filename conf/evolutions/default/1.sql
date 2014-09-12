@@ -9,7 +9,8 @@ create table charactor (
   name                      varchar(255),
   password                  varchar(255),
   level                     integer,
-  exp                       integer,
+  exp                       bigint,
+  money                     bigint,
   mhp                       integer,
   hp                        integer,
   mmp                       integer,
@@ -20,6 +21,8 @@ create table charactor (
   wil                       integer,
   place                     integer,
   scene                     integer,
+  nextplace                 integer,
+  respawn                   integer,
   constraint pk_charactor primary key (id))
 ;
 
