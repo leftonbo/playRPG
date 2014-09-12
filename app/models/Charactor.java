@@ -159,6 +159,40 @@ public class Charactor extends Model {
     	return this;
     }
     
+    public Charactor setName(String s) {
+    	name = s;
+    	return this;
+    }
+    public Charactor setLevel(int v) {
+    	level = v;
+    	return this;
+    }
+    public Charactor setHP(int v) {
+    	mhp = hp = v;
+    	return this;
+    }
+    public Charactor setMP(int v) {
+    	mmp = mp = v;
+    	return this;
+    }
+    public Charactor setparams(int s, int a, int e, int w) {
+    	str = s; agi = a; sen = e; wil = w;
+    	return this;
+    }
+    public Charactor setparams(int h, int m, int s, int a, int e, int w) {
+    	mhp = hp = h;
+    	mmp = mp = m;
+    	str = s; agi = a; sen = e; wil = w;
+    	return this;
+    }
+    public Charactor setparams(int l, int h, int m, int s, int a, int e, int w) {
+    	level = l;
+    	mhp = hp = h;
+    	mmp = mp = m;
+    	str = s; agi = a; sen = e; wil = w;
+    	return this;
+    }
+    
     /* ************************************************************ */
     
 	/**

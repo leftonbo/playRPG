@@ -65,7 +65,7 @@ public class PlacePrimaGreen extends GamePlace {
 		enemies = new ArrayList<Charactor>();
 		switch (scene) {
 		default:
-			enemies.add(new Charactor());
+			enemies.add(new Charactor().setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0));
 		}
 		return 0;
 	}
