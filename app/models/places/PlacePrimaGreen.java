@@ -10,7 +10,7 @@ public class PlacePrimaGreen extends GamePlace {
 	 * 場所の設定
 	 */
 	public PlacePrimaGreen() {
-		place = 2;
+		place = 3;
 		name = "プライマ平原";
 	}
 
@@ -37,14 +37,6 @@ public class PlacePrimaGreen extends GamePlace {
 	public void makeEventText(int scene) {
 		choose = new LinkedHashMap<Integer,String>();
 		switch (scene) {
-		case 1000:
-			eventName = "王様";
-			eventText = 
-				"おお、勇者{{name}}よ。ようやく現れおったな。\n" +
-				//"早速だが、私からの頼みがある。\n" +
-				"";
-			choose.put(0,"はい");
-			break;
 		default:
 			eventText = "謎の空間";
 			choose.put(0,"次へ");

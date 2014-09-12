@@ -26,6 +26,8 @@ public class PlaceFazmari extends GamePlace {
 	 * 移動可能エリアの設定
 	 */
 	public void makeNextList() {
+		nexts = new LinkedHashMap<String,GamePlace>();
+		nexts.put("東", new PlacePrimaGreen());
 	}
 
 	/**

@@ -48,7 +48,8 @@ public class GameMain extends Controller {
     	} else {
     		String desp = place.getDespriction()
     				.replace("\n", "<br>");
-    		render = gameMenu.render( place.name, desp, login);
+    		place.makeNextList();
+    		render = gameMenu.render( place.name, desp, place.nexts, login);
     	}
     	
     	// 選択メニュー

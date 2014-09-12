@@ -21,6 +21,11 @@ GET     /game                       controllers.GameMain.index()
 
 # Game Event Choose
 POST    /game/event                 controllers.GameMain.eventProcess()
+GET     /game/event                 controllers.GameMain.index()
+
+# Game Move
+POST    /game/move                  controllers.GameMain.moveProcess()
+GET     /game/move                  controllers.GameMain.index()
 
 # Test
 GET     /test                       controllers.Application.testBattle()

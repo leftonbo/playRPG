@@ -37,7 +37,7 @@ public class GamePlace {
 	 */
 	public void makeNextList() {
 		nexts = new LinkedHashMap<String,GamePlace>();
-		nexts.put("東", new PlacePrimaGreen());
+		nexts.put("初期地点", new PlaceFazmari());
 	}
 	
 	/**
@@ -70,6 +70,8 @@ public class GamePlace {
 		switch(p) {
 		case 2:
 			return new PlaceFazmari();
+		case 3:
+			return new PlacePrimaGreen();
 		}
 		return new GamePlace();
 	}
