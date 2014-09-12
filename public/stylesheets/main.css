@@ -30,3 +30,13 @@
 	font-size: 30px;
     font-weight: bold;
 }
+
+.progress-bar-exp{
+	background-color:#f39c12
+}
+.progress-bar-health{
+	background-color:#00bc8c
+}
+.progress-bar-mana{
+	background-color:#3498db
+}
