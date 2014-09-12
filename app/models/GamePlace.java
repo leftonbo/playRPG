@@ -9,7 +9,7 @@ public class GamePlace {
 	public String name;
 	
 	// 場所移動用
-	public List<GamePlace> nexts;
+	public Map<String,GamePlace> nexts;
 	
 	// イベント用変数
 	public String eventName;
@@ -36,6 +36,24 @@ public class GamePlace {
 	 * 移動可能エリアの設定
 	 */
 	public void makeNextList() {
+		nexts = new LinkedHashMap<String,GamePlace>();
+		nexts.put("東", new PlacePrimaGreen());
+	}
+	
+	/**
+	 * この地域に入ってきたときの処理
+	 * @return　次のシーン
+	 */
+	public int onEnterPlace(GamePlace from) {
+		return 0;
+	}
+	
+	/**
+	 * この地域から出たの処理
+	 * @return　次のシーン、0なら次のMAPへ
+	 */
+	public int onLeavePlace(GamePlace to) {
+		return 0;
 	}
 	
 	/**
@@ -53,6 +71,6 @@ public class GamePlace {
 		case 2:
 			return new PlaceFazmari();
 		}
-		return null;
+		return new GamePlace();
 	}
 }
