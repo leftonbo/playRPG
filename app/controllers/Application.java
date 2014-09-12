@@ -5,6 +5,7 @@ import static play.data.Form.form;
 import java.util.*;
 
 import models.*;
+import models.forms.FormNewGame;
 import mt.Sfmt;
 import play.data.*;
 import play.mvc.*;

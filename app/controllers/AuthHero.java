@@ -5,8 +5,8 @@ import static play.data.Form.form;
 import java.util.UUID;
 
 import models.Charactor;
-import models.FormContGame;
-import models.FormNewGame;
+import models.forms.FormContGame;
+import models.forms.FormNewGame;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
