@@ -45,6 +45,14 @@ public class PlaceFazmari extends GamePlace {
 				"";
 			choose.put(0,"はい");
 			break;
+		case -2:
+			eventName = "王様";
+			eventText = 
+				"おお勇者{{name}}よ。しんでしまうとはなさけない。\n" +
+				"そなたにもういちど機会をやろう。\n" +
+				"";
+			choose.put(0,"ふっかつ！");
+			break;
 		default:
 			eventText = "謎の空間";
 			choose.put(0,"次へ");

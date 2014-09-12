@@ -2,6 +2,7 @@ package models.places;
 
 import java.util.*;
 
+import models.Charactor;
 import models.GamePlace;
 import mt.Sfmt;
 
@@ -36,11 +37,7 @@ public class PlacePrimaGreen extends GamePlace {
 	 * @return　次のシーン
 	 */
 	public int onEnterPlace(GamePlace from) {
-		Sfmt mt = new Sfmt();
-		if (mt.NextUnif() < 0.2) {
-			return 1000;
-		}
-		return 0;
+		return enemyEncounter();
 	}
 	
 	/**
@@ -48,9 +45,13 @@ public class PlacePrimaGreen extends GamePlace {
 	 * @return　次のシーン、0なら次のMAPへ
 	 */
 	public int onLeavePlace(GamePlace to) {
+		return enemyEncounter();
+	}
+	
+	public int enemyEncounter() {
 		Sfmt mt = new Sfmt();
-		if (mt.NextUnif() < 0.2) {
-			return 1000;
+		if (mt.NextUnif() < 0.3) {
+			return 100;
 		}
 		return 0;
 	}
@@ -61,6 +62,11 @@ public class PlacePrimaGreen extends GamePlace {
 	 * @return 勝った時のシーン移動
 	 */
 	public int setEnemies(int scene) {
+		enemies = new ArrayList<Charactor>();
+		switch (scene) {
+		default:
+			enemies.add(new Charactor());
+		}
 		return 0;
 	}
 

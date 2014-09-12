@@ -2,6 +2,9 @@ package controllers;
 
 import static play.data.Form.form;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import models.*;
 import models.forms.*;
 import play.data.Form;
@@ -36,6 +39,10 @@ public class GameMain extends Controller {
     	login = Charactor.getByName(loginName);
     	int scene = login.scene;
 
+    	if (scene == -1) {
+    		// 死亡シーンへ
+    		return moveDeathProcess();
+    	}
     	if (scene == 0 && login.nextplace != 0) {
     		// シーンなし＋次場所予約済みなら移動する
     		return moveProcessTo(login.nextplace);
@@ -46,12 +53,24 @@ public class GameMain extends Controller {
     	Html render = null;
     	if (scene >= 100 && scene < 200) {
     		// 戦闘に突入
-    		place.makeEventText(scene);
-    		String text = place.eventText
-    				.replace("{{name}}", loginName)
-    				.replace("\n", "<br>");
-    		render = gameEvent.render( place.name, place.eventName, text, place.choose);
-    	} else if (scene >= 1000 && scene < 2000) {
+    		int nextscene = place.setEnemies(scene);
+    		// 味方チーム
+    		List<Charactor> a = new ArrayList<Charactor>();
+    		a.add(login);
+    		// 戦闘処理へ
+        	Battle btl = new Battle(a,place.enemies);
+        	List<BattleOccur> bo = btl.processBattle();
+        	// 結果
+        	if (btl.win == -1) {
+        		// 全滅なら次シーンはリスポン
+        		login.scene = -1;
+        	} else {
+        		// そうでないなら次へ
+        		login.scene = nextscene;
+        	}
+        	login.update();
+    		render = gameBattle.render( place.name, bo);
+    	} else if (scene == -2 || scene >= 1000 && scene < 2000) {
         	// イベントシーンへ
     		place.makeEventText(scene);
     		String text = place.eventText
@@ -144,6 +163,30 @@ public class GameMain extends Controller {
     	login.nextplace = 0;
     	nse = aft.onEnterPlace(bef);
     	login.scene = nse;
+    	login.update();
+    	
+    	return GO_HOME;
+    }
+    
+    
+    
+    /**
+     * リスポン処理
+     * @return
+     */
+    @Security.Authenticated(MyAuthenticator.class)
+    public static Result moveDeathProcess() {
+    	//loginName = request().username();
+    	//login = Charactor.getByName(loginName);
+    	
+    	// HPとMPを回復させておく
+    	login.hp = login.mhp;
+    	login.mp = login.mmp;
+    	
+    	// 場所を更新
+    	login.place = login.respawn;
+    	login.nextplace = 0;
+    	login.scene = -2;
     	login.update();
     	
     	return GO_HOME;

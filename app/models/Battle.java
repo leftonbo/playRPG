@@ -9,6 +9,7 @@ public class Battle {
 	public List<Charactor> enemies;
 	
 	public List<BattleOccur> result;
+	public int win;
 	
 	private boolean processed = false;
 	private Sfmt mt;
@@ -85,6 +86,7 @@ public class Battle {
 			turn ++;
 		}
 		
+		win = chk;
 		if (chk == -1) {
 			// 負け
 			result.add( new BattleOccur(0, BattleOccur.Occur.END) );
