@@ -44,7 +44,14 @@ public class GameMain extends Controller {
     	GamePlace place = GamePlace.createByPlace(login.place);
     	
     	Html render = null;
-    	if (scene >= 1000 && scene < 2000) {
+    	if (scene >= 100 && scene < 200) {
+    		// 戦闘に突入
+    		place.makeEventText(scene);
+    		String text = place.eventText
+    				.replace("{{name}}", loginName)
+    				.replace("\n", "<br>");
+    		render = gameEvent.render( place.name, place.eventName, text, place.choose);
+    	} else if (scene >= 1000 && scene < 2000) {
         	// イベントシーンへ
     		place.makeEventText(scene);
     		String text = place.eventText
@@ -123,8 +130,8 @@ public class GameMain extends Controller {
      */
     @Security.Authenticated(MyAuthenticator.class)
     public static Result moveProcessTo(int np) {
-    	loginName = request().username();
-    	login = Charactor.getByName(loginName);
+    	//loginName = request().username();
+    	//login = Charactor.getByName(loginName);
     	int nse = 0;
     	
     	GamePlace bef = GamePlace.createByPlace(login.place);

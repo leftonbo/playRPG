@@ -16,6 +16,9 @@ public class GamePlace {
 	public String eventText;
 	public Map<Integer,String> choose;
 	
+	// 戦闘用
+	public List<Charactor> enemies;
+	
 	/**
 	 * 場所の設定
 	 */
@@ -53,6 +56,15 @@ public class GamePlace {
 	 * @return　次のシーン、0なら次のMAPへ
 	 */
 	public int onLeavePlace(GamePlace to) {
+		return 0;
+	}
+
+	/**
+	 * 敵グループ設定
+	 * @param scene 100~199 敵グループ
+	 * @return 勝った時のシーン移動
+	 */
+	public int setEnemies(int scene) {
 		return 0;
 	}
 	

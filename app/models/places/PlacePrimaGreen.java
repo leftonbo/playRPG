@@ -3,6 +3,7 @@ package models.places;
 import java.util.*;
 
 import models.GamePlace;
+import mt.Sfmt;
 
 public class PlacePrimaGreen extends GamePlace {
 
@@ -28,6 +29,39 @@ public class PlacePrimaGreen extends GamePlace {
 	public void makeNextList() {
 		nexts = new LinkedHashMap<String,GamePlace>();
 		nexts.put("西", new PlaceFazmari());
+	}
+	
+	/**
+	 * この地域に入ってきたときの処理
+	 * @return　次のシーン
+	 */
+	public int onEnterPlace(GamePlace from) {
+		Sfmt mt = new Sfmt();
+		if (mt.NextUnif() < 0.2) {
+			return 1000;
+		}
+		return 0;
+	}
+	
+	/**
+	 * この地域から出たの処理
+	 * @return　次のシーン、0なら次のMAPへ
+	 */
+	public int onLeavePlace(GamePlace to) {
+		Sfmt mt = new Sfmt();
+		if (mt.NextUnif() < 0.2) {
+			return 1000;
+		}
+		return 0;
+	}
+
+	/**
+	 * 敵グループ設定
+	 * @param scene 100~199 敵グループ
+	 * @return 勝った時のシーン移動
+	 */
+	public int setEnemies(int scene) {
+		return 0;
 	}
 
 	/**
