@@ -5,16 +5,33 @@ import java.util.*;
 import models.GamePlace;
 
 public class PlaceFazmari extends GamePlace {
-	
+
+	/**
+	 * 場所の設定
+	 */
 	public PlaceFazmari() {
 		place = 2;
 		name = "ファズマリの街";
 	}
-	
+
+	/**
+	 * 場所の説明
+	 * @return
+	 */
 	public String getDespriction() {
 		return "街の説明TODO";
 	}
 
+	/**
+	 * 移動可能エリアの設定
+	 */
+	public void makeNextList() {
+	}
+
+	/**
+	 * イベントテキストの定義
+	 * @param scene シーン(1000~1999)
+	 */
 	public void makeEventText(int scene) {
 		choose = new LinkedHashMap<Integer,String>();
 		switch (scene) {
