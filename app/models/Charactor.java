@@ -83,6 +83,15 @@ public class Charactor extends Model {
     }
     
     /**
+     * やられたかな？
+     * @return
+     */
+    public boolean isDefeated() {
+    	if (hp <= 0) return true;
+    	return false;
+    }
+    
+    /**
      * 次のレベルへの経験値
      * @return
      */
@@ -190,6 +199,10 @@ public class Charactor extends Model {
     	mhp = hp = h;
     	mmp = mp = m;
     	str = s; agi = a; sen = e; wil = w;
+    	return this;
+    }
+    public Charactor setRewards(int e, int m) {
+    	exp = e;	money = m;
     	return this;
     }
     

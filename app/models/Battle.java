@@ -50,7 +50,7 @@ public class Battle {
 			List<Charactor> cturn = getInitiativeList();
 			for (Charactor cc : cturn) {
 				// HP0なら行動しない
-				if (cc.hp <= 0) continue;
+				if (cc.isDefeated()) continue;
 				/** 敵か味方か **/
 				boolean ally = isAlly(cc);
 				int allyInt = ally ? 1 : 0;
@@ -110,14 +110,14 @@ public class Battle {
 		// 味方
 		flag = false;
 		for (Charactor c : allies) {
-			if (c.hp > 0) { flag = true; break; }
+			if (!c.isDefeated()) { flag = true; break; }
 		}
 		if (!flag) return -1;
 		
 		// 敵
 		flag = false;
 		for (Charactor c : enemies) {
-			if (c.hp > 0) { flag = true; break; }
+			if (!c.isDefeated()) { flag = true; break; }
 		}
 		if (!flag) return  1;
 		
@@ -173,11 +173,11 @@ public class Battle {
 		List<Charactor> targets = new ArrayList<Charactor>();
 		if (ally) {
 			for (Charactor c : allies) {
-				if (c.hp > 0) targets.add(c);
+				if (!c.isDefeated()) targets.add(c);
 			}
 		} else {
 			for (Charactor c : enemies) {
-				if (c.hp > 0) targets.add(c);
+				if (!c.isDefeated()) targets.add(c);
 			}
 		}
 		return targets.get(mt.NextIntEx(targets.size()));

@@ -67,6 +67,17 @@ public class GameMain extends Controller {
         	} else {
         		// そうでないなら次へ
         		login.scene = nextscene;
+        		//　ついでに報酬ももらう
+        		int re = 0, rm = 0;
+        		for (Charactor cc : place.enemies) {
+        			if (cc.isDefeated()) {
+        				re += cc.exp;
+        				rm += cc.money;
+        			}
+        		}
+        		login.exp += re;
+        		login.money += rm;
+        		// TODO : ここに報酬表示処理とレベルアップ処理
         	}
         	login.update();
     		render = gameBattle.render( place.name, bo);
