@@ -1,15 +1,16 @@
 package models.items;
 
 import models.Charactor;
+import models.items.Item.*;
 
-public class Item {
+public class ItemPotion {
 
 	/**
 	 * なまえ
 	 * @return
 	 */
 	public String getName() {
-		return "謎";
+		return "小さな回復薬";
 	}
 	
 	/**
@@ -17,7 +18,7 @@ public class Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "謎";
+		return "HPを20回復する。";
 	}
 	
 	/**
@@ -25,15 +26,16 @@ public class Item {
 	 * @return
 	 */
 	public String getDespAfterUse(Used used) {
-		return "このアイテムは使えない。";
+		if (used == Used.OK) return "HPが20回復した。";
+		return "HPは既に満タンだ。";
 	}
 	
 	/**
 	 * アイテムタイプ
-	 * @return
+	 * @return 0:Unusable 1:Consumable 2:Weapon 3:Armor 4:Shield 5:Ring 6:Amulet
 	 */
 	public Type getType() {
-		return Type.UNUSE;
+		return Type.CONSUME;
 	}
 	
 	/**
@@ -42,30 +44,9 @@ public class Item {
 	 * @param c
 	 */
 	public Used onUse(Charactor c) {
-		return Used.NOUSE;
-	}
-	
-	// ===============================================
-	
-	public static enum Type {
-		UNUSE,
-		CONSUME,
-		WEAPON,
-		ARMOR,
-		SHIELD,
-		RING,
-		AMULET
-	}
-	public static enum Used {
-		OK,
-		NOUSE,
-		NONECESSARY
-	}
-	
-	public static Item createByInt(int i) {
-		switch (i) {
-			
-		}
-		return new Item();
+		if (c.hp >= c.mhp) return Used.NONECESSARY;
+		c.hp += 20;
+		if (c.hp > c.mhp) c.hp = c.mhp;
+		return Used.OK;
 	}
 }
