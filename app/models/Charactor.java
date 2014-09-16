@@ -1,14 +1,18 @@
 package models;
 
-import java.util.List;
+import java.util.*;
 
 import play.db.ebean.*;
 
 import javax.persistence.*;
 
+import com.avaje.ebean.annotation.CreatedTimestamp;
+
 import mt.Sfmt;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.*;
+import play.api.libs.json.JsValue;
+import play.api.libs.json.Json;
 
 @Entity
 public class Charactor extends Model {
@@ -23,6 +27,12 @@ public class Charactor extends Model {
 	 */
 	@Id
 	public Long id;
+ 
+	/** Timestamp */
+    @CreatedTimestamp
+    public Date createDate;
+    @Version
+    public Date updateDate;
 	
 	/** 味方かな */
 	public int side = 1;
@@ -70,6 +80,24 @@ public class Charactor extends Model {
     public int nextplace = 0;
     /** リスポン地点 */
     public int respawn = 0;
+    
+    /** アイテム */
+    public String itemstr = "{}";
+    protected JsValue itemj;
+    /** スキル */
+    public String skillstr = "{}";
+    protected JsValue skillj;
+
+    protected int attackType = 0;
+    protected int attackHit = 0;
+    protected int attackDNum = 1;
+    protected int attackDice = 6;
+    protected int attackVal = -3;
+    
+    protected int armor = 0;
+    protected int defMelee = 0;
+    protected int defRanged = 0;
+    protected int defMagic = 0;
 
     /**
      * デフォルトパラメータ
@@ -117,6 +145,93 @@ public class Charactor extends Model {
     	if (level <= 1) return (level+1) * (level+1) * (level+1);
     	return (level+1) * (level+1) * (level+1) - level * level * level;
     }
+    
+    public JsValue getItemJson() {
+    	if (itemj != null) return itemj;
+    	itemj = Json.parse(itemstr);
+    	return itemj;
+    }
+    public JsValue getSkillJson() {
+    	if (skillj != null) return skillj;
+    	skillj = Json.parse(skillstr);
+    	return skillj;
+    }
+
+    /* ************************************************************** */
+    
+    // なんだこのゲッターセッター軍は！
+
+	public int getAttackType() {
+		return attackType;
+	}
+
+	public int getAttackHit() {
+		return attackHit;
+	}
+
+	public int getAttackDNum() {
+		return attackDNum;
+	}
+
+	public int getAttackDice() {
+		return attackDice;
+	}
+
+	public int getAttackVal() {
+		return attackVal;
+	}
+
+	public Charactor setAttackType(int attackType) {
+		this.attackType = attackType;
+		return this;
+	}
+
+	public Charactor setAttackHit(int attackHit) {
+		this.attackHit = attackHit;
+		return this;
+	}
+	
+	public Charactor setAttacks(int x, int y, int hos) {
+		attackDNum = x;	attackDice = y;	attackVal = hos;
+		return this;
+	}
+	
+	// ======================================================
+
+	public int getArmor() {
+		return armor;
+	}
+
+	public int getDefMelee() {
+		return defMelee;
+	}
+
+	public int getDefRanged() {
+		return defRanged;
+	}
+	
+	public int getDefMagic() {
+		return defMagic;
+	}
+	
+	public int getDefenceByType(int i) {
+		switch (i) {
+		case 0: case 1:
+			return defMelee;
+		case 2:
+			return defRanged;
+		case 3:
+			return defMagic;
+		}
+		return 0;
+	}
+	
+	public Charactor setDefences(int ar, int me, int ra, int ma) {
+		armor = ar;	defMelee = me;	defRanged = ra;	defMagic = ma;
+		return this;
+	}
+    
+    /* ************************************************************** */
     
     /**
      * デバッグ用ランダムクリエイト

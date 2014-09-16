@@ -23,6 +23,8 @@ create table charactor (
   scene                     integer,
   nextplace                 integer,
   respawn                   integer,
+  itemstr                   varchar(255),
+  skills                    varchar(255),
   constraint pk_charactor primary key (id))
 ;
 
