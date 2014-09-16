@@ -21,11 +21,11 @@ public class Item {
 	}
 	
 	/**
-	 * 消耗品かミ？
-	 * @return
+	 * アイテムタイプ
+	 * @return 0:Unusable 1:Consumable 2:Weapon 3:Armor 4:Shield 5:Ring 6:Amulet
 	 */
-	public boolean isConsumable() {
-		return false;
+	public int getType() {
+		return 0;
 	}
 	
 	/**

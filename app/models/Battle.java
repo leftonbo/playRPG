@@ -15,6 +15,8 @@ public class Battle {
 	private Sfmt mt;
 	private int turn = 0;
 	private int lastcrit = 0;
+	@SuppressWarnings("unused")
+	private int lastjudge = 0;
 	
 	public Battle(List<Charactor> a, List<Charactor> e) {
 		allies = a;		enemies = e;
@@ -56,9 +58,22 @@ public class Battle {
 				int allyInt = ally ? 1 : 0;
 				// とりあえず攻撃
 				result.add( new BattleOccur(allyInt, BattleOccur.Occur.ATTACK, cc) );
+				
 				// テキトーに攻撃
 				Charactor target = randomTarget(!ally);
-				int damage = meleeAttack( cc, target, 0);
+				int damage = -1;
+				
+				switch(cc.attackType) {
+				case 0:
+					damage = meleeAttack( cc, target, 0);	break;
+				case 1:
+					damage = meleeAttack( cc, target, 1);	break;
+				case 2:
+					damage = rangedAttack( cc, target, 1);	break;
+				case 3:
+					damage = magicAttack( cc, target, 3);	break;
+				}
+				
 				if (lastcrit ==  1) 
 					result.add( new BattleOccur(ally ? 0 : 1, BattleOccur.Occur.CRITICALHIT, target) );
 				if (damage >= 0) {
@@ -183,6 +198,13 @@ public class Battle {
 		return targets.get(mt.NextIntEx(targets.size()));
 	}
 	
+	/**
+	 * 近接攻撃を繰り出す
+	 * @param atk
+	 * @param def
+	 * @param type
+	 * @return
+	 */
 	public int meleeAttack(Charactor atk, Charactor def, int type) {
 		int res = -1;
 		int judge;
@@ -191,19 +213,18 @@ public class Battle {
 		int atkp = 0, defp = 0;
 		
 		// 攻撃タイプ
-		// +2補正はそのうち外すかも
 		if (type == 0) {
-			atkp = atk.str + 2;
-			defp = def.str;
+			atkp = atk.str + atk.attackHit;
+			defp = def.str + atk.defMelee;
 		} else if (type == 1) {
-			atkp = atk.agi + 2;
-			defp = def.agi;
+			atkp = atk.agi + atk.attackHit;
+			defp = def.agi + atk.defMelee;
 		} else if (type == 2) {
-			atkp = atk.sen + 2;
-			defp = def.sen;
+			atkp = atk.sen + atk.attackHit;
+			defp = def.sen + atk.defMelee;
 		} else if (type == 3) {
-			atkp = atk.wil + 2;
-			defp = def.wil;
+			atkp = atk.wil + atk.attackHit;
+			defp = def.wil + atk.defMelee;
 		}
 		
 		lastcrit = 0;
@@ -228,11 +249,144 @@ public class Battle {
 				lastcrit = 1;
 			}
 		}
-		
+
+		lastjudge = judge;
 		if (judge >= 0) {
 			// 0以上なら命中
-			res = Math.max( judge , 0) + xDy(1+atk.level/10,6) - 3;
+			/*res = Math.max( judge , 0) + xDy(1+atk.level/10,6) - 3;*/
+			res = Math.max( judge
+					+ xDy(atk.attackDNum,atk.attackDice) + atk.attackVal
+					- def.armor, 0);
 			if (lastcrit == 1) res += xDy(1+atk.level/15,6);	// クリッツ振り足し
+		}
+		// ダメージ値を返す
+		return res;
+	}
+	
+	/**
+	 * 遠距離攻撃を繰り出す
+	 * @param atk
+	 * @param def
+	 * @param type
+	 * @return
+	 */
+	public int rangedAttack(Charactor atk, Charactor def, int type) {
+		int res = -1;
+		int judge;
+		Dice atkDice = new Dice(mt, 2, 6);
+		Dice defDice = new Dice(mt, 2, 6);
+		int atkp = 0, defp = 0;
+		
+		// 攻撃タイプ
+		if (type == 0) {
+			atkp = atk.str + atk.attackHit;
+		} else if (type == 1) {
+			atkp = atk.agi + atk.attackHit;
+		} else if (type == 2) {
+			atkp = atk.sen + atk.attackHit;
+		} else if (type == 3) {
+			atkp = atk.wil + atk.attackHit;
+		}
+		defp = def.agi + atk.defRanged;
+		
+		lastcrit = 0;
+		if (atkDice.critical == 1) {
+			// 攻撃クリッツ
+			judge = (atkp + atkDice.sum) - (defp);
+			lastcrit = 1;
+		} else if (atkDice.critical == -1) {
+			// ふぁんぶる
+			judge = -6;
+			lastcrit = -2;
+		} else if (defDice.critical == 1) {
+			// 防御クリッツ
+			judge = -6;
+			lastcrit = -1;
+		} else {
+			// 通常
+			judge = (atkp + atkDice.sum) - (defp + defDice.sum);
+			if (judge >= 10) {
+				// 10以上クリッツ
+				judge = (atkp + atkDice.sum) - (defp);
+				lastcrit = 1;
+			}
+		}
+
+		lastjudge = judge;
+		if (judge >= 0) {
+			// 0以上なら命中
+			/*res = Math.max( judge , 0) + xDy(1+atk.level/10,6) - 3;*/
+			res = Math.max( atk.str + 
+					xDy(atk.attackDNum,atk.attackDice) + atk.attackVal
+					- def.armor, 0);
+			if (lastcrit == 1) res += xDy(1+atk.level/15,6);	// クリッツ振り足し
+		}
+		// ダメージ値を返す
+		return res;
+	}
+	
+	/**
+	 * 魔法攻撃を繰り出す
+	 * @param atk
+	 * @param def
+	 * @param type
+	 * @return
+	 */
+	public int magicAttack(Charactor atk, Charactor def, int type) {
+		int res = -1;
+		int judge;
+		Dice atkDice = new Dice(mt, 2, 6);
+		Dice defDice = new Dice(mt, 2, 6);
+		int atkp = 0, defp = 0;
+		
+		// 攻撃タイプ
+		if (type == 0) {
+			atkp = atk.str + atk.attackHit;
+		} else if (type == 1) {
+			atkp = atk.agi + atk.attackHit;
+		} else if (type == 2) {
+			atkp = atk.sen + atk.attackHit;
+		} else if (type == 3) {
+			atkp = atk.wil + atk.attackHit;
+		}
+		defp = def.agi + atk.defMagic;
+		
+		lastcrit = 0;
+		if (atkDice.critical == 1) {
+			// 攻撃クリッツ
+			judge = (atkp + atkDice.sum) - (defp);
+			lastcrit = 1;
+		} else if (atkDice.critical == -1) {
+			// ふぁんぶる
+			judge = -6;
+			lastcrit = -2;
+		} else if (defDice.critical == 1) {
+			// 防御クリッツ
+			judge = -6;
+			lastcrit = -1;
+		} else {
+			// 通常
+			judge = (atkp + atkDice.sum) - (defp + defDice.sum);
+			if (judge >= 10) {
+				// 10以上クリッツ
+				judge = (atkp + atkDice.sum) - (defp);
+				lastcrit = 1;
+			}
+		}
+		
+		lastjudge = judge;
+		if (judge >= 0) {
+			// 0以上なら命中
+			/*res = Math.max( judge , 0) + xDy(1+atk.level/10,6) - 3;*/
+			res = Math.max( atk.wil + 
+					xDy(atk.attackDNum,atk.attackDice) + atk.attackVal
+					- def.armor, 0);
+			if (lastcrit == 1) res += xDy(1+atk.level/15,6);	// クリッツ振り足し
+		} else {
+			// 抵抗によるダメージ減少
+			res = Math.max((atk.wil + 
+					xDy(atk.attackDNum,atk.attackDice) + atk.attackVal + 1) / 2
+					+ judge - def.armor, 0);
 		}
 		// ダメージ値を返す
 		return res;

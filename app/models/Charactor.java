@@ -82,22 +82,50 @@ public class Charactor extends Model {
     public int respawn = 0;
     
     /** アイテム */
+    @Column(columnDefinition = "varchar(2048)")
     public String itemstr = "{}";
     protected JsValue itemj;
     /** スキル */
+    @Column(columnDefinition = "varchar(1024)")
     public String skillstr = "{}";
     protected JsValue skillj;
-
-    protected int attackType = 0;
-    protected int attackHit = 0;
-    protected int attackDNum = 1;
-    protected int attackDice = 6;
-    protected int attackVal = -3;
+    /** フラグ */
+    @Column(columnDefinition = "varchar(1024)")
+    public String flagstr = "{}";
+    protected JsValue flagj;
     
-    protected int armor = 0;
-    protected int defMelee = 0;
-    protected int defRanged = 0;
-    protected int defMagic = 0;
+    /** 装備中武器 */
+    public int equipWeapon;
+    /** 装備中盾 */
+    public int equipShield;
+    /** 装備中鎧 */
+    public int equipArmor;
+    /** 装備中腕輪1 */
+    public int equipRing;
+    /** 装備中腕輪2 */
+    public int equipAmulet;
+    
+    // 一時変数ども
+
+    @Transient
+    public int attackType = 0;
+    @Transient
+    public int attackHit = 0;
+    @Transient
+    public int attackDNum = 1;
+    @Transient
+    public int attackDice = 6;
+    @Transient
+    public int attackVal = -3;
+
+    @Transient
+    public int armor = 0;
+    @Transient
+    public int defMelee = 0;
+    @Transient
+    public int defRanged = 0;
+    @Transient
+    public int defMagic = 0;
 
     /**
      * デフォルトパラメータ
@@ -156,30 +184,13 @@ public class Charactor extends Model {
     	skillj = Json.parse(skillstr);
     	return skillj;
     }
+    public JsValue getFlagJson() {
+    	if (flagj != null) return flagj;
+    	flagj = Json.parse(flagstr);
+    	return flagj;
+    }
 
     /* ************************************************************** */
-    
-    // なんだこのゲッターセッター軍は！
-
-	public int getAttackType() {
-		return attackType;
-	}
-
-	public int getAttackHit() {
-		return attackHit;
-	}
-
-	public int getAttackDNum() {
-		return attackDNum;
-	}
-
-	public int getAttackDice() {
-		return attackDice;
-	}
-
-	public int getAttackVal() {
-		return attackVal;
-	}
 
 	public Charactor setAttackType(int attackType) {
 		this.attackType = attackType;
@@ -197,34 +208,6 @@ public class Charactor extends Model {
 	}
 	
 	// ======================================================
-
-	public int getArmor() {
-		return armor;
-	}
-
-	public int getDefMelee() {
-		return defMelee;
-	}
-
-	public int getDefRanged() {
-		return defRanged;
-	}
-	
-	public int getDefMagic() {
-		return defMagic;
-	}
-	
-	public int getDefenceByType(int i) {
-		switch (i) {
-		case 0: case 1:
-			return defMelee;
-		case 2:
-			return defRanged;
-		case 3:
-			return defMagic;
-		}
-		return 0;
-	}
 	
 	public Charactor setDefences(int ar, int me, int ra, int ma) {
 		armor = ar;	defMelee = me;	defRanged = ra;	defMagic = ma;
