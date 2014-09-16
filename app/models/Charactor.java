@@ -84,15 +84,12 @@ public class Charactor extends Model {
     /** アイテム */
     @Column(columnDefinition = "varchar(2048)")
     public String itemstr = "{}";
-    protected JsValue itemj;
     /** スキル */
     @Column(columnDefinition = "varchar(1024)")
     public String skillstr = "{}";
-    protected JsValue skillj;
     /** フラグ */
     @Column(columnDefinition = "varchar(1024)")
     public String flagstr = "{}";
-    protected JsValue flagj;
     
     /** 装備中武器 */
     public int equipWeapon;
@@ -107,6 +104,12 @@ public class Charactor extends Model {
     
     // 一時変数ども
 
+    @Transient
+    protected JsValue itemj;
+    @Transient
+    protected JsValue skillj;
+    @Transient
+    protected JsValue flagj;
     @Transient
     public int attackType = 0;
     @Transient
@@ -262,6 +265,84 @@ public class Charactor extends Model {
     		case 2:	sen ++;	break;
     		case 3:	wil ++;	break;
     		}
+    	}
+    	// ATKDIPE
+    	switch (mt.NextIntEx(9)) {
+    	case 0:
+    		setAttackType(mt.NextIntEx(2));
+    		setAttackHit(2 + Lv / 20);
+    		setAttacks(1, 6, 0 + Lv / 10);
+    		if (Lv >= 20) attackDNum ++;
+    		if (Lv >= 80) attackDNum ++;
+    		break;
+    	case 1:
+    		setAttackType(0);
+    		setAttackHit(Lv / 30);
+    		setAttacks(1, 6, 3 + Lv / 8);
+    		if (Lv >= 10) attackDNum ++;
+    		if (Lv >= 50) attackDNum ++;
+    		break;
+    	case 2:
+    		setAttackType(0);
+    		setAttackHit(-1 + Lv / 40);
+    		setAttacks(2, 8, 5 + Lv / 5);
+    		if (Lv >= 10) attackDNum ++;
+    		if (Lv >= 50) attackDNum ++;
+    		break;
+    	case 3:
+    		setAttackType(1);
+    		setAttackHit(Lv / 30);
+    		setAttacks(1, 6, 3 + Lv / 8);
+    		if (Lv >= 10) attackDNum ++;
+    		if (Lv >= 50) attackDNum ++;
+    		break;
+    	case 4:
+    		setAttackType(1);
+    		setAttackHit(3 + Lv / 15);
+    		setAttacks(1, 6, Lv / 20);
+    		if (Lv >= 30) attackDNum ++;
+    		if (Lv >= 90) attackDNum ++;
+    		break;
+    	case 5:
+    		setAttackType(2);
+    		setAttackHit(Lv / 20);
+    		setAttacks(1, 6, 2 + Lv / 10);
+    		if (Lv >= 10) attackDNum ++;
+    		if (Lv >= 50) attackDNum ++;
+    		break;
+    	case 6:
+    		setAttackType(2);
+    		setAttackHit(2 + Lv / 20);
+    		setAttacks(1, 6, -2 + Lv / 20);
+    		if (Lv >= 20) attackDNum ++;
+    		if (Lv >= 80) attackDNum ++;
+    		break;
+    	case 7:
+    		setAttackType(3);
+    		setAttackHit(Lv / 20);
+    		setAttacks(1, 6, 2 + Lv / 10);
+    		if (Lv >= 10) attackDNum ++;
+    		if (Lv >= 50) attackDNum ++;
+    		break;
+    	case 8:
+    		setAttackType(3);
+    		setAttackHit(2 + Lv / 20);
+    		setAttacks(1, 6, -2 + Lv / 15);
+    		if (Lv >= 20) attackDNum ++;
+    		if (Lv >= 80) attackDNum ++;
+    		break;
+    	}
+    	// ARMOR
+    	switch (mt.NextIntEx(3)) {
+    	case 0:
+    		setDefences( Lv/30, 0, 2+Lv/15, 2+Lv/15);
+    		break;
+    	case 1:
+    		setDefences( 1+Lv/15, 1+Lv/20, 1+Lv/20, 1+Lv/20);
+    		break;
+    	case 2:
+    		setDefences( 2+Lv/10, 2+Lv/15, -1, Lv/30);
+    		break;
     	}
     	return this;
     }
