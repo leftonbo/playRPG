@@ -1,9 +1,16 @@
 package models.items;
 
 import models.Charactor;
-import models.items.Item.*;
 
-public class ItemPotion {
+public class ItemPotion extends Item {
+	
+	/**
+	 * 識別ID
+	 * @return
+	 */
+	public int getId() {
+		return 1;
+	}
 
 	/**
 	 * なまえ

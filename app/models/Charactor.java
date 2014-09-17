@@ -8,11 +8,10 @@ import javax.persistence.*;
 
 import com.avaje.ebean.annotation.CreatedTimestamp;
 
+import models.charbox.*;
 import mt.Sfmt;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.*;
-import play.api.libs.json.JsValue;
-import play.api.libs.json.Json;
 
 @Entity
 public class Charactor extends Model {
@@ -83,13 +82,13 @@ public class Charactor extends Model {
     
     /** アイテム */
     @Column(columnDefinition = "varchar(2048)")
-    public String itemstr = "{}";
+    public String itemstr = "";
     /** スキル */
     @Column(columnDefinition = "varchar(1024)")
-    public String skillstr = "{}";
+    public String skillstr = "";
     /** フラグ */
     @Column(columnDefinition = "varchar(1024)")
-    public String flagstr = "{}";
+    public String flagstr = "";
     
     /** 装備中武器 */
     public int equipWeapon;
@@ -105,11 +104,7 @@ public class Charactor extends Model {
     // 一時変数ども
 
     @Transient
-    protected JsValue itemj;
-    @Transient
-    protected JsValue skillj;
-    @Transient
-    protected JsValue flagj;
+    protected CharBoxItem items;
     @Transient
     public int attackType = 0;
     @Transient
@@ -177,20 +172,10 @@ public class Charactor extends Model {
     	return (level+1) * (level+1) * (level+1) - level * level * level;
     }
     
-    public JsValue getItemJson() {
-    	if (itemj != null) return itemj;
-    	itemj = Json.parse(itemstr);
-    	return itemj;
-    }
-    public JsValue getSkillJson() {
-    	if (skillj != null) return skillj;
-    	skillj = Json.parse(skillstr);
-    	return skillj;
-    }
-    public JsValue getFlagJson() {
-    	if (flagj != null) return flagj;
-    	flagj = Json.parse(flagstr);
-    	return flagj;
+    public CharBoxItem getItemBox() {
+    	if (items != null) return items;
+    	items = new CharBoxItem(itemstr);
+    	return items;
     }
 
     /* ************************************************************** */
