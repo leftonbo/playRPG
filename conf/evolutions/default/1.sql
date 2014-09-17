@@ -23,6 +23,16 @@ create table charactor (
   scene                     integer,
   nextplace                 integer,
   respawn                   integer,
+  itemstr                   varchar(2048),
+  skillstr                  varchar(1024),
+  flagstr                   varchar(1024),
+  equip_weapon              integer,
+  equip_shield              integer,
+  equip_armor               integer,
+  equip_ring                integer,
+  equip_amulet              integer,
+  create_date               timestamp not null,
+  update_date               timestamp not null,
   constraint pk_charactor primary key (id))
 ;
 

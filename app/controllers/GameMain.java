@@ -7,6 +7,9 @@ import java.util.List;
 
 import models.*;
 import models.forms.*;
+import models.items.Item;
+import models.items.Item.Used;
+import mt.Sfmt;
 import play.data.Form;
 import play.mvc.*;
 import play.twirl.api.Html;
@@ -68,15 +71,22 @@ public class GameMain extends Controller {
         		// そうでないなら次へ
         		login.scene = nextscene;
         		//　ついでに報酬ももらう
+        		Sfmt mt = new Sfmt();
+        		List<Item> getitems = new ArrayList<Item>();
         		int re = 0, rm = 0;
         		for (Charactor cc : place.enemies) {
         			if (cc.isDefeated()) {
         				re += cc.exp;
         				rm += cc.money;
+        				getitems.addAll(cc.checkLoot(mt));
         			}
         		}
         		login.exp += re;
         		login.money += rm;
+        		// アイテム追加処理
+        		for (Item i : getitems) {
+        			login.addItem(i);
+        		}
         		// TODO : ここに報酬表示処理とレベルアップ処理
         	}
         	login.update();
@@ -200,6 +210,28 @@ public class GameMain extends Controller {
     	login.scene = -2;
     	login.update();
     	
+    	return GO_HOME;
+    }
+    
+    @Security.Authenticated(MyAuthenticator.class)
+    public static Result useItemProcess() {
+    	loginName = request().username();
+    	login = Charactor.getByName(loginName);
+    	FormItemUse f = form(FormItemUse.class).bindFromRequest().get();
+    	
+    	Used result = login.useItemByID(f.use);
+    	Item youuse = Item.createByInt(f.use);
+    	boolean writeflag = false;
+    	switch(result){
+    	case NOITEM:
+    		Application.flash("warning", "存在しないアイテムです。");
+    		break;
+    	default:
+    		writeflag = true;
+    		Application.flash("success", youuse.getDespAfterUse(result));
+    	}
+    	if (writeflag) login.update();
+
     	return GO_HOME;
     }
 }
