@@ -10,6 +10,7 @@ import com.avaje.ebean.annotation.CreatedTimestamp;
 
 import models.charbox.*;
 import models.items.Item;
+import models.items.Item.Used;
 import mt.Sfmt;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.*;
@@ -185,6 +186,54 @@ public class Charactor extends Model {
     	getItemBox().addItem(i);
 		return this;
     }
+    
+    public Used useItemByID(int id) {
+    	getItemBox();
+    	Item use = null;
+    	for (Item i : items.items) {
+    		if (i.getId() == id) {
+    			use = i; break;
+    		}
+    	}
+    	if (use == null) return Item.Used.NOITEM;  // ないよ！
+    	
+    	Used useflag;
+    	switch (use.getType()) {
+		case CONSUME:
+			use.num --;
+			useflag = use.onUse(this);
+			if (useflag != Item.Used.OK) use.num ++;	// やっぱりやめた
+			break;
+		case WEAPON:
+			this.equipWeapon = use.getId();
+			useflag = Item.Used.EQUIP;
+			break;
+		case ARMOR:
+			this.equipArmor = use.getId();
+			useflag = Item.Used.EQUIP;
+			break;
+		case SHIELD:
+			this.equipShield = use.getId();
+			useflag = Item.Used.EQUIP;
+			break;
+		case RING:
+			this.equipRing = use.getId();
+			useflag = Item.Used.EQUIP;
+			break;
+		case AMULET:
+			this.equipAmulet = use.getId();
+			useflag = Item.Used.EQUIP;
+			break;
+		case UNUSE:
+		default:
+			useflag = use.onUse(this);
+			break;
+    	}
+    	
+    	return useflag;
+    }
+
+    /* ************************************************************** */
     
     public List<Item> checkLoot(Sfmt mt) {
     	List<Item> get = new ArrayList<Item>();

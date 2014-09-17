@@ -8,6 +8,7 @@ import java.util.List;
 import models.*;
 import models.forms.*;
 import models.items.Item;
+import models.items.Item.Used;
 import mt.Sfmt;
 import play.data.Form;
 import play.mvc.*;
@@ -209,6 +210,28 @@ public class GameMain extends Controller {
     	login.scene = -2;
     	login.update();
     	
+    	return GO_HOME;
+    }
+    
+    @Security.Authenticated(MyAuthenticator.class)
+    public static Result useItemProcess() {
+    	loginName = request().username();
+    	login = Charactor.getByName(loginName);
+    	FormItemUse f = form(FormItemUse.class).bindFromRequest().get();
+    	
+    	Used result = login.useItemByID(f.use);
+    	Item youuse = Item.createByInt(f.use);
+    	boolean writeflag = false;
+    	switch(result){
+    	case NOITEM:
+    		Application.flash("warning", "存在しないアイテムです。");
+    		break;
+    	default:
+    		writeflag = true;
+    		Application.flash("success", youuse.getDespAfterUse(result));
+    	}
+    	if (writeflag) login.update();
+
     	return GO_HOME;
     }
 }

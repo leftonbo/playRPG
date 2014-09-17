@@ -8,6 +8,25 @@
 
 @main(pname+" - "+Application.appTitle) {
 
+    @if(flash.contains("success")) {
+    <div class="alert alert-dismissable alert-success">
+    	<button type="button" class="close" data-dismiss="alert">×</button>
+        @flash.get("success")
+    </div>
+	}
+    @if(flash.contains("warning")) {
+    <div class="alert alert-dismissable alert-warning">
+    	<button type="button" class="close" data-dismiss="alert">×</button>
+        @flash.get("warning")
+    </div>
+	}
+    @if(flash.contains("danger")) {
+    <div class="alert alert-dismissable alert-danger">
+    	<button type="button" class="close" data-dismiss="alert">×</button>
+        @flash.get("danger")
+    </div>
+	}
+
     <div class="jumbotron">
       <h1>@pname</h1>
       <p>@Html(desp)</p>
@@ -43,6 +62,9 @@ jQuery(function($){
  $('tr[rel=tooltip]').tooltip();
 });
 </script>
+<form name="itfm" action="@routes.GameMain.useItemProcess()" method="POST">
+<input type="hidden" name="use" value="">
+</form>
 <table class="table table-striped table-hover ">
   <thead>
     <tr>
@@ -58,7 +80,7 @@ jQuery(function($){
       <td>@itm.getName() x@itm.num</td>
       <td>@itm.getTypeString()</td>
       <td>todo</td>
-      <td><a href="#" class="btn btn-primary btn-xs">使う</a></td>
+      <td><button type="button" class="btn btn-primary btn-xs" onClick="document.itfm.use.value='@itm.getId()';document.itfm.submit();">使う</button></td>
     </tr>
   }
   </tbody>

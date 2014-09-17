@@ -27,6 +27,10 @@ GET     /game/event                 controllers.GameMain.index()
 POST    /game/move                  controllers.GameMain.moveProcess()
 GET     /game/move                  controllers.GameMain.index()
 
+# Use Item
+POST    /game/item                  controllers.GameMain.useItemProcess()
+GET     /game/item                  controllers.GameMain.index()
+
 # Test
 GET     /test                       controllers.Application.testBattle()
 

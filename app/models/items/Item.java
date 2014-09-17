@@ -134,8 +134,10 @@ public class Item implements Comparable<Item> {
 	}
 	public static enum Used {
 		OK,
+		EQUIP,
 		NOUSE,
-		NONECESSARY
+		NONECESSARY,
+		NOITEM,
 	}
 	
 	public static Item createByInt(int i, int n) {

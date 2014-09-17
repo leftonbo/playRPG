@@ -27,6 +27,7 @@ public class CharBoxItem extends CharBox {
 	public String makeSave() {
 		String res = "";
 		for (Item i : items) {
+			if (i.num <= 0) continue;	// ないよ！
 			if (res != "") res += ",";
 			res += ValToSave(i.getId()) + ":" + ValToSave(i.num);
 		}
