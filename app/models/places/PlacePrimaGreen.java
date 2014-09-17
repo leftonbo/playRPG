@@ -14,7 +14,7 @@ public class PlacePrimaGreen extends GamePlace {
 	 */
 	public PlacePrimaGreen() {
 		place = 3;
-		name = "プライマ平原";
+		name = "プランナ平原";
 	}
 
 	/**
@@ -22,7 +22,7 @@ public class PlacePrimaGreen extends GamePlace {
 	 * @return
 	 */
 	public String getDespriction() {
-		return "西にファズマリの街が見える。";
+		return "西にファスルの街が見える。";
 	}
 
 	/**

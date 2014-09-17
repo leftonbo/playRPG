@@ -11,7 +11,7 @@ public class PlaceFazmari extends GamePlace {
 	 */
 	public PlaceFazmari() {
 		place = 2;
-		name = "ファズマリの街";
+		name = "ファスルの街";
 	}
 
 	/**
