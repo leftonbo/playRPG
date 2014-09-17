@@ -1,10 +1,12 @@
 package models.items;
 
 import models.Charactor;
+import mt.Sfmt;
 
 public class Item implements Comparable<Item> {
 	
-	public int num;
+	public int num = 1;
+	public double freq = 1.0;
 
 	/**
 	 * 識別ID
@@ -54,6 +56,41 @@ public class Item implements Comparable<Item> {
 	public Used onUse(Charactor c) {
 		return Used.NOUSE;
 	}
+	
+	// ===============================================
+	
+	/**
+	 * 所持数をセット
+	 * @param n
+	 * @return
+	 */
+	public Item setNum(int n) {
+		num = n;
+		return this;
+	}
+	
+	/**
+	 * 出現率セット（1/1000000単位まで）
+	 * @param p
+	 * @return
+	 */
+	public Item setFreq(double p) {
+		freq = p;
+		return this;
+	}
+	
+	/**
+	 * ルートチェック
+	 * @param mt
+	 * @return
+	 */
+	public boolean IsChanceHitFreq(Sfmt mt) {
+		double a = mt.NextUnif();
+		if (a < freq) return true;
+		return false;
+	}
+	
+	// ===============================================
 
 	@Override
 	public int compareTo(Item o) {

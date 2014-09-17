@@ -7,6 +7,8 @@ import java.util.List;
 
 import models.*;
 import models.forms.*;
+import models.items.Item;
+import mt.Sfmt;
 import play.data.Form;
 import play.mvc.*;
 import play.twirl.api.Html;
@@ -68,15 +70,22 @@ public class GameMain extends Controller {
         		// そうでないなら次へ
         		login.scene = nextscene;
         		//　ついでに報酬ももらう
+        		Sfmt mt = new Sfmt();
+        		List<Item> getitems = new ArrayList<Item>();
         		int re = 0, rm = 0;
         		for (Charactor cc : place.enemies) {
         			if (cc.isDefeated()) {
         				re += cc.exp;
         				rm += cc.money;
+        				getitems.addAll(cc.checkLoot(mt));
         			}
         		}
         		login.exp += re;
         		login.money += rm;
+        		// アイテム追加処理
+        		for (Item i : getitems) {
+        			login.addItem(i);
+        		}
         		// TODO : ここに報酬表示処理とレベルアップ処理
         	}
         	login.update();

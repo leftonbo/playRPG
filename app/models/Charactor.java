@@ -9,6 +9,7 @@ import javax.persistence.*;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 
 import models.charbox.*;
+import models.items.Item;
 import mt.Sfmt;
 import play.data.validation.Constraints;
 import play.data.validation.Constraints.*;
@@ -172,10 +173,25 @@ public class Charactor extends Model {
     	return (level+1) * (level+1) * (level+1) - level * level * level;
     }
     
+    /* ************************************************************** */
+    
     public CharBoxItem getItemBox() {
     	if (items != null) return items;
     	items = new CharBoxItem(itemstr);
     	return items;
+    }
+    
+    public Charactor addItem(Item i) {
+    	getItemBox().addItem(i);
+		return this;
+    }
+    
+    public List<Item> checkLoot(Sfmt mt) {
+    	List<Item> get = new ArrayList<Item>();
+    	for (Item i : items.items) {
+    		if (i.IsChanceHitFreq(mt)) get.add(i);
+    	}
+    	return get;
     }
 
     /* ************************************************************** */
@@ -200,6 +216,22 @@ public class Charactor extends Model {
 	public Charactor setDefences(int ar, int me, int ra, int ma) {
 		armor = ar;	defMelee = me;	defRanged = ra;	defMagic = ma;
 		return this;
+	}
+	
+	// ======================================================
+	
+	@Override
+	public void save(){		
+		this.itemstr = (items != null) ? this.items.makeSave() : this.itemstr;
+	
+		super.save();
+	}
+
+	@Override
+	public void update() {
+		this.itemstr = (items != null) ? this.items.makeSave() : this.itemstr;
+		
+		super.update();
 	}
     
     /* ************************************************************** */

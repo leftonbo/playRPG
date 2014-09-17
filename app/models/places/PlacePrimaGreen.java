@@ -4,6 +4,7 @@ import java.util.*;
 
 import models.Charactor;
 import models.GamePlace;
+import models.items.ItemPotion;
 import mt.Sfmt;
 
 public class PlacePrimaGreen extends GamePlace {
@@ -66,7 +67,8 @@ public class PlacePrimaGreen extends GamePlace {
 		switch (scene) {
 		default:
 			enemies.add(new Charactor()
-				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300));
+				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
+				.addItem(new ItemPotion().setFreq(0.2)));
 		}
 		return 0;
 	}
