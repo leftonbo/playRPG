@@ -91,10 +91,30 @@ public class Item implements Comparable<Item> {
 	}
 	
 	// ===============================================
+	
+	public String getTypeString() {
+		switch (getType()) {
+		case CONSUME:
+			return "消費";
+		case WEAPON:
+			return "武器";
+		case ARMOR:
+			return "防具";
+		case SHIELD:
+			return "盾";
+		case RING:
+			return "腕輪";
+		case AMULET:
+			return "首飾り";
+		default:
+			return "その他";
+		}
+	}
+	
+	// ===============================================
 
 	@Override
 	public int compareTo(Item o) {
-		// TODO Auto-generated method stub
 		if (this.getType() != o.getType()) {
 			return getType().compareTo(o.getType());
 		}

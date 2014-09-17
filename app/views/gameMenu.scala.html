@@ -18,6 +18,7 @@
 
 <ul class="nav nav-tabs">
   <li class="active"><a href="#action" data-toggle="tab">こうどう</a></li>
+  <li class=""><a href="#item" data-toggle="tab">アイテム</a></li>
   <li class=""><a href="#stats" data-toggle="tab">ステータス</a></li>
   <li class=""><a href="#system" data-toggle="tab">システム</a></li>
 </ul>
@@ -33,6 +34,35 @@
   }
   }
   </form>
+    </p>
+  </div>
+  <div class="tab-pane fade" id="item">
+    <p>
+<script>
+jQuery(function($){
+ $('tr[rel=tooltip]').tooltip();
+});
+</script>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>種別</th>
+      <th>価値</th>
+      <th>アクション</th>
+    </tr>
+  </thead>
+  <tbody>
+  @for(itm <- pl.getItemBox().items) {
+    <tr rel="tooltip" data-toggle="tooltip" data-placement="bottom"  title="@itm.getDesp()">
+      <td>@itm.getName() x@itm.num</td>
+      <td>@itm.getTypeString()</td>
+      <td>todo</td>
+      <td><a href="#" class="btn btn-primary btn-xs">使う</a></td>
+    </tr>
+  }
+  </tbody>
+</table>
     </p>
   </div>
   <div class="tab-pane fade" id="stats">
