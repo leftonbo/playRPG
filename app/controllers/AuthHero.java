@@ -9,6 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import models.Charactor;
 import models.forms.FormContGame;
 import models.forms.FormNewGame;
+import models.items.ItemSwordCopper;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
@@ -46,6 +47,7 @@ public class AuthHero extends Controller {
     	newchar.place = 2;		// 初期地点(ファズマリ)
     	newchar.respawn = 2;
     	newchar.scene = 1000;	// 初期メッセージ画面？
+    	newchar.addItem(new ItemSwordCopper());
     	newchar.save();
     	// トークン作成
     	final String userToken = UUID.randomUUID().toString(); // ランダムトークン作成

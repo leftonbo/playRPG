@@ -148,8 +148,8 @@ public class Charactor extends Model {
     	level = 1;	exp = 0;
     	mhp = hp = 20;
     	mmp = mp = 20;
-    	str = 3;	agi = 2;
-    	sen = 2;	wil = 3;
+    	str = 2;	agi = 2;
+    	sen = 2;	wil = 2;
     }
     
     /**
