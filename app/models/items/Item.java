@@ -112,6 +112,12 @@ public class Item implements Comparable<Item> {
 	}
 	
 	// ===============================================
+	
+	public String getDespForTooltip() {
+		return getDesp().replace( "\n", "&lt;br&gt;");
+	}
+	
+	// ===============================================
 
 	@Override
 	public int compareTo(Item o) {

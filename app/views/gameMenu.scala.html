@@ -76,7 +76,7 @@ jQuery(function($){
   </thead>
   <tbody>
   @for(itm <- pl.getItemBox().items) {
-    <tr rel="tooltip" data-toggle="tooltip" data-placement="bottom"  title="@itm.getDesp()">
+    <tr rel="tooltip" data-toggle="tooltip" data-placement="bottom"  title="@itm.getDespForTooltip()">
       <td>@itm.getName() x@itm.num</td>
       <td>@itm.getTypeString()</td>
       <td>todo</td>
