@@ -6,6 +6,14 @@
 	parts.hpBar.render(a,b,s)
 }
 
+@showItemWeapon(i:items.Item) = {
+	@if(i == null) {
+		<span>(なし)</span>
+	} else {
+		<span class="text-success" rel="eqtip" data-toggle="tooltip" data-placement="right" data-html="true"  title="@Html(i.getDespForTooltip())">@i.getName()</span>
+	}
+}
+
 @main(pname+" - "+Application.appTitle) {
 
     @if(flash.contains("success")) {
@@ -76,8 +84,8 @@ jQuery(function($){
   </thead>
   <tbody>
   @for(itm <- pl.getItemBox().items) {
-    <tr rel="tooltip" data-toggle="tooltip" data-placement="bottom"  title="@itm.getDespForTooltip()">
-      <td>@itm.getName() x@itm.num</td>
+    <tr rel="tooltip" data-toggle="tooltip" data-placement="bottom" data-html="true"  title="@Html(itm.getDespForTooltip())">
+      <td>@itm.getName() <span class="badge">x@itm.num</span></td>
       <td>@itm.getTypeString()</td>
       <td>todo</td>
       <td><button type="button" class="btn btn-primary btn-xs" onClick="document.itfm.use.value='@itm.getId()';document.itfm.submit();">使う</button></td>
@@ -88,6 +96,11 @@ jQuery(function($){
     </p>
   </div>
   <div class="tab-pane fade" id="stats">
+<script>
+jQuery(function($){
+ $('span[rel=eqtip]').tooltip();
+});
+</script>
     <h2>@pl.name</h2>
     <p>レベル: @pl.level <small>(Exp: @{pl.exp}/@{pl.getNextExp()})</small></p>
     @progress(pl.getNowExp(),pl.getNowNextExp(),"progress-bar-exp")
@@ -100,6 +113,16 @@ jQuery(function($){
     <p>かんかく:　@pl.sen</p>
     <p>こころ:　@pl.wil</p>
     <p>所持金:　@pl.money</p>
+    <p>
+      装備品:
+      <ul>
+      <li>武器:@showItemWeapon(pl.itemWeapon)</li>
+      <li>盾:@showItemWeapon(pl.itemShield)</li>
+      <li>防具:@showItemWeapon(pl.itemArmor)</li>
+      <li>腕輪:@showItemWeapon(pl.itemRing)</li>
+      <li>首飾り:@showItemWeapon(pl.itemAmulet)</li>
+      </ul>
+    </p>
   </div>
   <div class="tab-pane fade" id="system">
     <p>

@@ -107,6 +107,20 @@ public class Charactor extends Model {
 
     @Transient
     protected CharBoxItem items;
+
+    @Transient
+    public boolean appliedEquips = false;
+    @Transient
+    public Item itemWeapon;
+    @Transient
+    public Item itemShield;
+    @Transient
+    public Item itemArmor;
+    @Transient
+    public Item itemRing;
+    @Transient
+    public Item itemAmulet;
+    
     @Transient
     public int attackType = 0;
     @Transient
@@ -114,9 +128,9 @@ public class Charactor extends Model {
     @Transient
     public int attackDNum = 1;
     @Transient
-    public int attackDice = 6;
+    public int attackDice = 4;
     @Transient
-    public int attackVal = -3;
+    public int attackVal = -1;
 
     @Transient
     public int armor = 0;
@@ -231,6 +245,37 @@ public class Charactor extends Model {
     	}
     	
     	return useflag;
+    }
+    
+    /* ************************************************************** */
+    
+    public void applyEquips() {
+    	if (appliedEquips) return;
+    	appliedEquips = true;
+    	
+    	if (equipWeapon > 0) { 
+    		itemWeapon = Item.createByInt(equipWeapon);
+    		itemWeapon.onUse(this);
+    	}
+
+    	if (equipShield > 0) { 
+    		itemShield = Item.createByInt(equipShield);
+    	}
+
+    	if (equipArmor > 0) { 
+    		itemArmor = Item.createByInt(equipArmor);
+    		itemArmor.onUse(this);
+    	}
+
+    	if (equipRing > 0) { 
+    		itemRing = Item.createByInt(equipRing);
+    		itemRing.onUse(this);
+    	}
+    	
+    	if (equipAmulet > 0) { 
+    		itemAmulet = Item.createByInt(equipAmulet);
+    		itemAmulet.onUse(this);
+    	}
     }
 
     /* ************************************************************** */

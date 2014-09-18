@@ -59,7 +59,7 @@ public class GameMain extends Controller {
     		int nextscene = place.setEnemies(scene);
     		// 味方チーム
     		List<Charactor> a = new ArrayList<Charactor>();
-    		a.add(login);
+    		a.add(login);  login.applyEquips();
     		// 戦闘処理へ
         	Battle btl = new Battle(a,place.enemies);
         	List<BattleOccur> bo = btl.processBattle();
@@ -99,9 +99,11 @@ public class GameMain extends Controller {
     				.replace("\n", "<br>");
     		render = gameEvent.render( place.name, place.eventName, text, place.choose);
     	} else {
+    		// メニュー画面
     		String desp = place.getDespriction()
     				.replace("\n", "<br>");
     		place.makeNextList();
+    		login.applyEquips();
     		render = gameMenu.render( place.name, desp, place.nexts, login);
     	}
     	
