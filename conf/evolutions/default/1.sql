@@ -8,7 +8,7 @@ create table charactor (
   side                      integer,
   name                      varchar(255),
   password                  varchar(255),
-  level                     integer,
+  levels                    integer,
   exp                       bigint,
   money                     bigint,
   mhp                       integer,

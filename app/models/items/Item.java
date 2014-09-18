@@ -162,6 +162,8 @@ public class Item implements Comparable<Item> {
 			res = new ItemPotion();	break;
 		case 2:
 			res = new ItemSwordCopper();	break;
+		case 3:
+			res = new ItemRodWood();	break;
 		}
 		
 		if (res == null) res = new Item();

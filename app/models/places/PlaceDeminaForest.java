@@ -5,17 +5,18 @@ import java.util.*;
 import models.Charactor;
 import models.GamePlace;
 import models.items.ItemPotion;
+import models.items.ItemRodWood;
 import models.items.ItemSwordCopper;
 import mt.Sfmt;
 
-public class PlacePrimaGreen extends GamePlace {
+public class PlaceDeminaForest extends GamePlace {
 
 	/**
 	 * 場所の設定
 	 */
-	public PlacePrimaGreen() {
-		place = 3;
-		name = "プランナ平原";
+	public PlaceDeminaForest() {
+		place = 4;
+		name = "デミナの森";
 	}
 
 	/**
@@ -23,7 +24,7 @@ public class PlacePrimaGreen extends GamePlace {
 	 * @return
 	 */
 	public String getDespriction() {
-		return "西にファスルの街が見える。";
+		return "森TEST";
 	}
 
 	/**
@@ -31,8 +32,7 @@ public class PlacePrimaGreen extends GamePlace {
 	 */
 	public void makeNextList() {
 		nexts = new LinkedHashMap<String,GamePlace>();
-		nexts.put("西", new PlaceFazmari());
-		nexts.put("北", new PlaceDeminaForest());
+		nexts.put("南", new PlacePrimaGreen());
 	}
 	
 	/**
@@ -54,7 +54,14 @@ public class PlacePrimaGreen extends GamePlace {
 	public int enemyEncounter() {
 		Sfmt mt = new Sfmt();
 		if (mt.NextUnif() < 0.3) {
-			return 100;
+			switch (mt.NextInt(3)) {
+			case 0:
+				return 100;
+			case 1:
+				return 101;
+			case 2:
+				return 102;
+			}
 		}
 		return 0;
 	}
@@ -67,6 +74,24 @@ public class PlacePrimaGreen extends GamePlace {
 	public int setEnemies(int scene) {
 		enemies = new ArrayList<Charactor>();
 		switch (scene) {
+		case 1:
+			enemies.add(new Charactor()
+				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
+				.addItem(new ItemPotion().setFreq(0.2))
+				.addItem(new ItemSwordCopper().setFreq(0.05))
+				);
+			enemies.add(new Charactor()
+				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
+				.addItem(new ItemPotion().setFreq(0.2))
+				.addItem(new ItemSwordCopper().setFreq(0.05))
+					);
+			break;
+		case 2:
+			enemies.add(new Charactor()
+				.setName("オオカミ").setparams(0, 10, 0, 2, 1, 0, 0).setRewards(3, 500)
+				.addItem(new ItemPotion().setFreq(0.2))
+				.addItem(new ItemRodWood().setFreq(0.05))
+				);
 		default:
 			enemies.add(new Charactor()
 				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
