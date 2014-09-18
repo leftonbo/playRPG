@@ -72,6 +72,9 @@ public class Charactor extends Model {
     public int sen;
     /** こころ　*/
     public int wil;
+    
+    /** スキルポイント */
+    public int skillPoint = 0;
 
     /** 現在地点 */
     public int place = 0;

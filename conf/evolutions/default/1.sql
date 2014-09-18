@@ -19,6 +19,7 @@ create table charactor (
   agi                       integer,
   sen                       integer,
   wil                       integer,
+  skill_point               integer,
   place                     integer,
   scene                     integer,
   nextplace                 integer,
