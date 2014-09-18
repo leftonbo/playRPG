@@ -83,13 +83,13 @@ public class Charactor extends Model {
     public int respawn = 0;
     
     /** アイテム */
-    @Column(columnDefinition = "varchar(2048)")
+    @Column(columnDefinition = "text")
     public String itemstr = "";
     /** スキル */
-    @Column(columnDefinition = "varchar(1024)")
+    @Column(columnDefinition = "text")
     public String skillstr = "";
     /** フラグ */
-    @Column(columnDefinition = "varchar(1024)")
+    @Column(columnDefinition = "text")
     public String flagstr = "";
     
     /** 装備中武器 */
