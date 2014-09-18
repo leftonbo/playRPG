@@ -3,14 +3,14 @@ package models.items;
 import models.Charactor;
 import models.items.Item;
 
-public class ItemPotion extends Item {
+public class ItemRodWood extends Item {
 	
 	/**
 	 * 識別ID
 	 * @return
 	 */
 	public int getId() {
-		return 1;
+		return 3;
 	}
 
 	/**
@@ -18,7 +18,7 @@ public class ItemPotion extends Item {
 	 * @return
 	 */
 	public String getName() {
-		return "小さな回復薬";
+		return "木のつえ";
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class ItemPotion extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "HPを20回復する。";
+		return "室の悪い木で作った、粗悪な杖。\n\n種類:魔法 - こころ攻撃\nダメージ:1D6+2";
 	}
 	
 	/**
@@ -34,8 +34,7 @@ public class ItemPotion extends Item {
 	 * @return
 	 */
 	public String getDespAfterUse(Item.Used used) {
-		if (used == Item.Used.OK) return "HPが20回復した。";
-		return "HPは既に満タンだ。";
+		return getName() + " を装備した。";
 	}
 	
 	/**
@@ -43,7 +42,7 @@ public class ItemPotion extends Item {
 	 * @return 0:Unusable 1:Consumable 2:Weapon 3:Armor 4:Shield 5:Ring 6:Amulet
 	 */
 	public Item.Type getType() {
-		return Type.CONSUME;
+		return Type.WEAPON;
 	}
 	
 	/**
@@ -51,7 +50,7 @@ public class ItemPotion extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 2000L;
+		return 5000L;
 	}
 	
 	/**
@@ -60,9 +59,11 @@ public class ItemPotion extends Item {
 	 * @param c
 	 */
 	public Item.Used onUse(Charactor c) {
-		if (c.hp >= c.mhp) return Item.Used.NONECESSARY;
-		c.hp += 20;
-		if (c.hp > c.mhp) c.hp = c.mhp;
+		c.attackType = 3;
+		c.attackHit = 0;
+		c.attackDNum = 1;
+		c.attackDice = 6;
+		c.attackVal = 2;
 		return Item.Used.OK;
 	}
 }

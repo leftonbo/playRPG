@@ -4,9 +4,12 @@ import static play.data.Form.form;
 
 import java.util.UUID;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import models.Charactor;
 import models.forms.FormContGame;
 import models.forms.FormNewGame;
+import models.items.ItemSwordCopper;
 import play.data.Form;
 import play.mvc.*;
 import views.html.*;
@@ -40,10 +43,11 @@ public class AuthHero extends Controller {
     	FormNewGame fn = fm.get();
     	Charactor newchar = new Charactor();
     	newchar.name = fn.name;
-    	newchar.password = fn.password;
+    	newchar.password = BCrypt.hashpw( fn.password, BCrypt.gensalt());
     	newchar.place = 2;		// 初期地点(ファズマリ)
     	newchar.respawn = 2;
     	newchar.scene = 1000;	// 初期メッセージ画面？
+    	newchar.addItem(new ItemSwordCopper());
     	newchar.save();
     	// トークン作成
     	final String userToken = UUID.randomUUID().toString(); // ランダムトークン作成

@@ -49,6 +49,14 @@ public class Item implements Comparable<Item> {
 	}
 	
 	/**
+	 * アイテムの価値
+	 * @return
+	 */
+	public Long getPrice() {
+		return 0L;
+	}
+	
+	/**
 	 * 使用時の処理
 	 * 武器装備時にどうなるかもここに書く
 	 * @param c
@@ -112,6 +120,12 @@ public class Item implements Comparable<Item> {
 	}
 	
 	// ===============================================
+	
+	public String getDespForTooltip() {
+		return getDesp().replace( "\n", "&lt;br&gt;");
+	}
+	
+	// ===============================================
 
 	@Override
 	public int compareTo(Item o) {
@@ -146,6 +160,10 @@ public class Item implements Comparable<Item> {
 		switch (i) {
 		case 1:
 			res = new ItemPotion();	break;
+		case 2:
+			res = new ItemSwordCopper();	break;
+		case 3:
+			res = new ItemRodWood();	break;
 		}
 		
 		if (res == null) res = new Item();

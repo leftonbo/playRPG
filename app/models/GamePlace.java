@@ -84,6 +84,8 @@ public class GamePlace {
 			return new PlaceFazmari();
 		case 3:
 			return new PlacePrimaGreen();
+		case 4:
+			return new PlaceDeminaForest();
 		}
 		return new GamePlace();
 	}

@@ -31,6 +31,10 @@ GET     /game/move                  controllers.GameMain.index()
 POST    /game/item                  controllers.GameMain.useItemProcess()
 GET     /game/item                  controllers.GameMain.index()
 
+# Level Up
+POST    /game/levelup               controllers.GameMain.levelUpProcess()
+GET     /game/levelup               controllers.GameMain.index()
+
 # Test
 GET     /test                       controllers.Application.testBattle()
 

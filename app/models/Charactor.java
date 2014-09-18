@@ -47,8 +47,7 @@ public class Charactor extends Model {
     public String password;
 
     /** レベル　*/
-    @Min(1)
-    public int level;
+    public int levels;
     /** けいけんち　*/
     public long exp;
     /** おかね　*/
@@ -72,6 +71,9 @@ public class Charactor extends Model {
     public int sen;
     /** こころ　*/
     public int wil;
+    
+    /** スキルポイント */
+    public int skillPoint = 0;
 
     /** 現在地点 */
     public int place = 0;
@@ -83,13 +85,13 @@ public class Charactor extends Model {
     public int respawn = 0;
     
     /** アイテム */
-    @Column(columnDefinition = "varchar(2048)")
+    @Column(columnDefinition = "text")
     public String itemstr = "";
     /** スキル */
-    @Column(columnDefinition = "varchar(1024)")
+    @Column(columnDefinition = "text")
     public String skillstr = "";
     /** フラグ */
-    @Column(columnDefinition = "varchar(1024)")
+    @Column(columnDefinition = "text")
     public String flagstr = "";
     
     /** 装備中武器 */
@@ -107,6 +109,20 @@ public class Charactor extends Model {
 
     @Transient
     protected CharBoxItem items;
+
+    @Transient
+    public boolean appliedEquips = false;
+    @Transient
+    public Item itemWeapon;
+    @Transient
+    public Item itemShield;
+    @Transient
+    public Item itemArmor;
+    @Transient
+    public Item itemRing;
+    @Transient
+    public Item itemAmulet;
+    
     @Transient
     public int attackType = 0;
     @Transient
@@ -114,9 +130,9 @@ public class Charactor extends Model {
     @Transient
     public int attackDNum = 1;
     @Transient
-    public int attackDice = 6;
+    public int attackDice = 4;
     @Transient
-    public int attackVal = -3;
+    public int attackVal = -1;
 
     @Transient
     public int armor = 0;
@@ -131,11 +147,11 @@ public class Charactor extends Model {
      * デフォルトパラメータ
      */
     public Charactor() {
-    	level = 1;	exp = 0;
+    	levels = 1;	exp = 0;
     	mhp = hp = 20;
     	mmp = mp = 20;
-    	str = 3;	agi = 2;
-    	sen = 2;	wil = 3;
+    	str = 2;	agi = 2;
+    	sen = 2;	wil = 2;
     }
     
     /**
@@ -152,8 +168,8 @@ public class Charactor extends Model {
      * @return
      */
     public long getNextExp() {
-    	if (level <= 1) return 2*2*2;
-    	return (level+1) * (level+1) * (level+1);
+    	if (levels <= 1) return 2*2*2;
+    	return (levels+1) * (levels+1) * (levels+1);
     }
     
     /**
@@ -161,8 +177,8 @@ public class Charactor extends Model {
      * @return
      */
     public long getNowExp() {
-    	if (level <= 1) return exp;
-    	return exp - level * level * level;
+    	if (levels <= 1) return exp;
+    	return exp - levels * levels * levels;
     }
     
     /**
@@ -170,8 +186,8 @@ public class Charactor extends Model {
      * @return
      */
     public long getNowNextExp() {
-    	if (level <= 1) return (level+1) * (level+1) * (level+1);
-    	return (level+1) * (level+1) * (level+1) - level * level * level;
+    	if (levels <= 1) return (levels+1) * (levels+1) * (levels+1);
+    	return (levels+1) * (levels+1) * (levels+1) - levels * levels * levels;
     }
     
     /* ************************************************************** */
@@ -232,6 +248,37 @@ public class Charactor extends Model {
     	
     	return useflag;
     }
+    
+    /* ************************************************************** */
+    
+    public void applyEquips() {
+    	if (appliedEquips) return;
+    	appliedEquips = true;
+    	
+    	if (equipWeapon > 0) { 
+    		itemWeapon = Item.createByInt(equipWeapon);
+    		itemWeapon.onUse(this);
+    	}
+
+    	if (equipShield > 0) { 
+    		itemShield = Item.createByInt(equipShield);
+    	}
+
+    	if (equipArmor > 0) { 
+    		itemArmor = Item.createByInt(equipArmor);
+    		itemArmor.onUse(this);
+    	}
+
+    	if (equipRing > 0) { 
+    		itemRing = Item.createByInt(equipRing);
+    		itemRing.onUse(this);
+    	}
+    	
+    	if (equipAmulet > 0) { 
+    		itemAmulet = Item.createByInt(equipAmulet);
+    		itemAmulet.onUse(this);
+    	}
+    }
 
     /* ************************************************************** */
     
@@ -269,6 +316,34 @@ public class Charactor extends Model {
 	
 	// ======================================================
 	
+	// その能力は上げらっるかな？
+	public boolean isDisablePowup(int type) {
+		int ff = 0;
+		switch (type) {
+		case 0: ff = str; break;
+		case 1: ff = agi; break;
+		case 2: ff = sen; break;
+		case 3: ff = wil; break;
+		}
+		if (ff != Math.max(str, Math.max(agi, Math.max(sen, wil)))) {
+			return false;
+		}
+		int max=0;
+		for (int i=0;i<4;i++) {
+			if (i == type) continue;
+			int fi = 0;
+			switch (i) {
+			case 0: fi = str; break;
+			case 1: fi = agi; break;
+			case 2: fi = sen; break;
+			case 3: fi = wil; break;
+			}
+			if (max < fi) max = fi;
+		}
+		if (ff - max >= 2) return true;
+		return false;
+	}
+	
 	@Override
 	public void save(){		
 		this.itemstr = (items != null) ? this.items.makeSave() : this.itemstr;
@@ -290,7 +365,7 @@ public class Charactor extends Model {
      * @return
      */
     public Charactor DebugRandomCreate(Sfmt mt, int s, int Lv) {
-    	level = Lv;
+    	levels = Lv;
     	side = s;
     	if (side == 1) {
     		int rnd = mt.NextInt(8);
@@ -418,7 +493,7 @@ public class Charactor extends Model {
     	return this;
     }
     public Charactor setLevel(int v) {
-    	level = v;
+    	levels = v;
     	return this;
     }
     public Charactor setHP(int v) {
@@ -440,7 +515,7 @@ public class Charactor extends Model {
     	return this;
     }
     public Charactor setparams(int l, int h, int m, int s, int a, int e, int w) {
-    	level = l;
+    	levels = l;
     	mhp = hp = h;
     	mmp = mp = m;
     	str = s; agi = a; sen = e; wil = w;

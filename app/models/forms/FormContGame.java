@@ -3,6 +3,8 @@ package models.forms;
 import models.Charactor;
 import play.data.validation.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class FormContGame {
 	@Constraints.Required(message="なまえがない！")
 	public String name;
@@ -10,7 +12,9 @@ public class FormContGame {
 	public String password;
 
     public String validate() {
-		if (Charactor.find.where().eq("name",name).eq("password",password).findList().size() != 1) {
+    	Charactor login = Charactor.find.where().eq("name",name).findUnique();
+    	if (login == null) return "おきのどくですが なまえ か 復活の呪文 が間違っているようです";
+		if (!BCrypt.checkpw(password, login.password)) {
 			return "おきのどくですが なまえ か 復活の呪文 が間違っているようです";
 		}
 		return null;

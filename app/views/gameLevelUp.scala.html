@@ -1,0 +1,140 @@
+@(pl:Charactor)
+
+@sttbtndiable(tpp:Int) = {
+	@if(pl.isDisablePowup(tpp)){
+		disabled="disabled"
+	}
+}
+
+@main("レベルアップ - "+Application.appTitle) {
+<div class="page-header">
+  <div class="row">
+  <div class="col-lg-8 col-lg-offset-2">
+    <h1 style="text-align:center;">レ　ベ　ル　ア　ッ　プ</h1>
+<div class="progress progress-striped active">
+  <div class="progress-bar progress-bar-exp" style="width: 100%"></div>
+</div>
+    <h2 style="text-align:center;"><small>Level @pl.levels <span class="glyphicon glyphicon-arrow-right"></span></small> <strong class="text-danger">@{pl.levels+1}</strong></h2>
+  </div>
+  </div>
+</div>
+
+<h2 style="text-align:center;">どれかひとつの能力が上がります</h2>
+
+<script>
+jQuery(function($){
+ $('button[rel=eqtip]').tooltip();
+});
+</script>
+
+  <div class="row">
+  <div class="col-lg-6 col-lg-offset-3">
+<div class="btn-group btn-group-justified">
+  <div class="btn-group">
+  <button type="button" class="btn btn-danger" @sttbtndiable(0) rel="eqtip" data-toggle="tooltip" data-placement="bottom" data-html="true"
+    title="@Html("ちから攻撃が当たりやすくなる&lt;br&gt;HP+5")"
+    onClick="$('#goStr').modal()">
+  ちから<br>
+  @pl.str <span class="glyphicon glyphicon-arrow-right"></span> <strong>@{pl.str+1}</strong></button>
+  </div>
+  <div class="btn-group">
+  <button type="button" class="btn btn-warning" @sttbtndiable(1) rel="eqtip" data-toggle="tooltip" data-placement="bottom" data-html="true"
+    title="@Html("弓矢の攻撃が当たりやすくなる&lt;br&gt;早く行動できる&lt;br&gt;HP+5")"
+    onMouseUp="$('#goAgi').modal()">
+  きようさ<br>
+  @pl.agi <span class="glyphicon glyphicon-arrow-right"></span> <strong>@{pl.agi+1}</strong></button>
+  </div>
+  <div class="btn-group">
+  <button type="button" class="btn btn-success" @sttbtndiable(2) rel="eqtip" data-toggle="tooltip" data-placement="bottom" data-html="true"
+    title="@Html("敵からアイテムを貰いやすくなる&lt;br&gt;MP+5")"
+    onMouseUp="$('#goSen').modal()">
+  かんかく<br>
+  @pl.sen <span class="glyphicon glyphicon-arrow-right"></span> <strong>@{pl.sen+1}</strong></button>
+  </div>
+  <div class="btn-group">
+  <button type="button" class="btn btn-info" @sttbtndiable(3) rel="eqtip" data-toggle="tooltip" data-placement="bottom" data-html="true"
+    title="@Html("杖と魔法の効力があがる&lt;br&gt;MP+5")"
+    onMouseUp="$('#goWil').modal()">
+  こころ<br>
+  @pl.wil <span class="glyphicon glyphicon-arrow-right"></span> <strong>@{pl.wil+1}</strong></button>
+  </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="goStr" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">ちから を上げる</h4>
+      </div>
+      <div class="modal-body">
+        ちからを上げます。よろしいですか？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">待った</button>
+        <button type="button" class="btn btn-primary" onClick="document.waiter.choose.value=0;document.waiter.submit();">上げる！</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade bs-example-modal-sm" id="goAgi" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">きようさ を上げる</h4>
+      </div>
+      <div class="modal-body">
+        きようさを上げます。よろしいですか？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">待った</button>
+        <button type="button" class="btn btn-primary" onClick="document.waiter.choose.value=1;document.waiter.submit();">上げる！</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade bs-example-modal-sm" id="goSen" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">かんかく を上げる</h4>
+      </div>
+      <div class="modal-body">
+        かんかくを上げます。よろしいですか？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">待った</button>
+        <button type="button" class="btn btn-primary" onClick="document.waiter.choose.value=2;document.waiter.submit();">上げる！</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade bs-example-modal-sm" id="goWil" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">こころ を上げる</h4>
+      </div>
+      <div class="modal-body">
+        こころを上げます。よろしいですか？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">待った</button>
+        <button type="button" class="btn btn-primary" onClick="document.waiter.choose.value=3;document.waiter.submit();">上げる！</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <form name="waiter" action="@routes.GameMain.levelUpProcess()" method="POST">
+  <input type="hidden" name="choose" value="">
+  </form>
+
+  </div>
+  </div>
+
+
+}
