@@ -26,7 +26,7 @@ public class ItemSwordCopper extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "銅でできた、粗悪な剣。\n\nダメージ:[命中度]+1D6-1";
+		return "銅でできた、粗悪な剣。\n\n種類:近接 - ちから攻撃\nダメージ:[命中度]+1D6-1";
 	}
 	
 	/**
@@ -43,6 +43,14 @@ public class ItemSwordCopper extends Item {
 	 */
 	public Item.Type getType() {
 		return Type.WEAPON;
+	}
+	
+	/**
+	 * アイテムの価値
+	 * @return
+	 */
+	public Long getPrice() {
+		return 5000L;
 	}
 	
 	/**

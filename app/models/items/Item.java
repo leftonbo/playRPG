@@ -49,6 +49,14 @@ public class Item implements Comparable<Item> {
 	}
 	
 	/**
+	 * アイテムの価値
+	 * @return
+	 */
+	public Long getPrice() {
+		return 0L;
+	}
+	
+	/**
 	 * 使用時の処理
 	 * 武器装備時にどうなるかもここに書く
 	 * @param c

@@ -47,6 +47,14 @@ public class ItemPotion extends Item {
 	}
 	
 	/**
+	 * アイテムの価値
+	 * @return
+	 */
+	public Long getPrice() {
+		return 2000L;
+	}
+	
+	/**
 	 * 使用時の処理
 	 * 武器装備時にどうなるかもここに書く
 	 * @param c
