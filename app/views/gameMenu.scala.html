@@ -102,7 +102,7 @@ jQuery(function($){
 });
 </script>
     <h2>@pl.name</h2>
-    <p>レベル: @pl.level <small>(Exp: @{pl.exp}/@{pl.getNextExp()})</small></p>
+    <p>レベル: @pl.levels <small>(Exp: @{pl.exp}/@{pl.getNextExp()})</small></p>
     @progress(pl.getNowExp(),pl.getNowNextExp(),"progress-bar-exp")
     <p>HP: @pl.hp / @pl.mhp</p>
     @progress(pl.hp,pl.mhp,"progress-bar-health")

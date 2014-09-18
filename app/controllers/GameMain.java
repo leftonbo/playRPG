@@ -54,7 +54,9 @@ public class GameMain extends Controller {
     	GamePlace place = GamePlace.createByPlace(login.place);
     	
     	Html render = null;
-    	if (scene >= 100 && scene < 200) {
+    	if (login.exp >= login.getNextExp()) {
+    		render = gameLevelUp.render( login);
+    	} else if (scene >= 100 && scene < 200) {
     		// 戦闘に突入
     		int nextscene = place.setEnemies(scene);
     		// 味方チーム
@@ -215,6 +217,10 @@ public class GameMain extends Controller {
     	return GO_HOME;
     }
     
+    /**
+     * アイテムを使う
+     * @return
+     */
     @Security.Authenticated(MyAuthenticator.class)
     public static Result useItemProcess() {
     	loginName = request().username();
@@ -234,6 +240,50 @@ public class GameMain extends Controller {
     	}
     	if (writeflag) login.update();
 
+    	return GO_HOME;
+    }
+    
+    /**
+     * レベルアップ！
+     * @return
+     */
+    @Security.Authenticated(MyAuthenticator.class)
+    public static Result levelUpProcess() {
+    	loginName = request().username();
+    	login = Charactor.getByName(loginName);
+    	// 本当はあまりよくないフォームの使い回し
+    	Form<FormEventChoose> fc = form(FormEventChoose.class).bindFromRequest();
+
+    	// レベル増加
+    	login.levels += 1;
+    	
+    	// スキルポイント増加
+    	login.skillPoint += 1;
+    	if (login.levels % 10 == 0) login.skillPoint += 1;
+    	
+    	// 選択した能力値の増加
+    	switch (fc.get().choose) {
+    	case 0:
+    		login.str += 1;	login.mhp += 5;
+    		break;
+    	case 1:
+    		login.agi += 1;	login.mhp += 5;
+    		break;
+    	case 2:
+    		login.sen += 1;	login.mmp += 5;
+    		break;
+    	case 3:
+    		login.wil += 1;	login.mmp += 5;
+    		break;
+    	}
+    	
+    	// HPMPが回復
+    	login.hp = login.mhp;
+    	login.mp = login.mmp;
+    	
+    	//セーブ
+    	login.update();
+    	
     	return GO_HOME;
     }
 }

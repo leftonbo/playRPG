@@ -257,7 +257,7 @@ public class Battle {
 			res = Math.max( judge
 					+ xDy(atk.attackDNum,atk.attackDice) + atk.attackVal
 					- def.armor, 0);
-			if (lastcrit == 1) res += xDy(1+atk.level/15,6);	// クリッツ振り足し
+			if (lastcrit == 1) res += xDy(1+atk.levels/15,6);	// クリッツ振り足し
 		}
 		// ダメージ値を返す
 		return res;
@@ -319,7 +319,7 @@ public class Battle {
 			res = Math.max( atk.str + 
 					xDy(atk.attackDNum,atk.attackDice) + atk.attackVal
 					- def.armor, 0);
-			if (lastcrit == 1) res += xDy(1+atk.level/15,6);	// クリッツ振り足し
+			if (lastcrit == 1) res += xDy(1+atk.levels/15,6);	// クリッツ振り足し
 		}
 		// ダメージ値を返す
 		return res;
@@ -381,7 +381,7 @@ public class Battle {
 			res = Math.max( atk.wil + 
 					xDy(atk.attackDNum,atk.attackDice) + atk.attackVal
 					- def.armor, 0);
-			if (lastcrit == 1) res += xDy(1+atk.level/15,6);	// クリッツ振り足し
+			if (lastcrit == 1) res += xDy(1+atk.levels/15,6);	// クリッツ振り足し
 		} else {
 			// 抵抗によるダメージ減少
 			res = Math.max((atk.wil + 
