@@ -2,10 +2,13 @@ package models.places;
 
 import java.util.*;
 
+import controllers.GameMain;
 import models.Charactor;
 import models.GamePlace;
+import models.items.ItemArmorHide;
 import models.items.ItemPotion;
 import models.items.ItemSwordCopper;
+import models.items.ItemSwordIron;
 import mt.Sfmt;
 
 public class PlacePrimaGreen extends GamePlace {
@@ -36,6 +39,14 @@ public class PlacePrimaGreen extends GamePlace {
 	}
 	
 	/**
+	 * 探索の設定
+	 */
+	public void makeExploreList() {
+		explores = new LinkedHashMap<String,Integer>();
+		explores.put("探索する", 200);
+	}
+	
+	/**
 	 * この地域に入ってきたときの処理
 	 * @return　次のシーン
 	 */
@@ -49,6 +60,34 @@ public class PlacePrimaGreen extends GamePlace {
 	 */
 	public int onLeavePlace(GamePlace to) {
 		return enemyEncounter();
+	}
+
+	/**
+	 * ランダムイベント設定
+	 * @param scene 200~299 ランダムリスト
+	 * @return シーン移動
+	 */
+	public int onRandomEvent(int scene) {
+		switch (scene) {
+		case 200:
+			Sfmt mt = new Sfmt();
+			if (GameMain.login.money >= 5000 && mt.NextUnif() < 0.09) {
+				return 1111 + mt.NextIntEx(2);
+			}
+			if (mt.NextUnif() < 0.9) {
+				return 100;
+			}
+			return 0;
+		case 211:
+			GameMain.login.money -= 5000;
+			GameMain.login.addItem(new ItemSwordIron());
+			return 0;
+		case 212:
+			GameMain.login.money -= 5000;
+			GameMain.login.addItem(new ItemArmorHide());
+			return 0;
+		}
+		return 0;
 	}
 	
 	public int enemyEncounter() {
@@ -84,6 +123,22 @@ public class PlacePrimaGreen extends GamePlace {
 	public void makeEventText(int scene) {
 		choose = new LinkedHashMap<Integer,String>();
 		switch (scene) {
+		case 1111:
+			eventName = "武器商人";
+			eventText = "わたしは武器商人。\n" + 
+			"君はお金をもっていて、私は鉄のつるぎを持っている。\n" + 
+			"どうだい、買ってみるかね。";
+			choose.put(211,"鉄のつるぎを買う(5000)");
+			choose.put(0,"いらない");
+			break;
+		case 1112:
+			eventName = "防具商人";
+			eventText = "わたしは防具商人。\n" + 
+			"君はお金をもっていて、私は革のよろいを持っている。\n" + 
+			"どうだい、買ってみるかね。";
+			choose.put(212,"革のよろいを買う(5000)");
+			choose.put(0,"いらない");
+			break;
 		default:
 			eventText = "謎の空間";
 			choose.put(0,"次へ");

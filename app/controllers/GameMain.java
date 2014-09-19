@@ -53,11 +53,22 @@ public class GameMain extends Controller {
     	
     	GamePlace place = GamePlace.createByPlace(login.place);
     	
+    	boolean dataNeedSave = false;
+    	if (scene >= 200 && scene < 300) {
+    		// シーンの自動遷移(ランダムイベント用)
+    		login.scene = place.onRandomEvent(login.scene);
+    		// ランダムイベント用のセーブフラグ
+    		dataNeedSave = true;
+    	}
+    	
     	Html render = null;
     	if (login.exp >= login.getNextExp()) {
     		render = gameLevelUp.render( login);
     	} else if (scene >= 100 && scene < 200) {
     		// 戦闘に突入
+    		// ランダムイベント用のセーブフラグを消す(戦闘後にupdateされるため)
+    		dataNeedSave = false;
+    		// 敵チーム、次シーン
     		int nextscene = place.setEnemies(scene);
     		// 味方チーム
     		List<Charactor> a = new ArrayList<Charactor>();
@@ -72,6 +83,10 @@ public class GameMain extends Controller {
         	} else {
         		// そうでないなら次へ
         		login.scene = nextscene;
+            	if (login.scene >= 200 && login.scene < 300) {
+            		// シーンの自動遷移(ランダムイベント用)
+            		login.scene = place.onRandomEvent(login.scene);
+            	}
         		//　ついでに報酬ももらう
         		Sfmt mt = new Sfmt();
         		List<Item> getitems = new ArrayList<Item>();
@@ -80,7 +95,7 @@ public class GameMain extends Controller {
         			if (cc.isDefeated()) {
         				re += cc.exp;
         				rm += cc.money;
-        				getitems.addAll(cc.checkLoot(mt));
+        				getitems.addAll(cc.checkLoot(mt,login));
         			}
         		}
         		login.exp += re;
@@ -99,15 +114,24 @@ public class GameMain extends Controller {
     		String text = place.eventText
     				.replace("{{name}}", loginName)
     				.replace("\n", "<br>");
+    		if (text.matches(".*\\Q{{levrem}}\\E.*")) {
+    			text = text.replace("{{levrem}}", String.format("%,d",login.getNextExp()-login.exp));
+    		}
     		render = gameEvent.render( place.name, place.eventName, text, place.choose);
     	} else {
     		// メニュー画面
     		String desp = place.getDespriction()
     				.replace("\n", "<br>");
     		place.makeNextList();
+    		place.makeExploreList();
     		login.applyEquips();
-    		render = gameMenu.render( place.name, desp, place.nexts, login);
+    		render = gameMenu.render( place.name, desp, place.nexts, place.explores, login);
     	}
+    	
+		// ランダムイベント用のセーブフラグ
+		if (dataNeedSave) {
+			login.update();
+		}
     	
     	// 選択メニュー
         return ok(render);
@@ -126,6 +150,24 @@ public class GameMain extends Controller {
     	Form<FormEventChoose> fc = form(FormEventChoose.class).bindFromRequest();
     	int next = fc.get().choose;
     	login.scene = next;
+
+    	if (login.scene >= 200 && login.scene < 300) {
+    		// シーンの自動遷移(ランダムイベント用)
+    		GamePlace place = GamePlace.createByPlace(login.place);
+    		login.scene = place.onRandomEvent(login.scene);
+    	} else if (login.scene >= 300 && login.scene < 400) {
+    		// 場所移動
+    		GamePlace place = GamePlace.createByPlace(login.place);
+    		int nextplace = place.setPlaceMove(login.place);
+    		if (nextplace != 0) {
+    			// 場所更新
+    			login.place = nextplace;
+    	    	login.nextplace = 0;
+    	    	int nse = GamePlace.createByPlace(nextplace).onEnterPlace(place);
+    	    	login.scene = nse;
+    		}
+    	}
+    	
     	// キャラクタ更新…？
     	login.update();
     	
@@ -162,6 +204,8 @@ public class GameMain extends Controller {
     	login.nextplace = 0;
     	nse = aft.onEnterPlace(bef);
     	login.scene = nse;
+
+    	// キャラクタ更新
     	login.update();
     	
     	return GO_HOME;

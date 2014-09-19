@@ -109,6 +109,8 @@ public class Charactor extends Model {
 
     @Transient
     protected CharBoxItem items;
+    @Transient
+    protected CharBoxFlag flags;
 
     @Transient
     public boolean appliedEquips = false;
@@ -279,13 +281,33 @@ public class Charactor extends Model {
     		itemAmulet.onUse(this);
     	}
     }
+    
+    /* ************************************************************** */
+    
+    public CharBoxFlag getFlagBox() {
+    	if (flags != null) return flags;
+    	flags = new CharBoxFlag(flagstr);
+    	return flags;
+    }
+    
+    public void setFlag(String flg, int val) {
+    	getFlagBox().setFlag(flg, val);
+    }
+    
+    public int getFlag(String flg) {
+    	return getFlagBox().getFlag(flg);
+    }
 
     /* ************************************************************** */
     
-    public List<Item> checkLoot(Sfmt mt) {
+    public List<Item> checkLoot(Sfmt mt, Charactor lootby) {
     	List<Item> get = new ArrayList<Item>();
+    	if (items == null) return get;
     	for (Item i : items.items) {
-    		if (i.IsChanceHitFreq(mt)) get.add(i);
+        	int lootench = lootby.sen - sen
+        			+ mt.NextIntEx(6) + mt.NextIntEx(6) - mt.NextIntEx(6) - mt.NextIntEx(6);
+        	double lootbonus = Math.min(1.0,Math.max(0.0, 5 * lootench));
+    		if (i.IsChanceHitFreq(mt,lootbonus)) get.add(i);
     	}
     	return get;
     }
@@ -347,6 +369,7 @@ public class Charactor extends Model {
 	@Override
 	public void save(){		
 		this.itemstr = (items != null) ? this.items.makeSave() : this.itemstr;
+		this.flagstr = (flags != null) ? this.flags.makeSave() : this.flagstr;
 	
 		super.save();
 	}
@@ -354,6 +377,7 @@ public class Charactor extends Model {
 	@Override
 	public void update() {
 		this.itemstr = (items != null) ? this.items.makeSave() : this.itemstr;
+		this.flagstr = (flags != null) ? this.flags.makeSave() : this.flagstr;
 		
 		super.update();
 	}

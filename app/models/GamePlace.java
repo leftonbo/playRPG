@@ -10,6 +10,8 @@ public class GamePlace {
 	
 	// 場所移動用
 	public Map<String,GamePlace> nexts;
+	// 探索用
+	public Map<String,Integer> explores;
 	
 	// イベント用変数
 	public String eventName;
@@ -44,6 +46,13 @@ public class GamePlace {
 	}
 	
 	/**
+	 * 探索の設定
+	 */
+	public void makeExploreList() {
+		explores = new LinkedHashMap<String,Integer>();
+	}
+	
+	/**
 	 * この地域に入ってきたときの処理
 	 * @return　次のシーン
 	 */
@@ -56,6 +65,24 @@ public class GamePlace {
 	 * @return　次のシーン、0なら次のMAPへ
 	 */
 	public int onLeavePlace(GamePlace to) {
+		return 0;
+	}
+
+	/**
+	 * ランダムイベント設定
+	 * @param scene 200~299 ランダムリスト
+	 * @return シーン移動
+	 */
+	public int onRandomEvent(int scene) {
+		return 0;
+	}
+
+	/**
+	 * 場所移動設定
+	 * @param scene 300~399 移動リスト
+	 * @return 場所(0=移動なし)
+	 */
+	public int setPlaceMove(int scene) {
 		return 0;
 	}
 
@@ -86,6 +113,8 @@ public class GamePlace {
 			return new PlacePrimaGreen();
 		case 4:
 			return new PlaceDeminaForest();
+		case 5:
+			return new PlaceDeminaForestDeep();
 		}
 		return new GamePlace();
 	}

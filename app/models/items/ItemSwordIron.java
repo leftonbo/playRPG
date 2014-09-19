@@ -3,14 +3,14 @@ package models.items;
 import models.Charactor;
 import models.items.Item;
 
-public class ItemSwordCopper extends Item {
+public class ItemSwordIron extends Item {
 	
 	/**
 	 * 識別ID
 	 * @return
 	 */
 	public int getId() {
-		return 2;
+		return 7;
 	}
 
 	/**
@@ -18,7 +18,7 @@ public class ItemSwordCopper extends Item {
 	 * @return
 	 */
 	public String getName() {
-		return "銅のつるぎ";
+		return "鉄のつるぎ";
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class ItemSwordCopper extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "銅でできた、粗悪な剣。\n\n種類:近接 - ちから攻撃\nダメージ:[命中度]+1D6-1";
+		return "鉄製の良くない剣。\n\n種類:近接 - ちから攻撃\nダメージ:[命中度]+1D6+1";
 	}
 	
 	/**
@@ -50,14 +50,14 @@ public class ItemSwordCopper extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 3000L;
+		return 6000L;
 	}
 	
 	/**
 	 * レアリティ
 	 */
 	public Rarity getRarity() {
-		return Rarity.JUNK;
+		return Rarity.COMMON;
 	}
 	
 	/**
@@ -69,7 +69,7 @@ public class ItemSwordCopper extends Item {
 		c.attackHit = 0;
 		c.attackDNum = 1;
 		c.attackDice = 6;
-		c.attackVal = -1;
+		c.attackVal = 1;
 		return Item.Used.OK;
 	}
 }

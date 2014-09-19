@@ -1,9 +1,12 @@
-@(pname:String, desp:String, nexts:Map[String,GamePlace], pl:Charactor)
+@(pname:String, desp:String, nexts:Map[String,GamePlace], explores:Map[String,Integer], pl:Charactor)
 
 @implicitFieldConstructor = @{ helper.FieldConstructor(loginInput.render) }
 
 @progress(a:Double,b:Double,s:String) = @{
 	parts.hpBar.render(a,b,s)
+}
+@progressNum(a:Double,b:Double,s:String) = @{
+	parts.hpBarNum.render(a,b,s)
 }
 
 @showItemWeapon(i:items.Item) = {
@@ -41,10 +44,19 @@
     </div>
     
 <div class="row">
+<div class="col-xs-4 col-lg-offset-2">
+    @progressNum(pl.hp,pl.mhp,"progress-bar-health")
+</div>
+<div class="col-xs-4">
+    @progressNum(pl.mp,pl.mmp,"progress-bar-mana")
+</div>
+</div>
+
+<div class="row">
 <div class="col-xs-8 col-lg-offset-2">
 
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#action" data-toggle="tab">こうどう</a></li>
+  <li class="active"><a href="#action" data-toggle="tab">行動</a></li>
   <li class=""><a href="#item" data-toggle="tab">アイテム</a></li>
   <li class=""><a href="#stats" data-toggle="tab">ステータス</a></li>
   <li class=""><a href="#system" data-toggle="tab">システム</a></li>
@@ -62,12 +74,26 @@
   }
   </form>
     </p>
+    <p>
+  <form name="expf" action="@routes.GameMain.eventProcess()" method="POST">
+  <input type="hidden" name="choose" value="">
+  @if(explores != null && explores.size() >= 1) {
+    <h2>しらべる</h2>
+  @for((pref,goto) <- explores) {
+    <button type="button" class="btn btn-warning" onClick="document.expf.choose.value='@goto';document.expf.submit();">@pref</button>
+  }
+  }
+  </form>
+    </p>
   </div>
   <div class="tab-pane fade" id="item">
     <p>
 <script>
 jQuery(function($){
  $('tr[rel=tooltip]').tooltip();
+});
+jQuery(function($){
+ $('span[rel=tooltip]').tooltip();
 });
 </script>
 <form name="itfm" action="@routes.GameMain.useItemProcess()" method="POST">
@@ -78,6 +104,7 @@ jQuery(function($){
     <tr>
       <th>名前</th>
       <th>種別</th>
+      <th>レア度</th>
       <th>価値</th>
       <th>アクション</th>
     </tr>
@@ -87,7 +114,8 @@ jQuery(function($){
     <tr rel="tooltip" data-toggle="tooltip" data-placement="bottom" data-html="true"  title="@Html(itm.getDespForTooltip())">
       <td>@itm.getName() <span class="badge">x@itm.num</span></td>
       <td>@itm.getTypeString()</td>
-      <td>todo</td>
+      <td>@Html(itm.getRarityHTML())</td>
+      <td>@itm.getPrice()</td>
       <td><button type="button" class="btn btn-primary btn-xs" onClick="document.itfm.use.value='@itm.getId()';document.itfm.submit();">使う</button></td>
     </tr>
   }

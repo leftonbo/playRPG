@@ -57,6 +57,13 @@ public class Item implements Comparable<Item> {
 	}
 	
 	/**
+	 * レアリティ
+	 */
+	public Rarity getRarity() {
+		return Rarity.COMMON;
+	}
+	
+	/**
 	 * 使用時の処理
 	 * 武器装備時にどうなるかもここに書く
 	 * @param c
@@ -92,9 +99,9 @@ public class Item implements Comparable<Item> {
 	 * @param mt
 	 * @return
 	 */
-	public boolean IsChanceHitFreq(Sfmt mt) {
+	public boolean IsChanceHitFreq(Sfmt mt, double freqadd) {
 		double a = mt.NextUnif();
-		if (a < freq) return true;
+		if (a < freq * (1+freqadd)) return true;
 		return false;
 	}
 	
@@ -114,6 +121,72 @@ public class Item implements Comparable<Item> {
 			return "腕輪";
 		case AMULET:
 			return "首飾り";
+		default:
+			return "その他";
+		}
+	}
+	
+	public String getRarityString() {
+		switch (getRarity()) {
+		case JUNK:
+			return "ジャンク";
+		case COMMON:
+			return "一般的";
+		case UNCOMMON:
+			return "やや希少";
+		case RARE:
+			return "珍しい";
+		case EPIC:
+			return "壮大";
+		case LEGENDARY:
+			return "伝説的";
+		default:
+			return "その他";
+		}
+	}
+	
+	public String getRarityHTML() {
+		switch (getRarity()) {
+		case JUNK:
+			return "<span class=\"text-muted\" rel=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" "
+					+ "title=\"ジャンク\">"
+					+ "<span class=\"glyphicon glyphicon-star-empty\"></span>"
+					+ "</span>";
+		case COMMON:
+			return "<span class=\"text-primary\" rel=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" "
+			+ "title=\"一般的\">"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "</span>";
+		case UNCOMMON:
+			return "<span class=\"text-info\" rel=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" "
+			+ "title=\"やや希少\">"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "</span>";
+		case RARE:
+			return "<span class=\"text-success\" rel=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" "
+			+ "title=\"珍しい\">"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "</span>";
+		case EPIC:
+			return "<span class=\"text-warning\" rel=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" "
+			+ "title=\"壮大\">"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "</span>";
+		case LEGENDARY:
+			return "<span class=\"text-danger\" rel=\"tooltip\" data-toggle=\"tooltip\" data-placement=\"top\" "
+			+ "title=\"伝説的\">"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "<span class=\"glyphicon glyphicon-star\"></span>"
+			+ "</span>";
 		default:
 			return "その他";
 		}
@@ -153,6 +226,14 @@ public class Item implements Comparable<Item> {
 		NONECESSARY,
 		NOITEM,
 	}
+	public static enum Rarity {
+		JUNK,
+		COMMON,
+		UNCOMMON,
+		RARE,
+		EPIC,
+		LEGENDARY
+	}
 	
 	public static Item createByInt(int i, int n) {
 		Item res = null;
@@ -164,6 +245,18 @@ public class Item implements Comparable<Item> {
 			res = new ItemSwordCopper();	break;
 		case 3:
 			res = new ItemRodWood();	break;
+		case 4:
+			res = new ItemBowShort();	break;
+		case 5:
+			res = new ItemAxeBattle();	break;
+		case 6:
+			res = new ItemPotionMedium();	break;
+		case 7:
+			res = new ItemSwordIron();	break;
+		case 8:
+			res = new ItemSwordSteel();	break;
+		case 9:
+			res = new ItemArmorHide();	break;
 		}
 		
 		if (res == null) res = new Item();

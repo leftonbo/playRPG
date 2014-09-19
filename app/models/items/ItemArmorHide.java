@@ -3,14 +3,14 @@ package models.items;
 import models.Charactor;
 import models.items.Item;
 
-public class ItemSwordCopper extends Item {
+public class ItemArmorHide extends Item {
 	
 	/**
 	 * 識別ID
 	 * @return
 	 */
 	public int getId() {
-		return 2;
+		return 9;
 	}
 
 	/**
@@ -18,7 +18,7 @@ public class ItemSwordCopper extends Item {
 	 * @return
 	 */
 	public String getName() {
-		return "銅のつるぎ";
+		return "革のよろい";
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class ItemSwordCopper extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "銅でできた、粗悪な剣。\n\n種類:近接 - ちから攻撃\nダメージ:[命中度]+1D6-1";
+		return "革製のそぼくな鎧。\n\n種類:軽い防具\n防御力:1\n近接防御:+1\n魔法抵抗:+1";
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class ItemSwordCopper extends Item {
 	 * @return 0:Unusable 1:Consumable 2:Weapon 3:Armor 4:Shield 5:Ring 6:Amulet
 	 */
 	public Item.Type getType() {
-		return Type.WEAPON;
+		return Type.ARMOR;
 	}
 	
 	/**
@@ -50,14 +50,14 @@ public class ItemSwordCopper extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 3000L;
+		return 6000L;
 	}
 	
 	/**
 	 * レアリティ
 	 */
 	public Rarity getRarity() {
-		return Rarity.JUNK;
+		return Rarity.COMMON;
 	}
 	
 	/**
@@ -66,10 +66,9 @@ public class ItemSwordCopper extends Item {
 	 * @param c
 	 */
 	public Item.Used onUse(Charactor c) {
-		c.attackHit = 0;
-		c.attackDNum = 1;
-		c.attackDice = 6;
-		c.attackVal = -1;
+		c.armor += 1;
+		c.defMelee += 1;
+		c.defMagic += 1;
 		return Item.Used.OK;
 	}
 }

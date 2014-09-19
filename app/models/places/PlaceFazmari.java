@@ -29,6 +29,14 @@ public class PlaceFazmari extends GamePlace {
 		nexts = new LinkedHashMap<String,GamePlace>();
 		nexts.put("東", new PlacePrimaGreen());
 	}
+	
+	/**
+	 * 探索の設定
+	 */
+	public void makeExploreList() {
+		explores = new LinkedHashMap<String,Integer>();
+		explores.put("王様に会う", 1100);
+	}
 
 	/**
 	 * イベントテキストの定義
@@ -41,9 +49,35 @@ public class PlaceFazmari extends GamePlace {
 			eventName = "王様";
 			eventText = 
 				"おお、勇者{{name}}よ。ようやく現れおったな。\n" +
-				//"早速だが、私からの頼みがある。\n" +
+				"早速だが、私からの頼みがある。\n" +
+				"\n" +
+				"この地ミドラムはかつての光の勇者によってもたらされた『栄光の印』によって" +
+				"平和が保たれていた。\n" +
+				"しかしある日悪しき王が現れ、その印を盗んでしまったのだ！\n" +
+				"このままでは印が悪用されて、世界は闇に包まれてしまうだろう。\n" +
+				"\n" +
+				"そこで君にお願いしたい。\n" +
+				"君は悪しき王を倒し、『栄光の印』を取り返すのだ！\n" +
+				"成功の暁には、この城を君に譲ろう！\n" +
 				"";
-			choose.put(0,"はい");
+			choose.put(1001,"わかりました");
+			break;
+		case 1001:
+			eventName = "王様";
+			eventText = 
+				"おお、私の願いを受け入れてくれるか。\n" +
+				"君の持ち物にわずかながら贈り物を入れておいた。\n" +
+				"さあ行くのじゃ、勇者{{name}}よ！\n" +
+				"";
+			choose.put(0,"いってまいります");
+			break;
+		case 1100:
+			eventName = "王様";
+			eventText = 
+				"勇者{{name}}よ！\n" +
+				"次のレベルアップまで{{levrem}}の経験値が必要じゃ！\n" +
+				"";
+			choose.put(0,"わかりました");
 			break;
 		case -2:
 			eventName = "王様";

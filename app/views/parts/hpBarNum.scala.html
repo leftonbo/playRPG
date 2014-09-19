@@ -1,0 +1,11 @@
+@(current: Double, max: Double, style: String)
+
+@percent(a:Double,b:Double) = @{
+	100.0 * a / b
+}
+
+<div class="progress">
+  <div class="progress-bar @style" style="width: @{percent(current,max)}%">
+  @String.format("%.0f",current) / @String.format("%.0f",max)
+  </div>
+</div>
