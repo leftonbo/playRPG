@@ -302,6 +302,7 @@ public class Charactor extends Model {
     
     public List<Item> checkLoot(Sfmt mt, Charactor lootby) {
     	List<Item> get = new ArrayList<Item>();
+    	if (items == null) return get;
     	for (Item i : items.items) {
         	int lootench = lootby.sen - sen
         			+ mt.NextIntEx(6) + mt.NextIntEx(6) - mt.NextIntEx(6) - mt.NextIntEx(6);

@@ -142,13 +142,13 @@ public class PlaceDeminaForestDeep extends GamePlace {
 			break;
 		case 103:
 			enemies.add(new Charactor()
-			.setName("オオカミ").setparams(3, 22, 0, 2, 2, 1, 1).setRewards(5, 500)
+			.setName("オオカミ").setparams(3, 22, 0, 2, 1, 1, 2).setRewards(5, 500)
 			.setAttacks(1, 6, 0)
 			.addItem(new ItemPotion().setFreq(0.1))
 			.addItem(new ItemBowShort().setFreq(0.05))
 			);
 			enemies.add(new Charactor()
-			.setName("オオグモ").setparams(3, 25, 0, 1, 3, 2, 1).setRewards(5, 300)
+			.setName("オオグモ").setparams(3, 25, 0, 1, 2, 2, 1).setRewards(5, 300)
 			.setAttackType(1)
 			.setAttackHit(1)
 			.setAttacks(1, 6, 0)
@@ -157,7 +157,7 @@ public class PlaceDeminaForestDeep extends GamePlace {
 			break;
 		case 104:
 			enemies.add(new Charactor()
-			.setName("森のクマ").setparams(5, 36, 10, 4, 3, 2, 2).setRewards(18, 2200)
+			.setName("森のクマ").setparams(5, 36, 10, 3, 3, 2, 2).setRewards(18, 2200)
 			.setAttackType(0)
 			.setAttacks(1, 6, 4)
 			.setDefences(2, 1, -2, -1)

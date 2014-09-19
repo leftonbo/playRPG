@@ -50,7 +50,7 @@ public class ItemAxeBattle extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 3000L;
+		return 8000L;
 	}
 	
 	/**
