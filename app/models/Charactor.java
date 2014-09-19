@@ -109,6 +109,8 @@ public class Charactor extends Model {
 
     @Transient
     protected CharBoxItem items;
+    @Transient
+    protected CharBoxFlag flags;
 
     @Transient
     public boolean appliedEquips = false;
@@ -279,6 +281,22 @@ public class Charactor extends Model {
     		itemAmulet.onUse(this);
     	}
     }
+    
+    /* ************************************************************** */
+    
+    public CharBoxFlag getFlagBox() {
+    	if (flags != null) return flags;
+    	flags = new CharBoxFlag(flagstr);
+    	return flags;
+    }
+    
+    public void setFlag(String flg, int val) {
+    	getFlagBox().setFlag(flg, val);
+    }
+    
+    public int getFlag(String flg) {
+    	return getFlagBox().getFlag(flg);
+    }
 
     /* ************************************************************** */
     
@@ -350,6 +368,7 @@ public class Charactor extends Model {
 	@Override
 	public void save(){		
 		this.itemstr = (items != null) ? this.items.makeSave() : this.itemstr;
+		this.flagstr = (flags != null) ? this.flags.makeSave() : this.flagstr;
 	
 		super.save();
 	}
@@ -357,6 +376,7 @@ public class Charactor extends Model {
 	@Override
 	public void update() {
 		this.itemstr = (items != null) ? this.items.makeSave() : this.itemstr;
+		this.flagstr = (flags != null) ? this.flags.makeSave() : this.flagstr;
 		
 		super.update();
 	}
