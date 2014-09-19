@@ -8,6 +8,8 @@ import models.GamePlace;
 import models.items.ItemAxeBattle;
 import models.items.ItemBowShort;
 import models.items.ItemPotion;
+import models.items.ItemPotionMedium;
+import models.items.ItemSwordSteel;
 import mt.Sfmt;
 
 public class PlaceDeminaForestDeep extends GamePlace {
@@ -80,13 +82,17 @@ public class PlaceDeminaForestDeep extends GamePlace {
 			}
 			int schnum = GameMain.login.getFlag("deminaDSch");
 			GameMain.login.setFlag("deminaDSch", schnum + 1);
-			if (schnum >= 18 && GameMain.login.getFlag("deminaDclear")!=0) {
+			if (schnum >= 20 && GameMain.login.getFlag("deminaDclear")==0) {
 				if (mt.NextUnif() < 0.1) {
 					// ボス戦
 					return 1000;
 				}
 			}
 			return enemyEncounter(0.9);
+		case 202:
+			// ボス撃破
+			GameMain.login.setFlag("deminaDclear", 1);
+			return 1002;
 		}
 		return 0;
 	}
@@ -144,7 +150,7 @@ public class PlaceDeminaForestDeep extends GamePlace {
 			enemies.add(new Charactor()
 			.setName("オオカミ").setparams(3, 22, 0, 2, 1, 1, 2).setRewards(5, 500)
 			.setAttacks(1, 6, 0)
-			.addItem(new ItemPotion().setFreq(0.1))
+			.addItem(new ItemPotionMedium().setFreq(0.1))
 			.addItem(new ItemBowShort().setFreq(0.05))
 			);
 			enemies.add(new Charactor()
@@ -161,10 +167,21 @@ public class PlaceDeminaForestDeep extends GamePlace {
 			.setAttackType(0)
 			.setAttacks(1, 6, 4)
 			.setDefences(2, 1, -2, -1)
-			.addItem(new ItemPotion().setFreq(0.3))
-			.addItem(new ItemBowShort().setFreq(0.05))
+			.addItem(new ItemPotionMedium().setFreq(0.4))
+			.addItem(new ItemBowShort().setFreq(0.09))
 			);
 			break;
+		case 120:
+			enemies.add(new Charactor()
+			.setName("ジャイアント・スパイダー").setparams(7, 70, 10, 2, 4, 3, 1).setRewards(18, 5000)
+			.setAttackType(1)
+			.setAttacks(2, 6, 1)
+			.setDefences(0, 1, -3, -1)
+			.addItem(new ItemPotionMedium().setFreq(1.0))
+			.addItem(new ItemPotionMedium().setFreq(1.0))
+			.addItem(new ItemSwordSteel().setFreq(1.0))
+			);
+			return 202;
 		default:
 			enemies.add(new Charactor()
 				.setName("スライムA").setparams(1, 12, 0, 1, 1, 1, 0).setRewards(2, 400)
@@ -199,6 +216,11 @@ public class PlaceDeminaForestDeep extends GamePlace {
 			eventText = "探索中、森のなかで倒れた人間を見つけます。\n" +
 			"彼は残念ながらしんでしまっていますが、彼のもっていたオノは無事のようです。";
 			choose.put(0,"バトルアックス を拾う");
+			break;
+		case 1002:
+			eventName = "巨大なクモ 撃破";
+			eventText = "脅威の巨大グモを倒し、あなたは安堵します。";
+			choose.put(0,"やったぜ。");
 			break;
 		default:
 			eventText = "謎の空間";

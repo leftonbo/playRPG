@@ -83,6 +83,10 @@ public class GameMain extends Controller {
         	} else {
         		// そうでないなら次へ
         		login.scene = nextscene;
+            	if (login.scene >= 200 && login.scene < 300) {
+            		// シーンの自動遷移(ランダムイベント用)
+            		login.scene = place.onRandomEvent(login.scene);
+            	}
         		//　ついでに報酬ももらう
         		Sfmt mt = new Sfmt();
         		List<Item> getitems = new ArrayList<Item>();
