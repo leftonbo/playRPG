@@ -56,8 +56,8 @@ public class ItemBowShort extends Item {
 	/**
 	 * レアリティ
 	 */
-	public Rarity getRarity() {
-		return Rarity.COMMON;
+	public Item.Rarity getRarity() {
+		return Item.Rarity.COMMON;
 	}
 	
 	/**

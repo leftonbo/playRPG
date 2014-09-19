@@ -56,8 +56,8 @@ public class ItemSwordCopper extends Item {
 	/**
 	 * レアリティ
 	 */
-	public Rarity getRarity() {
-		return Rarity.JUNK;
+	public Item.Rarity getRarity() {
+		return Item.Rarity.JUNK;
 	}
 	
 	/**
