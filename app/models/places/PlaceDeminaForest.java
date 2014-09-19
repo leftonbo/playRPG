@@ -36,11 +36,19 @@ public class PlaceDeminaForest extends GamePlace {
 	}
 	
 	/**
+	 * 探索の設定
+	 */
+	public void makeExploreList() {
+		explores = new LinkedHashMap<String,Integer>();
+		explores.put("探索する", 200);
+	}
+	
+	/**
 	 * この地域に入ってきたときの処理
 	 * @return　次のシーン
 	 */
 	public int onEnterPlace(GamePlace from) {
-		return enemyEncounter();
+		return enemyEncounter(0.3);
 	}
 	
 	/**
@@ -48,13 +56,22 @@ public class PlaceDeminaForest extends GamePlace {
 	 * @return　次のシーン、0なら次のMAPへ
 	 */
 	public int onLeavePlace(GamePlace to) {
-		return enemyEncounter();
+		return enemyEncounter(0.3);
+	}
+
+	/**
+	 * ランダムイベント設定
+	 * @param scene 200~299 ランダムリスト
+	 * @return シーン移動
+	 */
+	public int onRandomEvent(int scene) {
+		return enemyEncounter(0.9);
 	}
 	
-	public int enemyEncounter() {
+	public int enemyEncounter(double per) {
 		Sfmt mt = new Sfmt();
-		if (mt.NextUnif() < 0.3) {
-			switch (mt.NextInt(3)) {
+		if (mt.NextUnif() < per) {
+			switch (mt.NextIntEx(3)) {
 			case 0:
 				return 100;
 			case 1:
@@ -74,7 +91,7 @@ public class PlaceDeminaForest extends GamePlace {
 	public int setEnemies(int scene) {
 		enemies = new ArrayList<Charactor>();
 		switch (scene) {
-		case 1:
+		case 101:
 			enemies.add(new Charactor()
 				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
 				.addItem(new ItemPotion().setFreq(0.2))
@@ -86,17 +103,18 @@ public class PlaceDeminaForest extends GamePlace {
 				.addItem(new ItemSwordCopper().setFreq(0.05))
 					);
 			break;
-		case 2:
+		case 102:
 			enemies.add(new Charactor()
-				.setName("オオカミ").setparams(0, 10, 0, 2, 1, 0, 0).setRewards(3, 500)
+				.setName("オオカミ").setparams(2, 18, 0, 2, 1, 0, 1).setRewards(4, 500)
+				.setAttacks(1, 6, 0)
 				.addItem(new ItemPotion().setFreq(0.2))
 				.addItem(new ItemRodWood().setFreq(0.05))
 				);
+			break;
 		default:
 			enemies.add(new Charactor()
-				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
+				.setName("スライム").setparams(1, 12, 0, 1, 1, 1, 0).setRewards(2, 400)
 				.addItem(new ItemPotion().setFreq(0.2))
-				.addItem(new ItemSwordCopper().setFreq(0.05))
 				);
 		}
 		return 0;

@@ -36,6 +36,14 @@ public class PlacePrimaGreen extends GamePlace {
 	}
 	
 	/**
+	 * 探索の設定
+	 */
+	public void makeExploreList() {
+		explores = new LinkedHashMap<String,Integer>();
+		explores.put("探索する", 200);
+	}
+	
+	/**
 	 * この地域に入ってきたときの処理
 	 * @return　次のシーン
 	 */
@@ -49,6 +57,19 @@ public class PlacePrimaGreen extends GamePlace {
 	 */
 	public int onLeavePlace(GamePlace to) {
 		return enemyEncounter();
+	}
+
+	/**
+	 * ランダムイベント設定
+	 * @param scene 200~299 ランダムリスト
+	 * @return シーン移動
+	 */
+	public int onRandomEvent(int scene) {
+		Sfmt mt = new Sfmt();
+		if (mt.NextUnif() < 0.9) {
+			return 100;
+		}
+		return 0;
 	}
 	
 	public int enemyEncounter() {
