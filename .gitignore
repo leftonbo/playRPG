@@ -15,3 +15,6 @@ dist
 /RUNNING_PID
 /.settings
 /bin
+/play.h2.db
+/play.lock.db
+/play.trace.db
