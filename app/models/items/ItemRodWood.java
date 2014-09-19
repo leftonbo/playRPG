@@ -26,7 +26,7 @@ public class ItemRodWood extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "室の悪い木で作った、粗悪な杖。\n\n種類:魔法 - こころ攻撃\nダメージ:1D6+2";
+		return "室の悪い木で作った杖。\n\n種類:魔法 - こころ攻撃\nダメージ:1D6+3";
 	}
 	
 	/**
@@ -50,7 +50,14 @@ public class ItemRodWood extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 5000L;
+		return 8000L;
+	}
+	
+	/**
+	 * レアリティ
+	 */
+	public Rarity getRarity() {
+		return Rarity.COMMON;
 	}
 	
 	/**

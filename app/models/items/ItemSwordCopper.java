@@ -50,7 +50,14 @@ public class ItemSwordCopper extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 5000L;
+		return 3000L;
+	}
+	
+	/**
+	 * レアリティ
+	 */
+	public Rarity getRarity() {
+		return Rarity.JUNK;
 	}
 	
 	/**
