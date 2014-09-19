@@ -282,10 +282,13 @@ public class Charactor extends Model {
 
     /* ************************************************************** */
     
-    public List<Item> checkLoot(Sfmt mt) {
+    public List<Item> checkLoot(Sfmt mt, Charactor lootby) {
     	List<Item> get = new ArrayList<Item>();
     	for (Item i : items.items) {
-    		if (i.IsChanceHitFreq(mt)) get.add(i);
+        	int lootench = lootby.sen - sen
+        			+ mt.NextIntEx(6) + mt.NextIntEx(6) - mt.NextIntEx(6) - mt.NextIntEx(6);
+        	double lootbonus = Math.min(1.0,Math.max(0.0, 5 * lootench));
+    		if (i.IsChanceHitFreq(mt,lootbonus)) get.add(i);
     	}
     	return get;
     }

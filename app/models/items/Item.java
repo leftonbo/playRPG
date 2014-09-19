@@ -99,9 +99,9 @@ public class Item implements Comparable<Item> {
 	 * @param mt
 	 * @return
 	 */
-	public boolean IsChanceHitFreq(Sfmt mt) {
+	public boolean IsChanceHitFreq(Sfmt mt, double freqadd) {
 		double a = mt.NextUnif();
-		if (a < freq) return true;
+		if (a < freq * (1+freqadd)) return true;
 		return false;
 	}
 	

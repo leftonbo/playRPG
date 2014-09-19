@@ -91,7 +91,7 @@ public class GameMain extends Controller {
         			if (cc.isDefeated()) {
         				re += cc.exp;
         				rm += cc.money;
-        				getitems.addAll(cc.checkLoot(mt));
+        				getitems.addAll(cc.checkLoot(mt,login));
         			}
         		}
         		login.exp += re;
