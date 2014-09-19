@@ -78,6 +78,15 @@ public class GamePlace {
 	}
 
 	/**
+	 * 場所移動設定
+	 * @param scene 300~399 移動リスト
+	 * @return 場所(0=移動なし)
+	 */
+	public int setPlaceMove(int scene) {
+		return 0;
+	}
+
+	/**
 	 * 敵グループ設定
 	 * @param scene 100~199 敵グループ
 	 * @return 勝った時のシーン移動
@@ -104,6 +113,8 @@ public class GamePlace {
 			return new PlacePrimaGreen();
 		case 4:
 			return new PlaceDeminaForest();
+		case 5:
+			return new PlaceDeminaForestDeep();
 		}
 		return new GamePlace();
 	}

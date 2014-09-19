@@ -111,7 +111,6 @@ public class GameMain extends Controller {
     				.replace("{{name}}", loginName)
     				.replace("\n", "<br>");
     		if (text.matches(".*\\Q{{levrem}}\\E.*")) {
-    			play.Logger.debug("fassa");
     			text = text.replace("{{levrem}}", String.format("%,d",login.getNextExp()-login.exp));
     		}
     		render = gameEvent.render( place.name, place.eventName, text, place.choose);
@@ -148,10 +147,21 @@ public class GameMain extends Controller {
     	int next = fc.get().choose;
     	login.scene = next;
 
-		// シーンの自動遷移(ランダムイベント用)
     	if (login.scene >= 200 && login.scene < 300) {
+    		// シーンの自動遷移(ランダムイベント用)
     		GamePlace place = GamePlace.createByPlace(login.place);
     		login.scene = place.onRandomEvent(login.scene);
+    	} else if (login.scene >= 300 && login.scene < 400) {
+    		// 場所移動
+    		GamePlace place = GamePlace.createByPlace(login.place);
+    		int nextplace = place.setPlaceMove(login.place);
+    		if (nextplace != 0) {
+    			// 場所更新
+    			login.place = nextplace;
+    	    	login.nextplace = 0;
+    	    	int nse = GamePlace.createByPlace(nextplace).onEnterPlace(place);
+    	    	login.scene = nse;
+    		}
     	}
     	
     	// キャラクタ更新…？
@@ -190,6 +200,8 @@ public class GameMain extends Controller {
     	login.nextplace = 0;
     	nse = aft.onEnterPlace(bef);
     	login.scene = nse;
+
+    	// キャラクタ更新
     	login.update();
     	
     	return GO_HOME;

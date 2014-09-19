@@ -3,14 +3,14 @@ package models.items;
 import models.Charactor;
 import models.items.Item;
 
-public class ItemRodWood extends Item {
+public class ItemAxeBattle extends Item {
 	
 	/**
 	 * 識別ID
 	 * @return
 	 */
 	public int getId() {
-		return 3;
+		return 5;
 	}
 
 	/**
@@ -18,7 +18,7 @@ public class ItemRodWood extends Item {
 	 * @return
 	 */
 	public String getName() {
-		return "木のつえ";
+		return "バトルアックス";
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class ItemRodWood extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "室の悪い木で作った杖。\n\n種類:魔法 - こころ攻撃\nダメージ:1D6+3";
+		return "戦闘用の片手斧。\n\n種類:近接 - ちから攻撃\nダメージ:[命中度]+1D6+5\n命中:-1";
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class ItemRodWood extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 8000L;
+		return 3000L;
 	}
 	
 	/**
@@ -66,11 +66,11 @@ public class ItemRodWood extends Item {
 	 * @param c
 	 */
 	public Item.Used onUse(Charactor c) {
-		c.attackType = 3;
-		c.attackHit = 0;
+		c.attackType = 0;
+		c.attackHit = -1;
 		c.attackDNum = 1;
 		c.attackDice = 6;
-		c.attackVal = 3;
+		c.attackVal = 5;
 		return Item.Used.OK;
 	}
 }

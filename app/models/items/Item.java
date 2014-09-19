@@ -245,6 +245,10 @@ public class Item implements Comparable<Item> {
 			res = new ItemSwordCopper();	break;
 		case 3:
 			res = new ItemRodWood();	break;
+		case 4:
+			res = new ItemBowShort();	break;
+		case 5:
+			res = new ItemAxeBattle();	break;
 		}
 		
 		if (res == null) res = new Item();
