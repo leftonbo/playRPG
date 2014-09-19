@@ -56,8 +56,8 @@ public class ItemSwordSteel extends Item {
 	/**
 	 * レアリティ
 	 */
-	public Rarity getRarity() {
-		return Rarity.UNCOMMON;
+	public Item.Rarity getRarity() {
+		return Item.Rarity.UNCOMMON;
 	}
 	
 	/**
