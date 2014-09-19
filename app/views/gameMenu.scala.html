@@ -5,6 +5,9 @@
 @progress(a:Double,b:Double,s:String) = @{
 	parts.hpBar.render(a,b,s)
 }
+@progressNum(a:Double,b:Double,s:String) = @{
+	parts.hpBarNum.render(a,b,s)
+}
 
 @showItemWeapon(i:items.Item) = {
 	@if(i == null) {
@@ -40,6 +43,15 @@
       <p>@Html(desp)</p>
     </div>
     
+<div class="row">
+<div class="col-xs-4 col-lg-offset-2">
+    @progressNum(pl.hp,pl.mhp,"progress-bar-health")
+</div>
+<div class="col-xs-4">
+    @progressNum(pl.mp,pl.mmp,"progress-bar-mana")
+</div>
+</div>
+
 <div class="row">
 <div class="col-xs-8 col-lg-offset-2">
 
