@@ -26,7 +26,7 @@ public class ItemRodWood extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "室の悪い木で作った杖。\n\n種類:魔法 - こころ攻撃\nダメージ:1D6+3";
+		return "室の悪い木で作った杖。\n\n種類:魔法 - こころ攻撃\nダメージ:こころ+1D6+3";
 	}
 	
 	/**
