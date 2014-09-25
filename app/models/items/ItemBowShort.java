@@ -26,7 +26,7 @@ public class ItemBowShort extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "小型で扱い易い弓。\n\n種類:射撃 - きようさ攻撃\nダメージ:1D6+3";
+		return "小型で扱い易い弓。\n\n種類:射撃 - きようさ攻撃\nダメージ:ちから+1D6+3";
 	}
 	
 	/**

@@ -36,6 +36,8 @@ public class PlaceDeminaForestDeep extends GamePlace {
 	public void makeNextList() {
 		nexts = new LinkedHashMap<String,GamePlace>();
 		nexts.put("南", new PlaceDeminaForest());
+		if (GameMain.login.getFlag("deminaDclear")!=0)
+			nexts.put("北", new PlaceTownUrest());
 	}
 	
 	/**

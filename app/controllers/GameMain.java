@@ -20,7 +20,10 @@ import views.html.*;
  * 0：メニュー
  * 1:地域に入る
  * 2：地域から出る
+ * 3：リスポン設定
  * 100~199：敵と遭遇
+ * 200~299：シーンの自動遷移
+ * 300~399：場所の自動遷移
  * 1000~1999：イベント
  * 
  * -1：死亡時の処理
@@ -108,7 +111,7 @@ public class GameMain extends Controller {
         	}
         	login.update();
     		render = gameBattle.render( place.name, bo);
-    	} else if (scene == -2 || scene >= 1000 && scene < 2000) {
+    	} else if (scene == -2 || scene == 3 || scene >= 1000 && scene < 2000) {
         	// イベントシーンへ
     		place.makeEventText(scene);
     		String text = place.eventText
@@ -151,7 +154,10 @@ public class GameMain extends Controller {
     	int next = fc.get().choose;
     	login.scene = next;
 
-    	if (login.scene >= 200 && login.scene < 300) {
+    	if (login.scene == 3) {
+    		// リスポンの設定
+    		login.respawn = login.place;
+    	} else if (login.scene >= 200 && login.scene < 300) {
     		// シーンの自動遷移(ランダムイベント用)
     		GamePlace place = GamePlace.createByPlace(login.place);
     		login.scene = place.onRandomEvent(login.scene);

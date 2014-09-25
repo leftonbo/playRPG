@@ -115,6 +115,8 @@ public class GamePlace {
 			return new PlaceDeminaForest();
 		case 5:
 			return new PlaceDeminaForestDeep();
+		case 6:
+			return new PlaceTownUrest();
 		}
 		return new GamePlace();
 	}
