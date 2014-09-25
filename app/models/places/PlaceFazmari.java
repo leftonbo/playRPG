@@ -35,7 +35,7 @@ public class PlaceFazmari extends GamePlace {
 	 */
 	public void makeExploreList() {
 		explores = new LinkedHashMap<String,Integer>();
-		explores.put("王様に会う", 1100);
+		explores.put("王様に会う", 3);
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class PlaceFazmari extends GamePlace {
 				"";
 			choose.put(0,"いってまいります");
 			break;
-		case 1100:
+		case 3:
 			eventName = "王様";
 			eventText = 
 				"勇者{{name}}よ！\n" +
