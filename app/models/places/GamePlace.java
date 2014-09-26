@@ -143,6 +143,8 @@ public class GamePlace {
 			return new PlaceDeminaForestDeep();
 		case 6:
 			return new PlaceTownUrest();
+		case 7:
+			return new PlaceSalamDesert();
 		}
 		return new GamePlace();
 	}

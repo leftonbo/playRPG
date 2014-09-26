@@ -103,6 +103,8 @@ public class PlaceFazmari extends GamePlace {
 			makeSoldItemSelect(212, new ItemSwordIron(), 1.0, 1);
 			makeSoldItemSelect(214, new ItemSpearShort(), 1.5, 1);
 			makeSoldItemSelect(213, new ItemArmorHide(), 1.0, 1);
+			makeSoldItemSelect(215, new ItemArmorChain(), 1.0, 1);
+			makeSoldItemSelect(216, new ItemArmorIron(), 1.0, 1);
 			eventText += "</ul>";
 			break;
 		default:
@@ -132,6 +134,12 @@ public class PlaceFazmari extends GamePlace {
 			return 1100;
 		case 214:
 			processSoldItemSelect(new ItemSpearShort(), 1.5, 1);
+			return 1100;
+		case 215:
+			processSoldItemSelect(new ItemArmorChain(), 1.0, 1);
+			return 1100;
+		case 216:
+			processSoldItemSelect(new ItemArmorIron(), 1.0, 1);
 			return 1100;
 		}
 		return 0;

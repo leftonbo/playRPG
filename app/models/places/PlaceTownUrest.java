@@ -28,6 +28,7 @@ public class PlaceTownUrest extends GamePlace {
 	public void makeNextList() {
 		nexts = new LinkedHashMap<String,GamePlace>();
 		nexts.put("南", new PlaceDeminaForestDeep());
+		nexts.put("東", new PlaceSalamDesert());
 	}
 	
 	/**
