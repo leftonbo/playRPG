@@ -1,7 +1,8 @@
-package models;
+package models.places;
 
 import java.util.*;
 
+import models.Charactor;
 import models.places.*;
 
 public class GamePlace {	

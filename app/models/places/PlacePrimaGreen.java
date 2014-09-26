@@ -4,7 +4,6 @@ import java.util.*;
 
 import controllers.GameMain;
 import models.Charactor;
-import models.GamePlace;
 import models.items.ItemArmorHide;
 import models.items.ItemPotion;
 import models.items.ItemSwordCopper;

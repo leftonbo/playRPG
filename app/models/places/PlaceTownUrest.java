@@ -2,8 +2,6 @@ package models.places;
 
 import java.util.*;
 
-import models.GamePlace;
-
 public class PlaceTownUrest extends GamePlace {
 
 	/**

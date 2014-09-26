@@ -4,7 +4,6 @@ import java.util.*;
 
 import controllers.GameMain;
 import models.Charactor;
-import models.GamePlace;
 import models.items.ItemAxeBattle;
 import models.items.ItemBowShort;
 import models.items.ItemPotion;
