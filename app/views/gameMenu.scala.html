@@ -130,27 +130,33 @@ jQuery(function($){
 });
 </script>
     <h2>@pl.name</h2>
-    <p>レベル: @pl.levels <small>(Exp: @{pl.exp}/@{pl.getNextExp()})</small></p>
-    @progress(pl.getNowExp(),pl.getNowNextExp(),"progress-bar-exp")
-    <p>HP: @pl.hp / @pl.mhp</p>
-    @progress(pl.hp,pl.mhp,"progress-bar-health")
-    <p>MP: @pl.mp / @pl.mmp</p>
-    @progress(pl.mp,pl.mmp,"progress-bar-mana")
-    <p>ちから:　@pl.str</p>
-    <p>きようさ:　@pl.agi</p>
-    <p>かんかく:　@pl.sen</p>
-    <p>こころ:　@pl.wil</p>
-    <p>所持金:　@pl.money</p>
-    <p>
-      装備品:
-      <ul>
-      <li>武器:@showItemWeapon(pl.itemWeapon)</li>
-      <li>盾:@showItemWeapon(pl.itemShield)</li>
-      <li>防具:@showItemWeapon(pl.itemArmor)</li>
-      <li>腕輪:@showItemWeapon(pl.itemRing)</li>
-      <li>首飾り:@showItemWeapon(pl.itemAmulet)</li>
-      </ul>
-    </p>
+    <div class="row">
+    <div class="col-xs-6">
+      <p>レベル: @pl.levels <small>(Exp: @{pl.exp}/@{pl.getNextExp()})</small></p>
+      @progress(pl.getNowExp(),pl.getNowNextExp(),"progress-bar-exp")
+      <p>HP: @pl.hp / @pl.mhp</p>
+      @progress(pl.hp,pl.mhp,"progress-bar-health")
+      <p>MP: @pl.mp / @pl.mmp</p>
+      @progress(pl.mp,pl.mmp,"progress-bar-mana")
+      <p>ちから:　@pl.str</p>
+      <p>きようさ:　@pl.agi</p>
+      <p>かんかく:　@pl.sen</p>
+      <p>こころ:　@pl.wil</p>
+    </div>
+    <div class="col-xs-6">
+      <p>所持金:　@pl.money</p>
+      <p>
+        装備品:
+        <ul>
+        <li>武器:@showItemWeapon(pl.itemWeapon)</li>
+        <li>盾:@showItemWeapon(pl.itemShield)</li>
+        <li>防具:@showItemWeapon(pl.itemArmor)</li>
+        <li>腕輪:@showItemWeapon(pl.itemRing)</li>
+        <li>首飾り:@showItemWeapon(pl.itemAmulet)</li>
+        </ul>
+      </p>
+    </div>
+    </div>
   </div>
   <div class="tab-pane fade" id="system">
     <p>
@@ -163,5 +169,8 @@ jQuery(function($){
 </div>
 
 </div>
+</div>
+
+<div style="height:1024px">
 </div>
 }
