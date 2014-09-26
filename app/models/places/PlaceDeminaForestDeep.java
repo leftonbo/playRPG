@@ -133,7 +133,6 @@ public class PlaceDeminaForestDeep extends GamePlace {
 			enemies.add(new Charactor()
 			.setName("オオカミB").setparams(2, 16, 0, 2, 1, 0, 1).setRewards(3, 500)
 			.setAttacks(1, 6, 0)
-			.addItem(new ItemPotion().setFreq(0.1))
 			);
 			break;
 		case 102:
@@ -144,7 +143,6 @@ public class PlaceDeminaForestDeep extends GamePlace {
 				);
 			enemies.add(new Charactor()
 				.setName("スライムA").setparams(1, 12, 0, 1, 1, 1, 0).setRewards(2, 400)
-				.addItem(new ItemPotion().setFreq(0.1))
 				);
 			break;
 		case 103:

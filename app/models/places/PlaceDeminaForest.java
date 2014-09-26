@@ -124,27 +124,26 @@ public class PlaceDeminaForest extends GamePlace {
 		case 101:
 			enemies.add(new Charactor()
 				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
-				.addItem(new ItemPotion().setFreq(0.2))
+				.addItem(new ItemPotion().setFreq(0.05))
 				.addItem(new ItemSwordCopper().setFreq(0.01))
 				);
 			enemies.add(new Charactor()
 				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
-				.addItem(new ItemPotion().setFreq(0.2))
-				.addItem(new ItemSwordCopper().setFreq(0.01))
+				.addItem(new ItemPotion().setFreq(0.05))
 					);
 			break;
 		case 102:
 			enemies.add(new Charactor()
 				.setName("オオカミ").setparams(2, 18, 0, 2, 1, 0, 1).setRewards(4, 500)
 				.setAttacks(1, 6, 0)
-				.addItem(new ItemPotion().setFreq(0.2))
+				.addItem(new ItemPotion().setFreq(0.05))
 				.addItem(new ItemRodWood().setFreq(0.05))
 				);
 			break;
 		default:
 			enemies.add(new Charactor()
 				.setName("スライム").setparams(1, 12, 0, 1, 1, 1, 0).setRewards(2, 400)
-				.addItem(new ItemPotion().setFreq(0.2))
+				.addItem(new ItemPotion().setFreq(0.05))
 				);
 		}
 		return 0;

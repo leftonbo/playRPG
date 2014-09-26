@@ -4,10 +4,7 @@ import java.util.*;
 
 import controllers.GameMain;
 import models.Charactor;
-import models.items.ItemArmorHide;
-import models.items.ItemPotion;
-import models.items.ItemSwordCopper;
-import models.items.ItemSwordIron;
+import models.items.*;
 import mt.Sfmt;
 
 public class PlacePrimaGreen extends GamePlace {
@@ -108,8 +105,7 @@ public class PlacePrimaGreen extends GamePlace {
 		default:
 			enemies.add(new Charactor()
 				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
-				.addItem(new ItemPotion().setFreq(0.2))
-				.addItem(new ItemSwordCopper().setFreq(0.05))
+				.addItem(new ItemPotion().setFreq(0.05))
 				);
 		}
 		return 0;
