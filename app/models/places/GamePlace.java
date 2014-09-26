@@ -2,8 +2,9 @@ package models.places;
 
 import java.util.*;
 
+import controllers.GameMain;
 import models.Charactor;
-import models.places.*;
+import models.items.Item;
 
 public class GamePlace {	
 	public int place;
@@ -101,6 +102,30 @@ public class GamePlace {
 	 * @param scene シーン(1000~1999)
 	 */
 	public void makeEventText(int scene) {
+	}
+	
+	/// ====
+	
+	// ヘルパー
+	
+	protected void makeSoldItemSelect(int toScene, Item item, double rate, int num) {
+		Long price = (Long)(Math.round(rate * num * item.getPrice()));
+		eventText += String.format("<li>%s(x%d) : %d (所持数:%d)</li>"
+				, item.getName(), num, price, GameMain.login.getItemNum(item.getId()));
+		if (GameMain.login.money >= price) {
+			choose.put(toScene,String.format("\n%s(x%d)を買う(%d)",
+					item.getName(), num, price));
+		}
+	}
+	protected void processSoldItemSelect(Item item, double rate, int num) {
+		Long price = (Long)(Math.round(rate * num * item.getPrice()));
+		if (GameMain.login.money >= price) {
+			GameMain.login.addItem(item);
+			GameMain.login.money -= price;
+		}
+	}
+	protected static Long getNowManey() {
+		return GameMain.login.money;
 	}
 	
 	

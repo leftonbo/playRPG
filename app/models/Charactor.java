@@ -205,6 +205,10 @@ public class Charactor extends Model {
 		return this;
     }
     
+    public int getItemNum(int id) {
+		return getItemBox().getItemNum(id);
+    }
+    
     public Used useItemByID(int id) {
     	getItemBox();
     	Item use = null;
