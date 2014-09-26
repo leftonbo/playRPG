@@ -2,7 +2,7 @@ package models.places;
 
 import java.util.*;
 
-import models.GamePlace;
+import models.items.*;
 
 public class PlaceFazmari extends GamePlace {
 
@@ -36,6 +36,7 @@ public class PlaceFazmari extends GamePlace {
 	public void makeExploreList() {
 		explores = new LinkedHashMap<String,Integer>();
 		explores.put("王様に会う", 3);
+		explores.put("道具屋へ行く", 1100);
 	}
 
 	/**
@@ -87,10 +88,61 @@ public class PlaceFazmari extends GamePlace {
 				"";
 			choose.put(0,"ふっかつ！");
 			break;
+		case 1100:
+			eventName = "道具屋";
+			eventText = 
+				"いらっしゃい！\n" +
+				"好きなだけ見ていってくれ。\n" +
+				"\n" +
+				"あなたの所持金: " + getNowManey() + "\n" +
+				"\n" +
+				"<ul>";
+			choose.put(0,"立ち去る");
+			makeSoldItemSelect(210, new ItemPotion(), 1.0, 1);
+			makeSoldItemSelect(211, new ItemSwordCopper(), 1.0, 1);
+			makeSoldItemSelect(212, new ItemSwordIron(), 1.0, 1);
+			makeSoldItemSelect(214, new ItemSpearShort(), 1.5, 1);
+			makeSoldItemSelect(213, new ItemArmorHide(), 1.0, 1);
+			makeSoldItemSelect(215, new ItemArmorChain(), 1.0, 1);
+			makeSoldItemSelect(216, new ItemArmorIron(), 1.0, 1);
+			eventText += "</ul>";
+			break;
 		default:
 			eventText = "謎の空間";
 			choose.put(0,"次へ");
 		}
+	}
+	
+	/**
+	 * ランダムイベント設定
+	 * @param scene 200~299 ランダムリスト
+	 * @return シーン移動
+	 */
+	public int onRandomEvent(int scene) {
+		switch (scene) {
+		case 210:
+			processSoldItemSelect(new ItemPotion(), 1.0, 1);
+			return 1100;
+		case 211:
+			processSoldItemSelect(new ItemSwordCopper(), 1.0, 1);
+			return 1100;
+		case 212:
+			processSoldItemSelect(new ItemSwordIron(), 1.0, 1);
+			return 1100;
+		case 213:
+			processSoldItemSelect(new ItemArmorHide(), 1.0, 1);
+			return 1100;
+		case 214:
+			processSoldItemSelect(new ItemSpearShort(), 1.5, 1);
+			return 1100;
+		case 215:
+			processSoldItemSelect(new ItemArmorChain(), 1.0, 1);
+			return 1100;
+		case 216:
+			processSoldItemSelect(new ItemArmorIron(), 1.0, 1);
+			return 1100;
+		}
+		return 0;
 	}
 	
 }

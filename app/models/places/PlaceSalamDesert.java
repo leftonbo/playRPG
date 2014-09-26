@@ -2,21 +2,18 @@ package models.places;
 
 import java.util.*;
 
-import controllers.GameMain;
 import models.Charactor;
-import models.items.ItemPotion;
-import models.items.ItemRodWood;
-import models.items.ItemSwordCopper;
+import models.items.*;
 import mt.Sfmt;
 
-public class PlaceDeminaForest extends GamePlace {
+public class PlaceSalamDesert extends GamePlace {
 
 	/**
 	 * 場所の設定
 	 */
-	public PlaceDeminaForest() {
-		place = 4;
-		name = "デミナの森";
+	public PlaceSalamDesert() {
+		place = 7;
+		name = "サラム砂漠";
 	}
 
 	/**
@@ -24,7 +21,7 @@ public class PlaceDeminaForest extends GamePlace {
 	 * @return
 	 */
 	public String getDespriction() {
-		return "森TEST";
+		return "砂漠。";
 	}
 
 	/**
@@ -32,8 +29,7 @@ public class PlaceDeminaForest extends GamePlace {
 	 */
 	public void makeNextList() {
 		nexts = new LinkedHashMap<String,GamePlace>();
-		nexts.put("南", new PlacePrimaGreen());
-		if (GameMain.login.getFlag("deminaNext")!=0) nexts.put("北", new PlaceDeminaForestDeep());
+		nexts.put("西", new PlaceTownUrest());
 	}
 	
 	/**
@@ -69,16 +65,6 @@ public class PlaceDeminaForest extends GamePlace {
 		switch (scene) {
 		case 200:
 			// 探索
-			int schnum = GameMain.login.getFlag("deminaSch");
-			GameMain.login.setFlag("deminaSch", schnum + 1);
-			if (schnum >= 10 && GameMain.login.getFlag("deminaNext")==0) {
-				Sfmt mt = new Sfmt();
-				if (mt.NextUnif() < 0.5) {
-					// デミナ奥地発見
-					GameMain.login.setFlag("deminaNext", 1);
-					return 1000;
-				}
-			}
 			return enemyEncounter(0.9);
 		}
 		return 0;
@@ -90,10 +76,6 @@ public class PlaceDeminaForest extends GamePlace {
 	 * @return 場所(0=移動なし)
 	 */
 	public int setPlaceMove(int scene) {
-		switch (scene) {
-		case 300:
-			return 5;
-		}
 		return 0;
 	}
 
@@ -123,26 +105,31 @@ public class PlaceDeminaForest extends GamePlace {
 		switch (scene) {
 		case 101:
 			enemies.add(new Charactor()
-				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
-				.addItem(new ItemPotion().setFreq(0.05))
-				.addItem(new ItemSwordCopper().setFreq(0.01))
-				);
+			.setName("ゴブリンA").setparams(6, 20, 20, 2, 3, 2, 2).setRewards(8, 1500)
+			.setAttackType(2)
+			.setAttacks(1, 6, 2)
+			.addItem(new ItemPotion().setFreq(0.05))
+			);
 			enemies.add(new Charactor()
-				.setName("スライム").setparams(0, 10, 0, 1, 0, 1, 0).setRewards(2, 300)
-				.addItem(new ItemPotion().setFreq(0.05))
-					);
+			.setName("ゴブリンB").setparams(6, 20, 20, 2, 3, 0, 4).setRewards(8, 1500)
+			.setAttackType(3)
+			.setAttacks(1, 6, 2)
+			.addItem(new ItemPotion().setFreq(0.05))
+			);
 			break;
 		case 102:
 			enemies.add(new Charactor()
-				.setName("オオカミ").setparams(2, 18, 0, 2, 1, 0, 1).setRewards(4, 500)
-				.setAttacks(1, 6, 0)
-				.addItem(new ItemPotion().setFreq(0.05))
-				.addItem(new ItemRodWood().setFreq(0.05))
+				.setName("オーク").setparams(9, 50, 30, 5, 1, 0, 1).setRewards(28, 5000)
+				.setAttacks(2, 8, 1)
+				.addItem(new ItemPotionMedium().setFreq(0.08))
+				.addItem(new ItemHammerWar().setFreq(0.08))
 				);
 			break;
 		default:
 			enemies.add(new Charactor()
-				.setName("スライム").setparams(1, 12, 0, 1, 1, 1, 0).setRewards(2, 400)
+				.setName("サソリ").setparams(7, 25, 5, 2, 5, 0, 2).setRewards(16, 2000)
+				.setAttackType(1)
+				.setAttacks(1, 6, 2)
 				.addItem(new ItemPotion().setFreq(0.05))
 				);
 		}
@@ -156,13 +143,6 @@ public class PlaceDeminaForest extends GamePlace {
 	public void makeEventText(int scene) {
 		choose = new LinkedHashMap<Integer,String>();
 		switch (scene) {
-		case 1000:
-			eventName = "奥地発見";
-			eventText = "あなたは森の更に深いところへ入れる道を発見します。\n" +
-			"ここよりもさらに危険でしょう。用心してください！";
-			choose.put(300,"先に進む");
-			choose.put(0,"一旦戻る");
-			break;
 		default:
 			eventText = "謎の空間";
 			choose.put(0,"次へ");

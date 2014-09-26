@@ -3,14 +3,14 @@ package models.items;
 import models.Charactor;
 import models.items.Item;
 
-public class ItemArmorHide extends Item {
+public class ItemAxeGreat extends Item {
 	
 	/**
 	 * 識別ID
 	 * @return
 	 */
 	public int getId() {
-		return 9;
+		return 15;
 	}
 
 	/**
@@ -18,7 +18,7 @@ public class ItemArmorHide extends Item {
 	 * @return
 	 */
 	public String getName() {
-		return "革のよろい";
+		return "ウォーハンマー";
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class ItemArmorHide extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "革製のそぼくな鎧。\n\n種類:軽い防具\n防御力:2\n近接防御:+1\n魔法抵抗:+1";
+		return "戦闘用の大きなハンマー。\n\n種類:近接 - ちから攻撃\nダメージ:[命中度]+2D10+2\n命中:-2";
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class ItemArmorHide extends Item {
 	 * @return 0:Unusable 1:Consumable 2:Weapon 3:Armor 4:Shield 5:Ring 6:Amulet
 	 */
 	public Item.Type getType() {
-		return Type.ARMOR;
+		return Type.WEAPON;
 	}
 	
 	/**
@@ -50,14 +50,14 @@ public class ItemArmorHide extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 6000L;
+		return 20000L;
 	}
 	
 	/**
 	 * レアリティ
 	 */
 	public Item.Rarity getRarity() {
-		return Item.Rarity.COMMON;
+		return Item.Rarity.RARE;
 	}
 	
 	/**
@@ -66,9 +66,11 @@ public class ItemArmorHide extends Item {
 	 * @param c
 	 */
 	public Item.Used onUse(Charactor c) {
-		c.armor += 2;
-		c.defMelee += 1;
-		c.defMagic += 1;
+		c.attackType = 0;
+		c.attackHit = -2;
+		c.attackDNum = 2;
+		c.attackDice = 10;
+		c.attackVal = 2;
 		return Item.Used.OK;
 	}
 }

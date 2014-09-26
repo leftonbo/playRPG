@@ -9,6 +9,7 @@ import models.*;
 import models.forms.*;
 import models.items.Item;
 import models.items.Item.Used;
+import models.places.GamePlace;
 import mt.Sfmt;
 import play.data.Form;
 import play.mvc.*;

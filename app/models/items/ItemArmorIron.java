@@ -3,14 +3,14 @@ package models.items;
 import models.Charactor;
 import models.items.Item;
 
-public class ItemArmorHide extends Item {
+public class ItemArmorIron extends Item {
 	
 	/**
 	 * 識別ID
 	 * @return
 	 */
 	public int getId() {
-		return 9;
+		return 13;
 	}
 
 	/**
@@ -18,7 +18,7 @@ public class ItemArmorHide extends Item {
 	 * @return
 	 */
 	public String getName() {
-		return "革のよろい";
+		return "鉄の重鎧";
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class ItemArmorHide extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "革製のそぼくな鎧。\n\n種類:軽い防具\n防御力:2\n近接防御:+1\n魔法抵抗:+1";
+		return "粗い鉄の鎧。重たい。\n\n種類:重い鎧\n防御力:4\n近接防御:+2\n射撃回避:-1";
 	}
 	
 	/**
@@ -50,14 +50,14 @@ public class ItemArmorHide extends Item {
 	 * @return
 	 */
 	public Long getPrice() {
-		return 6000L;
+		return 15000L;
 	}
 	
 	/**
 	 * レアリティ
 	 */
 	public Item.Rarity getRarity() {
-		return Item.Rarity.COMMON;
+		return Item.Rarity.UNCOMMON;
 	}
 	
 	/**
@@ -66,9 +66,9 @@ public class ItemArmorHide extends Item {
 	 * @param c
 	 */
 	public Item.Used onUse(Charactor c) {
-		c.armor += 2;
-		c.defMelee += 1;
-		c.defMagic += 1;
+		c.armor += 4;
+		c.defMelee += 2;
+		c.defRanged -= 1;
 		return Item.Used.OK;
 	}
 }

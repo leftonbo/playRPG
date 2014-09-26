@@ -47,5 +47,13 @@ public class CharBoxItem extends CharBox {
 			items.add(add);
 		}
 	}
+	public int getItemNum(int id) {
+		for (Item i : items) {
+			if (i.getId() == id) {
+				return i.num;
+			}
+		}
+		return 0;
+	}
 
 }
