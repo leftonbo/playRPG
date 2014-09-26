@@ -26,7 +26,7 @@ public class ItemArmorHide extends Item {
 	 * @return
 	 */
 	public String getDesp() {
-		return "革製のそぼくな鎧。\n\n種類:軽い防具\n防御力:1\n近接防御:+1\n魔法抵抗:+1";
+		return "革製のそぼくな鎧。\n\n種類:軽い防具\n防御力:2\n近接防御:+1\n魔法抵抗:+1";
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class ItemArmorHide extends Item {
 	 * @param c
 	 */
 	public Item.Used onUse(Charactor c) {
-		c.armor += 1;
+		c.armor += 2;
 		c.defMelee += 1;
 		c.defMagic += 1;
 		return Item.Used.OK;
